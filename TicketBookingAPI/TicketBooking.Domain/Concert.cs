@@ -11,6 +11,7 @@
         public string? Place { get; set; }
         public double GeoLong { get; set; }
         public double GeoLat { get; set; }
-        public string? ConcertType { get; set; } = "Concert";
+        public string? ConcertType { get; set; } = nameof(Concert);
+        public List<Ticket> Tickets { get; set; } = new();
     }
 }
