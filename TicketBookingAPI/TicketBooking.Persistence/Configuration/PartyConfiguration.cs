@@ -7,14 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using TicketBooking.Domain;
 
-namespace TicketBooking.Persistance.Configuration
+namespace TicketBooking.Persistence.Configuration
 {
     public class PartyConfiguration : IEntityTypeConfiguration<Party>
     {
-        public void Configure(EntityTypeBuilder<Party> builder)
-        {
-            builder.HasKey(p => p.Id);
-            builder.HasIndex(p => p.Id).IsUnique();
-        }
+        public void Configure(EntityTypeBuilder<Party> builder) { }
     }
 }

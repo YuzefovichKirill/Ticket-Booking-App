@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
-using TicketBooking.Persistance.Configuration;
+using TicketBooking.Persistence.Configuration;
 
-namespace TicketBooking.Persistance
+namespace TicketBooking.Persistence
 {
     public class TicketBookingDbContext : DbContext, ITicketBookingDbContext
     {
@@ -17,7 +17,9 @@ namespace TicketBooking.Persistance
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Concert>().UseTptMappingStrategy();
+            builder.Entity<ClassicalConcert>().ToTable("ClassicalConcerts");
+            builder.Entity<OpenAir>().ToTable("OpenAirs");
+            builder.Entity<Party>().ToTable("Parties");
 
             builder.ApplyConfiguration(new ConcertConfiguration());
             builder.ApplyConfiguration(new ClassicalConcertConfiguration());

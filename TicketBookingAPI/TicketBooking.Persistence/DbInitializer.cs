@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TicketBooking.Persistance
+namespace TicketBooking.Persistence
 {
     public class DbInitializer
     {

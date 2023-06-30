@@ -7,14 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TicketBooking.Domain;
 
-namespace TicketBooking.Persistance.Configuration
+namespace TicketBooking.Persistence.Configuration
 {
     public class ClassicalConcertConfiguration : IEntityTypeConfiguration<ClassicalConcert>
     {
         public void Configure(EntityTypeBuilder<ClassicalConcert> builder)
         {
-            builder.HasKey(c => c.Id);
-            builder.HasIndex(c => c.Id).IsUnique();
             builder.Property(c => c.VoiceType).HasMaxLength(20);
             builder.Property(c => c.Composer).HasMaxLength(20);
         }

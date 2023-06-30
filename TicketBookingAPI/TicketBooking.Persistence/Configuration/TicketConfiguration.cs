@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TicketBooking.Domain;
 
-namespace TicketBooking.Persistance.Configuration
+namespace TicketBooking.Persistence.Configuration
 {
     public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
     {

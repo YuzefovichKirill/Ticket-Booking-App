@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TicketBooking.Domain;
 
-namespace TicketBooking.Persistance.Configuration
+namespace TicketBooking.Persistence.Configuration
 {
     public class ConcertConfiguration : IEntityTypeConfiguration<Concert>
     {

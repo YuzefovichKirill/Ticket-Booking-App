@@ -1,8 +1,3 @@
-using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.ComponentModel.DataAnnotations;
-using TicketBooking.Persistance;
 using TicketBooking.Persistence;
 
 namespace TicketBooking.WebAPI
@@ -16,6 +11,7 @@ namespace TicketBooking.WebAPI
 
             ConfigurationManager config = builder.Configuration;
             services.AddPersistence(config);
+            services.AddControllers();
 
             services.AddCors(options =>
             {
@@ -32,7 +28,7 @@ namespace TicketBooking.WebAPI
             // Configure
             var app = builder.Build();
 
-            /*using (var scope = app.Services.CreateScope())
+            using (var scope = app.Services.CreateScope())
             {
                 var serviceProvider = scope.ServiceProvider;
                 try
@@ -45,10 +41,13 @@ namespace TicketBooking.WebAPI
                     Console.WriteLine(ex.ToString());
                     return;
                 }
-            }*/
+            }
 
-            //app.UseSwagger();
-            //app.UseSwaggerUI(c=>c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ticket booking v1"));
+            /*if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ticket booking v1"));
+            }*/
 
             app.UseRouting();
             app.UseHttpsRedirection();
