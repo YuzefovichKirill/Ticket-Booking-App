@@ -1,3 +1,4 @@
+using TicketBooking.Application;
 using TicketBooking.Persistence;
 
 namespace TicketBooking.WebAPI
@@ -10,6 +11,7 @@ namespace TicketBooking.WebAPI
             IServiceCollection services = builder.Services;
 
             ConfigurationManager config = builder.Configuration;
+            services.AddApplication();
             services.AddPersistence(config);
             services.AddControllers();
 
@@ -23,7 +25,8 @@ namespace TicketBooking.WebAPI
                 });
             });
 
-            //services.AddSwaggerGen();
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+            services.AddSwaggerGen();
 
             // Configure
             var app = builder.Build();
@@ -43,18 +46,18 @@ namespace TicketBooking.WebAPI
                 }
             }
 
-            /*if (app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ticket booking v1"));
-            }*/
+            }
 
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
 
-            //app.UseEndpoints(endpoints => endpoints.MapControllers());
-            app.MapGet("/", () => "Hello World!");
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            //app.MapGet("/", () => "Hello World!");
 
             app.Run();
         }
