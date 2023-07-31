@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Nodes;
 using TicketBooking.Application.Features.Concerts.Commands.CreateConcert;
+using TicketBooking.Application.Features.Concerts.Commands.DeleteConcert;
 using TicketBooking.Application.Features.Concerts.Queries.GetConcertList;
 
 namespace TicketBooking.WebAPI.Controllers
@@ -25,6 +26,15 @@ namespace TicketBooking.WebAPI.Controllers
             
             var concertId = await Mediator.Send(command);
             return Ok(concertId);
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            var command = new DeleteConcertCommand() { Id = id };
+
+            await Mediator.Send(command);
+            return NoContent();
         }
     }
 }

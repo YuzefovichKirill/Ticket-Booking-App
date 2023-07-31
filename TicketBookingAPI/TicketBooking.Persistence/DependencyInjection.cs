@@ -18,7 +18,7 @@ namespace TicketBooking.Persistence
                 options.UseSqlServer(connectionString);
             });
             services.AddScoped<ITicketBookingDbContext>(provider =>
-                provider.GetService<ITicketBookingDbContext>());
+                provider.GetService<TicketBookingDbContext>());
             return services;
         }
 
