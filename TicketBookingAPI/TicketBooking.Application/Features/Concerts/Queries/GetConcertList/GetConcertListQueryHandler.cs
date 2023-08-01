@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TicketBooking.Application.Interfaces;
+using TicketBooking.Domain;
 
 namespace TicketBooking.Application.Features.Concerts.Queries.GetConcertList
 {
@@ -14,7 +15,30 @@ namespace TicketBooking.Application.Features.Concerts.Queries.GetConcertList
         public async Task<ConcertListVm> Handle(GetConcertListQuery request,
             CancellationToken cancellationToken)
         {
-            var concerts =  await _ticketBookingDbContext.Concerts.ToListAsync(cancellationToken);
+            List<Concert> concerts;
+
+            if (!String.IsNullOrEmpty(request.ContainsInName) && !String.IsNullOrEmpty(request.ConcertType))
+            {
+                concerts = await _ticketBookingDbContext.Concerts
+                    .Where(c => c.ConcertName.Contains(request.ContainsInName) &&  c.ConcertType == request.ConcertType)
+                    .ToListAsync(cancellationToken);
+            }
+            else if (!String.IsNullOrEmpty(request.ContainsInName))
+            {
+                concerts = await _ticketBookingDbContext.Concerts
+                    .Where(c => c.ConcertName.Contains(request.ContainsInName))
+                    .ToListAsync(cancellationToken);
+            }
+            else if (!String.IsNullOrEmpty(request.ConcertType))
+            {
+                concerts = await _ticketBookingDbContext.Concerts
+                    .Where(c => c.ConcertType == request.ConcertType)
+                    .ToListAsync(cancellationToken);
+            }
+            else
+            {
+                concerts = await _ticketBookingDbContext.Concerts.ToListAsync(cancellationToken);
+            }
 
             var ConcertListDtos = concerts.Select(c => new ConcertDto()
             {

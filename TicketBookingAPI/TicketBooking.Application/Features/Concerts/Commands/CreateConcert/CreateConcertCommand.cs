@@ -5,6 +5,6 @@ namespace TicketBooking.Application.Features.Concerts.Commands.CreateConcert
 {
     public class CreateConcertCommand : IRequest<Guid>
     {
-        public JsonObject jsonObj { get; set; }
+        public JsonObject JsonObj { get; set; }
     }
 }

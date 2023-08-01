@@ -1,11 +1,10 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TicketBooking.Application.Features.Concerts.Queries.GetConcertList
 {
-    public class GetConcertListQuery : IRequest<ConcertListVm> { }
+    public class GetConcertListQuery : IRequest<ConcertListVm> 
+    {
+        public string? ContainsInName { get; set; }
+        public string? ConcertType { get; set; }
+    }
 }

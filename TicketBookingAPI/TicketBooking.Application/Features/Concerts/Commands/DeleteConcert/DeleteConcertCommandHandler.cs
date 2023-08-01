@@ -15,7 +15,7 @@ namespace TicketBooking.Application.Features.Concerts.Commands.DeleteConcert
         {
             var concert = await _ticketBookingDbContext.Concerts.FindAsync(new object[] { request.Id }, cancellationToken);
 
-            if (concert == null)
+            if (concert is null)
             {
                 throw new Exception("There is no concert in db with this id");
             }
