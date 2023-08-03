@@ -22,8 +22,6 @@ namespace TicketBooking.Application.Features.Concerts.Commands.DeleteConcert
 
             _ticketBookingDbContext.Concerts.Remove(concert);
             await _ticketBookingDbContext.SaveChangesAsync(cancellationToken);
-
-            return;
         }
     }
 }

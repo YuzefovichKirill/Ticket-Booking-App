@@ -2,7 +2,7 @@
 {
     public class Party : Concert
     {
-        public Party() { ConcertType = nameof(Party); }
+        public Party() : base(nameof(Party)) { }
         public int AgeLimit { get; set; }
     }
 }

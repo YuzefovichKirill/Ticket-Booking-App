@@ -8,7 +8,7 @@ namespace TicketBooking.Domain
 {
     public class ClassicalConcert : Concert
     {
-        public ClassicalConcert() { ConcertType = nameof(ClassicalConcert); }
+        public ClassicalConcert() : base(nameof(ClassicalConcert)) { }
         public string? VoiceType { get; set; }
         public string? Composer { get; set; }
     }

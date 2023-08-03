@@ -19,7 +19,7 @@ namespace TicketBooking.Application.Features.Concerts.Commands.CreateConcert
             Concert concert;
             switch (concertType)
             {
-                case "ClassicalConcert":
+                case nameof(ClassicalConcert):
                     /*concert = new ClassicalConcert()
                     {
                         Id = Guid.NewGuid(),
@@ -38,7 +38,7 @@ namespace TicketBooking.Application.Features.Concerts.Commands.CreateConcert
                     };*/
                     concert = JsonSerializer.Deserialize<ClassicalConcert>(request.JsonObj);
                     break;
-                case "OpenAir":
+                case nameof(OpenAir):
                     /*concert = new OpenAir()
                     {
                         Id = Guid.NewGuid(),
@@ -57,7 +57,7 @@ namespace TicketBooking.Application.Features.Concerts.Commands.CreateConcert
                     };*/
                     concert = JsonSerializer.Deserialize<OpenAir>(request.JsonObj);
                     break;
-                case "Party":
+                case nameof(Party):
                     /*concert = new Party()
                     {
                         Id = Guid.NewGuid(),

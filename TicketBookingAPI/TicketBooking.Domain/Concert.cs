@@ -1,6 +1,6 @@
 ﻿namespace TicketBooking.Domain
 {
-    public class Concert 
+    public abstract class Concert 
     {
         public Guid Id { get; set; }
         public string? ConcertName { get; set; }
@@ -11,7 +11,9 @@
         public string? Place { get; set; }
         public double GeoLong { get; set; }
         public double GeoLat { get; set; }
-        public string? ConcertType { get; set; } = nameof(Concert);
+        public string? ConcertType { get; } = nameof(Concert);
         public List<Ticket> Tickets { get; set; } = new();
+   
+        public Concert(string concertType) => ConcertType = concertType;    
     }
 }
