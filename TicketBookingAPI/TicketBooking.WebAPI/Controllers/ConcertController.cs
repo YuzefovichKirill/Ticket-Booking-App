@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Nodes;
 using TicketBooking.Application.Features.Concerts.Commands.CreateConcert;
 using TicketBooking.Application.Features.Concerts.Commands.DeleteConcert;
@@ -9,6 +10,7 @@ using TicketBooking.Domain;
 
 namespace TicketBooking.WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]s")]
     public class ConcertController : BaseController
     {

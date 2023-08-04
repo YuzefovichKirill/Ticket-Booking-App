@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TicketBooking.Application.Features.Tickets.Commands.CreateTicket;
 using TicketBooking.Application.Features.Tickets.Commands.DeleteTicket;
 using TicketBooking.Application.Features.Tickets.Queries.GetTicket;
@@ -6,6 +7,7 @@ using TicketBooking.Application.Features.Tickets.Queries.GetTicketList;
 
 namespace TicketBooking.WebAPI.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]s")]
     public class TicketController : BaseController
     {

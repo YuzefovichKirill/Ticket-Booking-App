@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using System.Net;
 using TicketBooking.Application;
 using TicketBooking.Persistence;
 
@@ -10,9 +13,9 @@ namespace TicketBooking.WebAPI
             var builder = WebApplication.CreateBuilder(args);
             IServiceCollection services = builder.Services;
 
-            ConfigurationManager config = builder.Configuration;
+            ConfigurationManager configuration = builder.Configuration;
             services.AddApplication();
-            services.AddPersistence(config);
+            services.AddPersistence(configuration);
             services.AddControllers();
 
             services.AddCors(options =>
@@ -27,6 +30,20 @@ namespace TicketBooking.WebAPI
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
             services.AddSwaggerGen();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })  
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/account/google-login";
+                })
+                .AddGoogle(options =>
+                {
+                    options.ClientId = configuration["Authentication:Google:ClientId"];
+                    options.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+                });
 
             // Configure
             var app = builder.Build();
@@ -56,8 +73,10 @@ namespace TicketBooking.WebAPI
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints => endpoints.MapControllers());
-            //app.MapGet("/", () => "Hello World!");
 
             app.Run();
         }
