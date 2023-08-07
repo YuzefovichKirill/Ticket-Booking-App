@@ -10,12 +10,12 @@ using TicketBooking.Domain;
 
 namespace TicketBooking.WebAPI.Controllers
 {
-    [Authorize]
     [Route("api/[controller]s")]
     public class ConcertController : BaseController
     {
         [HttpGet]
-        public async Task<ActionResult<ConcertListVm>> GetAll([FromHeader] string containsInName = "", string concertType = "")
+        [AllowAnonymous]
+        public async Task<ActionResult<ConcertListVm>> GetAll(string containsInName = "", string concertType = "")
         {
             var query = new GetConcertListQuery() { ContainsInName = containsInName, ConcertType = concertType };
             var vm = await Mediator.Send(query);
@@ -23,6 +23,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Concert>> Get(Guid id)
         {
             var query = new GetConcertQuery();
@@ -31,6 +32,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
         
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Guid>> Create([FromBody] JsonObject jsonObj)
         {
             var command = new CreateConcertCommand() { JsonObj = jsonObj };
@@ -39,6 +41,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<ActionResult> Update([FromBody] JsonObject jsonObj)
         {
             var command = new UpdateConcertCommand() { JsonObj = jsonObj };
@@ -47,6 +50,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> Delete(Guid id)
         {
             var command = new DeleteConcertCommand() { Id = id };

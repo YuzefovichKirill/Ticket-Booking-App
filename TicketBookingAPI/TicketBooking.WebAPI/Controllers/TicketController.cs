@@ -7,11 +7,11 @@ using TicketBooking.Application.Features.Tickets.Queries.GetTicketList;
 
 namespace TicketBooking.WebAPI.Controllers
 {
-    [AllowAnonymous]
     [Route("api/[controller]s")]
     public class TicketController : BaseController
     {
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<TicketListVm>> GetAll()
         {
             var query = new GetTicketListQuery() { UserId = UserId };
@@ -20,6 +20,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<TicketVm>> Get(Guid concertId)
         {
             var query = new GetTicketQuery() { UserId = UserId, ConcertId = concertId };
@@ -28,6 +29,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Guid>> Create([FromBody] Guid concertId)
         {
             var command = new CreateTicketCommand() { UserId = UserId, ConcertId = concertId };
@@ -37,6 +39,7 @@ namespace TicketBooking.WebAPI.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> Delete(Guid ticketId)
         {
             var command = new DeleteTicketCommand() { Id = ticketId };

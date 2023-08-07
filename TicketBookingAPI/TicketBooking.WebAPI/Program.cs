@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Net;
 using TicketBooking.Application;
 using TicketBooking.Persistence;
@@ -33,9 +34,17 @@ namespace TicketBooking.WebAPI
 
             services.AddAuthentication(options =>
             {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })  
-                .AddCookie(options =>
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                //options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = "https://localhost:7181/";
+                    options.Audience = "TicketBookingAPI";
+                    options.RequireHttpsMetadata = false;
+                });
+                /*.AddCookie(options =>
                 {
                     options.LoginPath = "/account/google-login";
                 })
@@ -43,7 +52,7 @@ namespace TicketBooking.WebAPI
                 {
                     options.ClientId = configuration["Authentication:Google:ClientId"];
                     options.ClientSecret = configuration["Authentication:Google:ClientSecret"];
-                });
+                });*/
 
             // Configure
             var app = builder.Build();

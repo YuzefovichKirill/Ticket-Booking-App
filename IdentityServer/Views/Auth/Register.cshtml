@@ -1,0 +1,32 @@
+﻿@model RegisterVm
+
+<head>
+    <link href=@Url.Content("~/Styles/app.css") rel="stylesheet" type="text/css" />
+</head>
+
+<form asp-controller="Auth" asp-action="Register" method="post">
+    <input type="hidden" asp-for="ReturnUrl" />
+    <div class="header">Sign Up</div>
+    <div class="block">
+        <label>UserName</label>
+        <input type="text" asp-for="UserName" class="input" />
+    </div>
+    <div class="block">
+        <label>Email</label>
+        <input type="email" asp-for="Email" class="input" />
+    </div>
+    <div class="block">
+        <label>Password</label>
+        <input type="password" asp-for="Password" class="input" />
+    </div>
+    <div class="block">
+        <label>Confirm Password</label>
+        <input type="password" asp-for="ConfirmPassword" class="input" />
+    </div>
+    <div class="block">
+        <button type="submit" class="button">Sign Up</button>
+    </div>
+
+    <a asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl"
+       class="switch-button">Login</a>
+</form>

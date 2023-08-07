@@ -1,0 +1,39 @@
+﻿.input {
+    font-size: 14px;
+    font-family: Calibri;
+    background-color: aquamarine;
+    width: 70%;
+    align-content: center;
+}
+
+.header {
+    font-family: Calibri;
+    font-size: 24px;
+    text-align: center;
+}
+
+.button {
+    font-size: 14px;
+    background-color: #00ff21;
+    border-radius: 4px;
+    color: #0d4cbe;
+    font-family: Calibri;
+    width: 70%;
+    align-content: center;
+}
+
+.block {
+    margin-top: 10px;
+    align-content: center;
+}
+
+.switch-button {
+    margin-top: 8px;
+    font-size: 8px;
+    border-radius: 4px;
+    font-family: Calibri;
+    display: inline-block;
+    text-align: center;
+    width: 70%;
+    align-content: center;
+}
