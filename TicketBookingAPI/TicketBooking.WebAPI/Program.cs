@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using TicketBooking.Application;
 using TicketBooking.Persistence;
@@ -32,6 +34,7 @@ namespace TicketBooking.WebAPI
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
             services.AddSwaggerGen();
 
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -43,16 +46,13 @@ namespace TicketBooking.WebAPI
                     options.Authority = "https://localhost:7181/";
                     options.Audience = "TicketBookingAPI";
                     options.RequireHttpsMetadata = false;
-                });
-                /*.AddCookie(options =>
-                {
-                    options.LoginPath = "/account/google-login";
                 })
-                .AddGoogle(options =>
+                .AddOpenIdConnect("oidc", options => 
                 {
-                    options.ClientId = configuration["Authentication:Google:ClientId"];
-                    options.ClientSecret = configuration["Authentication:Google:ClientSecret"];
-                });*/
+                    options.Scope.Add("roles");
+                    options.ClaimActions.MapJsonKey("role", "role", "role");
+                    options.TokenValidationParameters.RoleClaimType = "role";
+                });
 
             // Configure
             var app = builder.Build();

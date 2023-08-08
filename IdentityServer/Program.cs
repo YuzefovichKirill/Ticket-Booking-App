@@ -1,4 +1,6 @@
 using IdentityServer.Data;
+using IdentityServer.Services;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -14,6 +16,8 @@ namespace IdentityServer
             string connectionString = configuration["IdentityConnection"];
             var services = builder.Services;
 
+            services.AddTransient<IProfileService, ProfileService>();
+
             services.AddDbContext<AuthDbContext>(options =>
             {
                 options.UseSqlServer(connectionString);
@@ -24,6 +28,7 @@ namespace IdentityServer
                 config.Password.RequiredLength = 4;
                 config.Password.RequireDigit = false;
                 config.Password.RequireLowercase = false;
+                config.Password.RequireUppercase = false;
                 config.Password.RequireNonAlphanumeric = false;
             })
                 .AddEntityFrameworkStores<AuthDbContext>()
@@ -37,13 +42,14 @@ namespace IdentityServer
                 .AddInMemoryClients(Configuration.Clients)
                 .AddDeveloperSigningCredential();
 
+            Configuration.CreateRoles(services).Wait();
+
             services.ConfigureApplicationCookie(configuration =>
             {
                 configuration.Cookie.Name = "Identity.Cookie";
                 configuration.LoginPath = "/Auth/Login";
                 configuration.LogoutPath = "/Auth/Logout";
             });
-
             /*services.AddAuthentication()
                 .AddGoogle("Google", options =>
                 {

@@ -1,6 +1,7 @@
 ﻿using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace IdentityServer
 {
@@ -10,7 +11,8 @@ namespace IdentityServer
             new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResource("roles", new[] { "role" })
             };
 
         public static IEnumerable<ApiResource> ApiResources =>
@@ -53,9 +55,28 @@ namespace IdentityServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
+                        "roles",
                         "TicketBookingAPI"
                     }
                 }
             };
+
+        public static async Task CreateRoles(IServiceCollection serviceCollection)
+        {
+            using(ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider())
+            {
+                var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                if (!await RoleManager.RoleExistsAsync("Admin"))
+                {
+                    await RoleManager.CreateAsync(new IdentityRole("Admin"));
+                }
+
+                if (!await RoleManager.RoleExistsAsync("User"))
+                {
+                    await RoleManager.CreateAsync(new IdentityRole("User"));
+                }
+            }
+        }
     }
 }

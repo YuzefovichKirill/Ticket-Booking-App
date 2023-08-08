@@ -16,6 +16,8 @@ namespace IdentityServer.Models
         [DataType(DataType.Password)]
         [Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
+        [Required]
+        public bool AdminRole { get; set; }
         public string ReturnUrl { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
         
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Guid>> Create([FromBody] JsonObject jsonObj)
         {
             var command = new CreateConcertCommand() { JsonObj = jsonObj };
@@ -41,7 +41,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpPut]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Update([FromBody] JsonObject jsonObj)
         {
             var command = new UpdateConcertCommand() { JsonObj = jsonObj };
@@ -50,7 +50,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(Guid id)
         {
             var command = new DeleteConcertCommand() { Id = id };

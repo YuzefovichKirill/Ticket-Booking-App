@@ -40,6 +40,7 @@ namespace IdentityServer.Controllers
             }
 
             var user = await _userManager.FindByEmailAsync(vm.Email);
+
             if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "User not found");
@@ -86,8 +87,15 @@ namespace IdentityServer.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, true);
+
+                if (vm.AdminRole)
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                else
+                    await _userManager.AddToRoleAsync(user, "User");
+
                 return Redirect(vm.ReturnUrl);
             }
+
             ModelState.AddModelError(string.Empty, "Error occured");
             return View(vm);
         }
