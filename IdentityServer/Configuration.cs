@@ -41,15 +41,15 @@ namespace IdentityServer
                     AllowAccessTokensViaBrowser = true,
                     RedirectUris =
                     {
-                        "http://localhost:.../signin-callback"
+                        "http://localhost:3000/signin-callback"
                     },
                      AllowedCorsOrigins =
                     {
-                        "http://localhost:..."
+                        "http://localhost:3000"
                     },
                     PostLogoutRedirectUris =
                     {
-                        "http://localhost:.../signout-callback"
+                        "http://localhost:3000/signout-callback"
                     },
                     AllowedScopes =
                     {
