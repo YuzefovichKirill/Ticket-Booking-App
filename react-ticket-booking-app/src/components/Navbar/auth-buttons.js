@@ -1,5 +1,6 @@
 import React from "react"
 import { NavLink } from "react-router-dom";
+import { login, logout } from "../../services/auth-service";
 
 const styles = {
     navBtn: {
@@ -21,14 +22,29 @@ const styles = {
     }
 }
 
+function onLogin() {
+    login();
+}
+
+function onLogout() {
+    logout();
+}
+
+function onRegister() {
+    
+}
+
 function AuthButtons() {
     return (
     <>
         <nav style={styles.navBtn}>
-            <NavLink style={styles.navBtnLink} to='/sign-up'>Sign Up</NavLink>
+            <NavLink style={styles.navBtnLink}  onClick={onRegister.bind(null)}>Sign Up</NavLink>
         </nav>
         <nav style={styles.navBtn}>
-            <NavLink style={styles.navBtnLink} to='/sign-in'>Sign In</NavLink>
+            <NavLink style={styles.navBtnLink} to='/auth/login' onClick={() => onLogin()}>Sign In</NavLink>
+        </nav>
+        <nav style={styles.navBtn}>
+            <NavLink style={styles.navBtnLink} to='/auth/logout' onClick={() => onLogout()}>Logout</NavLink>
         </nav>
     </>
     )
