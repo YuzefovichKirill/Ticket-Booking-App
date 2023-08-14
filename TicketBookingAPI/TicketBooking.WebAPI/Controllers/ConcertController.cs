@@ -15,7 +15,7 @@ namespace TicketBooking.WebAPI.Controllers
     {
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<ConcertListVm>> GetAll(string containsInName = "", string concertType = "")
+        public async Task<ActionResult<ConcertListVm>> GetAll(string? containsInName = "", string? concertType = "")
         {
             var query = new GetConcertListQuery() { ContainsInName = containsInName, ConcertType = concertType };
             var vm = await Mediator.Send(query);

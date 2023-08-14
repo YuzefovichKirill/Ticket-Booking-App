@@ -48,7 +48,7 @@ namespace IdentityServer.Controllers
             }
 
             var result = await _signInManager.PasswordSignInAsync(user.UserName,
-                vm.Password, true, false);
+                vm.Password, false, false);
 
             if (result.Succeeded)
             {
@@ -86,7 +86,7 @@ namespace IdentityServer.Controllers
 
             if (result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, true);
+                await _signInManager.SignInAsync(user, false);
 
                 if (vm.AdminRole)
                     await _userManager.AddToRoleAsync(user, "Admin");

@@ -1,23 +1,33 @@
 import { UserManager } from 'oidc-client'
 import environment from '../environments/environment'
+import { Subject } from 'rxjs';
 
 const settings = {
     authority: environment.AuthorityUrl,
     client_id: environment.clientId,
-    redirect_uri: environment.clientUrl + 'signin-callback',
-    scope: 'openid profile TicketBookingAPI roles',
+    redirect_uri: environment.clientUrl + '/signin-callback',
+    scope: 'openid profile roles TicketBookingAPI',
     response_type: 'code',
-    post_logout_redirect_uri: environment.clientUrl + 'signout-callback'
+    post_logout_redirect_uri: environment.clientUrl + '/signout-callback'
 }
 
-const userManager = new UserManager(settings);
+export const userManager = new UserManager(settings);
+var user = null;
+const loginChangedSubject = new Subject();
+export var loginChanged = loginChangedSubject.asObservable();
 
 export function login() {
     return userManager.signinRedirect();
 }
 
 export function finishLogin() {
-    return userManager.signinRedirectCallback();
+    return userManager.signinRedirectCallback()
+        .then(_user => {
+            localStorage.setItem('token', _user.access_token)
+            user = _user;
+            loginChangedSubject.next(checkUser(user));
+            return user;
+        })
 }
 
 export function logout() {
@@ -29,20 +39,29 @@ export function logout() {
 export function finishLogout() {
     userManager.clearStaleState();
     userManager.removeUser();
+    user = null;
     return userManager.signoutRedirectCallback();
 }
 
 export function isAuthenticated() {
-    return checkUser(userManager.getUser())
+    return userManager.getUser()
+        .then(_user => {
+            if (user !== _user) {
+                loginChangedSubject.next(checkUser(user))
+            }   
+            
+            user = _user;
+            return checkUser(user);
+        })
 }
 
-export function checkUser(user) {
-    return !!user && !user.expired;
+export function checkUser(_user) {
+    return !!_user && !_user.expired;
 }
 
 export function getAccessToken() {
-    return this.UserManager.getUser()
-        .then(user => {
-            return !!user && user.expired ? user.access_token : null;
+    return userManager.getUser()
+        .then(_user => {
+            return !!_user && !_user.expired ? _user.access_token : null;
         })
 }

@@ -46,13 +46,13 @@ namespace TicketBooking.WebAPI
                     options.Authority = "https://localhost:7181/";
                     options.Audience = "TicketBookingAPI";
                     options.RequireHttpsMetadata = false;
-                })
-                .AddOpenIdConnect("oidc", options => 
+                });
+                /*.AddOpenIdConnect("oidc", options =>
                 {
                     options.Scope.Add("roles");
                     options.ClaimActions.MapJsonKey("role", "role", "role");
                     options.TokenValidationParameters.RoleClaimType = "role";
-                });
+                });*/
 
             // Configure
             var app = builder.Build();

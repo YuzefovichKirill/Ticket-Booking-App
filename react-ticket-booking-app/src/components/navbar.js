@@ -35,13 +35,13 @@ const Navbar = () => {
     return (
     <nav style={styles.nav}>
         <div style={styles.navMenu}>
-            <NavLink style={styles.navLink} to='/' activeStyle>
+            <NavLink style={styles.navLink} to='/'>
                 Home page
             </NavLink>
-            <NavLink style={styles.navLink} to='concerts/concert-list' activeStyle>
+            <NavLink style={styles.navLink} to='concerts/concert-list'>
                 Concerts
             </NavLink>
-            <NavLink style={styles.navLink} to='tickets/ticket-list' activeStyle>
+            <NavLink style={styles.navLink} to='tickets/ticket-list'>
                 Tickets
             </NavLink>
         </div>

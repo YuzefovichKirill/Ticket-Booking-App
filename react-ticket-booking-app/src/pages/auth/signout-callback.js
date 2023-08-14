@@ -1,18 +1,16 @@
 import { useEffect } from "react"
-import { logout } from "../../services/auth-service"
-import { useNavigate } from 'react-router-dom'
+import { finishLogout } from "../../services/auth-service"
 
 function SignoutCallback() {
-    const navigate = useNavigate()
     useEffect(() => {
         async function signoutAsync() {
-            await logout()
-            navigate('/')
+            await finishLogout()
         }
         signoutAsync()
-    }, [navigate])
+        window.location.href = '/';
+    }, [])
 
-    window.location.href = "/";
+
     return (
         <div>Redirecting...</div>
     )

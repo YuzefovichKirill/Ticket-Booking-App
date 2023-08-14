@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.4.0",
     "oidc-client": "^1.11.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -14,6 +15,7 @@
     "react-router-dom": "^6.15.0",
     "react-router-guards": "^1.0.2",
     "react-scripts": "5.0.1",
+    "rxjs": "^7.8.1",
     "style-components": "^0.1.0",
     "styled-components": "^6.0.7",
     "web-vitals": "^2.1.4"

@@ -19,7 +19,10 @@ namespace IdentityServer
             new List<ApiResource>
             {
                 new ApiResource("TicketBookingAPI", "My ticket booking API",
-                    new [] { JwtClaimTypes.Name})
+                    new [] { JwtClaimTypes.Email})
+                {
+                    Scopes = { "TicketBookingAPI" }
+                }
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
@@ -43,7 +46,7 @@ namespace IdentityServer
                     {
                         "http://localhost:3000/signin-callback"
                     },
-                     AllowedCorsOrigins =
+                    AllowedCorsOrigins =
                     {
                         "http://localhost:3000"
                     },

@@ -1,18 +1,21 @@
 import { useEffect } from "react"
-import { login } from "../../services/auth-service"
-import { useNavigate } from 'react-router-dom'
+import { finishLogin, userManager } from "../../services/auth-service"
 
 function SigninCallback() {
-    const navigate = useNavigate()
     useEffect(() => {
         async function signinAsync() {
-            await login()
-            navigate('/')
+            await finishLogin()
         }
-        signinAsync()
-    }, [navigate])
 
-    window.location.href = "/";
+        signinAsync().then(() => {
+            userManager.getUser().then((user) => {
+                console.log(user)
+            })
+            window.location.href = '/';
+        })
+        //window.location.href = '/';
+    }, [])
+
     return (
         <div>Redirecting...</div>
     )
