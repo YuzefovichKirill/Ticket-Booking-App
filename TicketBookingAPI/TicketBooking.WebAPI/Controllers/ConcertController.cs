@@ -11,6 +11,7 @@ using TicketBooking.Domain;
 namespace TicketBooking.WebAPI.Controllers
 {
     [Route("api/[controller]s")]
+    [AllowAnonymous]
     public class ConcertController : BaseController
     {
         [HttpGet]

@@ -16,7 +16,9 @@ export default function ConcertList() {
             <strong>Concerts</strong>
             <ul>{
                 concerts?.map(concert => {
-                    return <li>{concert?.id} {concert?.concertName}</li>       
+                    return (
+                    <li>{concert.id} {concert.concertName} ... </li>
+                    )   
                 })
             }</ul>
         </>

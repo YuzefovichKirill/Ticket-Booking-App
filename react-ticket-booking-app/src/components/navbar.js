@@ -41,6 +41,9 @@ const Navbar = () => {
             <NavLink style={styles.navLink} to='concerts/concert-list'>
                 Concerts
             </NavLink>
+            <NavLink style={styles.navLink} to='concerts/concert-create'>
+                Create Concert
+            </NavLink>
             <NavLink style={styles.navLink} to='tickets/ticket-list'>
                 Tickets
             </NavLink>

@@ -8,6 +8,7 @@ using TicketBooking.Application.Features.Tickets.Queries.GetTicketList;
 namespace TicketBooking.WebAPI.Controllers
 {
     [Route("api/[controller]s")]
+    [AllowAnonymous]
     public class TicketController : BaseController
     {
         [HttpGet]

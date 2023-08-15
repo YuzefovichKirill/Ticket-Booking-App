@@ -49,7 +49,7 @@ namespace TicketBooking.Persistence
                     GeoLat = 0,
 
                     GettingHere = "Some guide",
-                    HeadLiner = "Some band"
+                    Headliner = "Some band"
                 },
                 new Party() 
                 {

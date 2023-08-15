@@ -39,7 +39,7 @@ namespace TicketBooking.Application.Features.Concerts.Commands.UpdateConcert
                     var openAir = JsonSerializer.Deserialize<OpenAir>(request.JsonObj);
                     concert = openAir;
                     var dbOpenAir = dbConcert as OpenAir;
-                    dbOpenAir.HeadLiner = openAir.HeadLiner;
+                    dbOpenAir.Headliner = openAir.Headliner;
                     dbOpenAir.GettingHere = openAir.GettingHere;
                     break;
                 case nameof(Party):

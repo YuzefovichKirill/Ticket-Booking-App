@@ -4,6 +4,6 @@
     {
         public OpenAir() : base(nameof(OpenAir)) { }
         public string? GettingHere { get; set; }
-        public string? HeadLiner { get; set; }
+        public string? Headliner { get; set; }
     }
 }

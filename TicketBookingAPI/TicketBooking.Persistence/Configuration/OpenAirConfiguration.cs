@@ -9,7 +9,7 @@ namespace TicketBooking.Persistence.Configuration
         public void Configure(EntityTypeBuilder<OpenAir> builder)
         {
             builder.Property(o => o.GettingHere).HasMaxLength(100);
-            builder.Property(o => o.HeadLiner).HasMaxLength(20);
+            builder.Property(o => o.Headliner).HasMaxLength(20);
         }
     }
 }
