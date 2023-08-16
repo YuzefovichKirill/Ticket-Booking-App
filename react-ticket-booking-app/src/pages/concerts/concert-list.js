@@ -9,6 +9,11 @@ export default function ConcertList() {
             setConcerts(data.data.concerts)
     })}, [])
 
+
+    function deleteConcert(id) {
+        concertService.deleteConcert(id);
+    }
+
     if (!concerts) return <div>There is no concerts</div>
 
     return (
@@ -17,7 +22,10 @@ export default function ConcertList() {
             <ul>{
                 concerts?.map(concert => {
                     return (
-                    <li>{concert.id} {concert.concertName} ... </li>
+                    <li>
+                        {concert.id} {concert.concertName} ...
+                        <button onClick={() => deleteConcert(concert.id)}>Delete concert</button>
+                    </li>
                     )   
                 })
             }</ul>

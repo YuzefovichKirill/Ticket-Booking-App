@@ -9,7 +9,6 @@ namespace TicketBooking.Application.Features.Tickets.Queries.GetTicketList
     public class TicketDto
     {
         public Guid Id { get; set; }
-        public Guid UserId { get; set; }
         public Guid ConcertId { get; set; }
         public string? ConcertName { get; set; }
         public DateTime ConcertTime { get; set; }

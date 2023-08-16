@@ -20,7 +20,6 @@ namespace TicketBooking.Application.Features.Tickets.Queries.GetTicketList
             List<TicketDto> ticketDtos = ticketsList.Join(concertsList, t => t.ConcertId, c => c.Id, (t, c) => new TicketDto()
             {
                 Id = t.Id,
-                UserId = t.UserId,
                 ConcertId = t.ConcertId,
                 ConcertName = c.ConcertName,
                 ConcertTime = c.DateTime

@@ -36,7 +36,6 @@ namespace TicketBooking.Application.Features.Tickets.Queries.GetTicket
 
             TicketVm ticketVm = new TicketVm()
             {
-                UserId = request.UserId,
                 ConcertId = request.ConcertId,
                 ConcertName = concertName,
                 ConcertTime = concertTime,
