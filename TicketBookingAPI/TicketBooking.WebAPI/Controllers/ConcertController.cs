@@ -27,7 +27,7 @@ namespace TicketBooking.WebAPI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<Concert>> Get(Guid id)
         {
-            var query = new GetConcertQuery();
+            var query = new GetConcertQuery() { Id = id };
             var vm = await Mediator.Send(query);
             return Ok(vm);
         }

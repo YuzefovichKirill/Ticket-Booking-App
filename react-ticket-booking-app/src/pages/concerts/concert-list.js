@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ConcertService } from "../../services/concert-service";
+import { Link } from "react-router-dom";
 
 export default function ConcertList() {
     var [concerts, setConcerts] = useState()
@@ -8,7 +9,6 @@ export default function ConcertList() {
         concertService.getConcertList().then(data => {
             setConcerts(data.data.concerts)
     })}, [])
-
 
     function deleteConcert(id) {
         concertService.deleteConcert(id);
@@ -23,7 +23,8 @@ export default function ConcertList() {
                 concerts?.map(concert => {
                     return (
                     <li>
-                        {concert.id} {concert.concertName} ...
+                        <Link to='/concerts/concert-info' state={{concertId: concert.id}}>Get concert info</Link>
+                        <> {concert.id} {concert.concertName} ... </>
                         <button onClick={() => deleteConcert(concert.id)}>Delete concert</button>
                     </li>
                     )   

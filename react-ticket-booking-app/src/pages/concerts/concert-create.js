@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { ConcertService } from "../../services/concert-service";
 
-export default function ConcertCreate(id) {
+export default function ConcertCreate() {
     const [concertType, setConcertType] = useState('ClassicalConcert')
     const concertName = useRef(null)
     const bandName = useRef(null)
@@ -112,7 +112,7 @@ export default function ConcertCreate(id) {
                         <option value='Party'>Party</option>
                     </select>
                 </div>
-                {(concertType == 'ClassicalConcert') &&
+                {(concertType === 'ClassicalConcert') &&
                 <>
                     <div>
                         <label>Voice type</label>
@@ -123,7 +123,7 @@ export default function ConcertCreate(id) {
                         <input type="text" ref={composer}/>   
                     </div>
                 </>}
-                {(concertType == 'OpenAir') &&
+                {(concertType === 'OpenAir') &&
                 <>
                     <div>
                         <label>Getting Here</label>
@@ -134,7 +134,7 @@ export default function ConcertCreate(id) {
                         <input type="text" ref={headliner}/>   
                     </div>
                 </>}
-                {(concertType == 'Party') &&
+                {(concertType === 'Party') &&
                 <div>
                     <label>Age limit</label>
                     <input type="number" min={1} ref={ageLimit}/>   

@@ -11,8 +11,10 @@ export class TicketService {
         return this.ticketBookingApi.get(`/api/tickets/${id}`)
     }
 
-    createTicket(body) {
-        return this.ticketBookingApi.post(`/api/tickets`, body)
+    createTicket(id) {
+        return this.ticketBookingApi.post(`/api/tickets`, id)
+                                                        //JSON.stringify(body)
+                                                        //{ concertId: id }
     }
 
     deleteTicket(id) {

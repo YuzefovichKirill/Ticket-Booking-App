@@ -33,7 +33,7 @@ namespace TicketBooking.WebAPI.Controllers
         [Authorize]
         public async Task<ActionResult<Guid>> Create([FromBody] Guid concertId)
         {
-            var command = new CreateTicketCommand() { UserId = UserId, ConcertId = concertId };
+            var command = new CreateTicketCommand() { UserId = Guid.Empty/*UserId*/, ConcertId = concertId };
             var ticketId = await Mediator.Send(command);
             return Ok(ticketId);
         }
