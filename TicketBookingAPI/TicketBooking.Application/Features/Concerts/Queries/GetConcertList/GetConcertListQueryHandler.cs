@@ -48,7 +48,9 @@ namespace TicketBooking.Application.Features.Concerts.Queries.GetConcertList
                 AmountOfAvailableTickets = c.AmountOfAvailableTickets,
                 ConcertType = c.ConcertType,
                 DateTime = c.DateTime,
-                Place = c.Place
+                Place = c.Place,
+                GeoLat = c.GeoLat,
+                GeoLng = c.GeoLng
             }).ToList();
 
             return new ConcertListVm() { Concerts = ConcertListDtos };

@@ -9,7 +9,7 @@
         public int AmountOfAvailableTickets { get; set; }
         public DateTime DateTime { get; set; }
         public string? Place { get; set; }
-        public double GeoLong { get; set; }
+        public double GeoLng { get; set; }
         public double GeoLat { get; set; }
         public string? ConcertType { get; } = nameof(Concert);
         public List<Ticket> Tickets { get; set; } = new();

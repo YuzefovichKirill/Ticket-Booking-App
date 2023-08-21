@@ -11,7 +11,9 @@ export default function TicketList() {
     })}, [])
 
     function deleteTicket(id) {
-        ticketService.deleteTicket(id);
+        ticketService.deleteTicket(id).then(() => {
+            setTickets(tickets.filter(ticket => ticket.id !== id))
+        });
     }
 
     if (!tickets) return <div>There is no tickets</div>

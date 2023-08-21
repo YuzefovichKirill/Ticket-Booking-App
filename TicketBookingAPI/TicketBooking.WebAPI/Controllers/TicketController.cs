@@ -20,14 +20,14 @@ namespace TicketBooking.WebAPI.Controllers
             return Ok(vm);
         }
 
-        [HttpGet("{id}")]
+        /*[HttpGet("{id}")]
         [Authorize]
         public async Task<ActionResult<TicketVm>> Get(Guid concertId)
         {
             var query = new GetTicketQuery() { UserId = UserId, ConcertId = concertId };
             var vm = await Mediator.Send(query);
             return Ok(vm);
-        }
+        }*/
 
         [HttpPost]
         [Authorize]
@@ -41,9 +41,9 @@ namespace TicketBooking.WebAPI.Controllers
 
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<ActionResult> Delete(Guid ticketId)
+        public async Task<ActionResult> Delete(Guid id)
         {
-            var command = new DeleteTicketCommand() { Id = ticketId };
+            var command = new DeleteTicketCommand() { Id = id };
             await Mediator.Send(command);
             return NoContent();
         }

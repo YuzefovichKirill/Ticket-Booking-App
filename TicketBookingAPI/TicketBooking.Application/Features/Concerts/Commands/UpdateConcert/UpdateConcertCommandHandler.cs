@@ -58,7 +58,7 @@ namespace TicketBooking.Application.Features.Concerts.Commands.UpdateConcert
             dbConcert.ConcertName = concert.ConcertName;
             dbConcert.DateTime = concert.DateTime;
             dbConcert.GeoLat = concert.GeoLat;
-            dbConcert.GeoLong = concert.GeoLong;
+            dbConcert.GeoLng = concert.GeoLng;
             dbConcert.Place = concert.Place;
 
             await _ticketBookingDbContext.SaveChangesAsync(cancellationToken);

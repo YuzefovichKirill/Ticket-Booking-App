@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicketBooking.Domain;
-
-namespace TicketBooking.Application.Features.Concerts.Queries.GetConcertList
+﻿namespace TicketBooking.Application.Features.Concerts.Queries.GetConcertList
 {
     public class ConcertDto
     {
@@ -15,6 +8,8 @@ namespace TicketBooking.Application.Features.Concerts.Queries.GetConcertList
         public int AmountOfAvailableTickets { get; set; }
         public DateTime DateTime { get; set; }
         public string? Place { get; set; }
+        public double GeoLng { get; set; }
+        public double GeoLat { get; set; }
         public string? ConcertType { get; set; }
 
     }

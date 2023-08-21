@@ -9,7 +9,7 @@ export default function ConcertCreate() {
     const amountOfAvailableTickets = useRef(null)
     const dateTime = useRef(null)
     const place = useRef(null)
-    const geoLong = useRef(null)
+    const geoLng = useRef(null)
     const geoLat = useRef(null)
     const concert = {
         concertName: '',
@@ -18,7 +18,7 @@ export default function ConcertCreate() {
         amountOfAvailableTickets: 0,
         dateTime: Date.now(),
         place: '',
-        geoLong: 0,
+        geoLng: 0,
         geoLat: 0,
         concertType: ''
     }
@@ -44,7 +44,7 @@ export default function ConcertCreate() {
         concert.amountOfAvailableTickets = amountOfAvailableTickets?.current?.value || 0
         concert.dateTime = dateTime?.current?.value || Date.now()
         concert.place = place?.current?.value || ''
-        concert.geoLong = geoLong?.current?.value || 0
+        concert.geoLng = geoLng?.current?.value || 0
         concert.geoLat = geoLat?.current?.value || 0
         concert.concertType = concertType
 
@@ -98,7 +98,7 @@ export default function ConcertCreate() {
                 </div>
                 <div>
                     <label>Geo longitude</label>
-                    <input type="number" step='any' min={-180} max={180} ref={geoLong}/>
+                    <input type="number" step='any' min={-180} max={180} ref={geoLng}/>
                 </div>
                 <div>
                     <label>Geo latitude</label>
