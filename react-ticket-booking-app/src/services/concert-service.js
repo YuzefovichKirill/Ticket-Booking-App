@@ -3,8 +3,18 @@ import ticketBookingApiInstance from './http-interceptor'
 export class ConcertService {
     ticketBookingApi = ticketBookingApiInstance;
 
-    getConcertList() {
-        return this.ticketBookingApi.get('/api/concerts')
+    getConcertList(concertName, concertType) {
+        var urlAdd = ''
+        if (concertName && concertName.length > 0) urlAdd += '?containsInName=' + concertName //
+        if (concertType && concertType.length > 0) {
+            if (urlAdd.length === 0) {
+                urlAdd += '?concertType=' + concertType
+            }
+            else {
+                urlAdd += '&concertType=' + concertType
+            }
+        }
+        return this.ticketBookingApi.get('/api/concerts' + urlAdd)
     }
 
     getConcert(id) {

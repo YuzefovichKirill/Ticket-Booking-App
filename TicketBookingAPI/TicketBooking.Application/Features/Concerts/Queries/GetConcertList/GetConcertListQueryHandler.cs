@@ -19,9 +19,9 @@ namespace TicketBooking.Application.Features.Concerts.Queries.GetConcertList
 
             if (!String.IsNullOrEmpty(request.ContainsInName) && !String.IsNullOrEmpty(request.ConcertType))
             {
-                concerts = await _ticketBookingDbContext.Concerts
-                    .Where(c => c.ConcertName.Contains(request.ContainsInName) &&  c.ConcertType == request.ConcertType)
-                    .ToListAsync(cancellationToken);
+                concerts = _ticketBookingDbContext.Concerts
+                    .AsEnumerable().Where(c => c.ConcertName.Contains(request.ContainsInName) && String.Equals(c.ConcertType, request.ConcertType, StringComparison.OrdinalIgnoreCase)).ToList();
+                    //.ToListAsync(cancellationToken);
             }
             else if (!String.IsNullOrEmpty(request.ContainsInName))
             {
@@ -31,9 +31,9 @@ namespace TicketBooking.Application.Features.Concerts.Queries.GetConcertList
             }
             else if (!String.IsNullOrEmpty(request.ConcertType))
             {
-                concerts = await _ticketBookingDbContext.Concerts
-                    .Where(c => c.ConcertType == request.ConcertType)
-                    .ToListAsync(cancellationToken);
+                concerts = _ticketBookingDbContext.Concerts
+                    .AsEnumerable().Where(c => c.ConcertType == request.ConcertType)
+                    .ToList();
             }
             else
             {
