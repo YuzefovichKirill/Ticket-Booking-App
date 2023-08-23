@@ -20,8 +20,9 @@ namespace TicketBooking.Application.Features.Concerts.Queries.GetConcertList
             if (!String.IsNullOrEmpty(request.ContainsInName) && !String.IsNullOrEmpty(request.ConcertType))
             {
                 concerts = _ticketBookingDbContext.Concerts
-                    .AsEnumerable().Where(c => c.ConcertName.Contains(request.ContainsInName) && String.Equals(c.ConcertType, request.ConcertType, StringComparison.OrdinalIgnoreCase)).ToList();
-                    //.ToListAsync(cancellationToken);
+                    .AsEnumerable()
+                    .Where(c => c.ConcertName.Contains(request.ContainsInName) && String.Equals(c.ConcertType, request.ConcertType, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
             }
             else if (!String.IsNullOrEmpty(request.ContainsInName))
             {

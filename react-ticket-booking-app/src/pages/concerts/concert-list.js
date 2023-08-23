@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ConcertService } from "../../services/concert-service";
 import { Link } from "react-router-dom";
 import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
+import "./concert-list.css"
 
 export default function ConcertList() {
     var [concerts, setConcerts] = useState()
@@ -34,45 +35,77 @@ export default function ConcertList() {
 
     return (
         <>
-            <div>
-                <label>Name of concert</label>
-                <input type="text" ref={concertName}/>
-                <label >Type of Concert</label>
-                <select onChange={(e) => changeType(e.target.value)}>
-                    <option value=''/>
-                    <option value='ClassicalConcert'>Classical concert</option>
-                    <option value='OpenAir'>Open air</option>
-                    <option value='Party'>Party</option>
-                </select>
-                <button onClick={getConcertListWithFilters.bind(null, concertName, concertType)}>Find concerts</button>
-            </div>
+            <div className="wrapper">
+                <div className="concert-search">
+                    <label>Name of concert</label>
+                    <input type="text" ref={concertName}/>
+                    <label >Type of Concert</label>
+                    <select className="select-type" onChange={(e) => changeType(e.target.value)}>
+                        <option value=''/>
+                        <option value='ClassicalConcert'>Classical concert</option>
+                        <option value='OpenAir'>Open air</option>
+                        <option value='Party'>Party</option>
+                    </select>
+                    <button onClick={getConcertListWithFilters.bind(null, concertName, concertType)}>Find concerts</button>
+                </div>
 
-            <strong>Concerts</strong>
-            <ul>
-                {concerts?.map(concert => {
-                    return (
-                    <li>
-                        <Link to='/concerts/concert-info' state={{concertId: concert.id}}>Get concert info</Link>
-                        <> {concert.id} {concert.concertName} ... </>
-                        <button onClick={() => deleteConcert(concert.id)}>Delete concert</button>
-                    </li>
-                    )   
-                })}
-            </ul>
-            <div>
-                <YMaps>
-                    <Map defaultState={{ center: [53.8839926266, 27.58253953370], zoom: 6 }} height={600} width={1000}>
+                <div className="concert-list">
+                    <p className="title"><strong>Concerts</strong></p>
+                    <table>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Concert Name</th>
+                            <th>Band name</th>
+                            <th>Date and Time</th>
+                            <th>Concert Type</th>
+                            <th>&nbsp;</th>
+                        </tr>
                         {concerts?.map(concert => {
                             return (
-                                <Placemark
-                                    modules={["geoObject.addon.balloon"]}
-                                    defaultGeometry={[concert.geoLng, concert.geoLat]}
-                                    properties={{ balloonContentBody: concert.concertName }}
-                                />
-                            )
+                                <tr className="concert">
+                                    <td><Link to='/concerts/concert-info' state={{concertId: concert.id}}>Get concert info</Link></td>
+                                    <td>{concert.concertName}</td>
+                                    <td>{concert.bandName}</td>
+                                    <td>{concert.dateTime}</td>
+                                    <td>{concert.concertType}</td>
+                                    <td><button onClick={() => deleteConcert(concert.id)}>Delete concert</button></td>
+                                </tr>
+                            )   
                         })}
-                    </Map>
-                </YMaps>
+                    </table>
+                </div>
+
+                {/* <div className="concert-list">
+                    <p className="title"><strong>Concerts</strong></p>
+                    <ul>
+                        {concerts?.map(concert => {
+                            return (
+                            <li className="concert">
+                                <Link to='/concerts/concert-info' state={{concertId: concert.id}}>Get concert info</Link>
+                                <> {concert.id} {concert.concertName} ... </>
+                                <button onClick={() => deleteConcert(concert.id)}>Delete concert</button>
+                            </li>
+                            )   
+                        })}
+                    </ul>
+                </div> */}
+
+                <div className="map">
+                    <p className="title"><strong>Location on map</strong></p>
+                    <YMaps>
+                        <Map defaultState={{ center: [53.8839926266, 27.58253953370], zoom: 6 }} >
+                            {concerts?.map(concert => {
+                                return (
+                                    <Placemark
+                                        modules={["geoObject.addon.balloon"]}
+                                        defaultGeometry={[concert.geoLng, concert.geoLat]}
+                                        properties={{ balloonContentBody: concert.concertName }}
+                                    />
+                                )
+                            })}
+                        </Map>
+                    </YMaps>
+                </div>
             </div>
         </>
     )

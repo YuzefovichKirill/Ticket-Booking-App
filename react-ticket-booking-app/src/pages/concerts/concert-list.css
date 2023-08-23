@@ -1,0 +1,60 @@
+.concert {
+    padding: 5px;
+    background-color: aqua;
+    margin-bottom: 10px;
+    border-radius: 15px;
+}
+
+.title {
+    font-size: 26px;
+    text-align: center;
+}
+
+.select-type {
+    cursor: pointer;
+}
+
+
+.wrapper {
+    display: grid;
+    column-gap: 10px;
+    row-gap: 10px;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr auto;
+
+    margin-top: 10px;
+}
+
+.concert-search {
+    display: grid;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+
+    width: 250px;
+    height: 150px;
+    text-align: center;
+    background-color: aqua;
+    border-radius: 9px;
+    box-sizing: border-box;
+    padding: 16px;
+    margin-left: auto;
+}
+
+.concert-list {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.map {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
