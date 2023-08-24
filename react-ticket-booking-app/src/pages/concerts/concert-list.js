@@ -5,33 +5,32 @@ import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
 import "./concert-list.css"
 
 export default function ConcertList() {
-    var [concerts, setConcerts] = useState()
+    var [concerts, setConcerts] = useState([])
 
     const concertName = useRef(null)
     const [concertType, setConcertType] = useState('')
     var concertService = new ConcertService();
     useEffect(() => {
-        concertService.getConcertList(concertName?.current?.value, concertType).then(data => {
-            setConcerts(data.data.concerts)
-    })}, [])
+        concertService.getConcertList(concertName?.current?.value, concertType)
+            .then(data => setConcerts(data.data.concerts))
+            .catch(error => console.log(error.toJSON()))
+    }, [])
 
     function getConcertListWithFilters() {
-        concertService.getConcertList(concertName?.current?.value, concertType).then(data => {
-            setConcerts(data.data.concerts)
-        });
+        concertService.getConcertList(concertName?.current?.value, concertType)
+        .then(data => setConcerts(data.data.concerts))
+        .catch(error => console.log(error.toJSON()));
     }
 
     function deleteConcert(id) {
-        concertService.deleteConcert(id).then(() => {
-            setConcerts(concerts.filter(concert => concert.id !== id))
-        });
+        concertService.deleteConcert(id)
+        .then(() => setConcerts(concerts.filter(concert => concert.id !== id)))
+        .catch((error) => console.log(error.toJSON()));
     }
 
     const changeType = (value) => {
         setConcertType(value);
     }
-
-    if (!concerts) return <div>There is no concerts</div>
 
     return (
         <>
@@ -49,47 +48,69 @@ export default function ConcertList() {
                     <button onClick={getConcertListWithFilters.bind(null, concertName, concertType)}>Find concerts</button>
                 </div>
 
+                {/* {(concerts && concerts.length > 0 ) 
+                ?
                 <div className="concert-list">
                     <p className="title"><strong>Concerts</strong></p>
                     <table>
-                        <tr>
-                            <th>&nbsp;</th>
-                            <th>Concert Name</th>
-                            <th>Band name</th>
-                            <th>Date and Time</th>
-                            <th>Concert Type</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                        {concerts?.map(concert => {
-                            return (
-                                <tr className="concert">
-                                    <td><Link to='/concerts/concert-info' state={{concertId: concert.id}}>Get concert info</Link></td>
-                                    <td>{concert.concertName}</td>
-                                    <td>{concert.bandName}</td>
-                                    <td>{concert.dateTime}</td>
-                                    <td>{concert.concertType}</td>
-                                    <td><button onClick={() => deleteConcert(concert.id)}>Delete concert</button></td>
-                                </tr>
-                            )   
-                        })}
+                        <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>Concert Name</th>
+                                <th>Band name</th>
+                                <th>Date and Time</th>
+                                <th>Concert Type</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {concerts?.map(concert => {
+                                return (
+                                    <tr className="concert">
+                                        <td><Link to='/concerts/concert-info' state={{concertId: concert.id}}>Get concert info</Link></td>
+                                        <td>{concert.concertName}</td>
+                                        <td>{concert.bandName}</td>
+                                        <td>{concert.dateTime}</td>
+                                        <td>{concert.concertType}</td>
+                                        <td><button onClick={() => deleteConcert(concert.id)}>Delete concert</button></td>
+                                    </tr>
+                                )   
+                            })}
+                        </tbody>
                     </table>
                 </div>
+                : 
+                <div className="title">There is no concerts</div>} */}
 
-                {/* <div className="concert-list">
+                {(concerts && concerts.length > 0 ) 
+                ?
+                <div className="concert-list">
                     <p className="title"><strong>Concerts</strong></p>
-                    <ul>
-                        {concerts?.map(concert => {
-                            return (
-                            <li className="concert">
+                    {concerts?.map(concert => {
+                        return (
+                        <div className="concert">
+                            <div className="concert-payload">
+                                <div className="info">
+                                    <div>{concert.concertName}</div>
+                                    <div>{concert.bandName}</div>
+                                </div>    
+                                <div className="info">
+                                    <div>{new Date(Date.parse(concert.dateTime)).toLocaleDateString()}</div>
+                                    <div>{new Date(Date.parse(concert.dateTime)).getHours() + ':' + new Date(Date.parse(concert.dateTime)).getMinutes()}</div>
+                                </div> 
+                                <div>{concert.concertType}</div>
+                            </div>
+                            <div className="buttons">
                                 <Link to='/concerts/concert-info' state={{concertId: concert.id}}>Get concert info</Link>
-                                <> {concert.id} {concert.concertName} ... </>
                                 <button onClick={() => deleteConcert(concert.id)}>Delete concert</button>
-                            </li>
-                            )   
-                        })}
-                    </ul>
-                </div> */}
-
+                            </div>
+                        </div>
+                        )   
+                    })}
+                </div>
+                : 
+                <div className="title">There is no concerts</div>}
+                
                 <div className="map">
                     <p className="title"><strong>Location on map</strong></p>
                     <YMaps>

@@ -16,7 +16,9 @@ namespace TicketBooking.Application.Features.Concerts.Commands.CreateConcert
             CancellationToken cancellationToken)
         {
             string concertType = request.JsonObj["ConcertType"].ToString();
+            JsonSerializerOptions options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
             Concert concert;
+
             switch (concertType)
             {
                 case nameof(ClassicalConcert):
@@ -36,7 +38,7 @@ namespace TicketBooking.Application.Features.Concerts.Commands.CreateConcert
                         VoiceType = request.JsonObj["VoiceType"].ToString(),
                         Composer = request.JsonObj["Composer"].ToString(),
                     };*/
-                    concert = JsonSerializer.Deserialize<ClassicalConcert>(request.JsonObj);
+                    concert = JsonSerializer.Deserialize<ClassicalConcert>(request.JsonObj, options);
                     break;
                 case nameof(OpenAir):
                     /*concert = new OpenAir()
@@ -55,7 +57,7 @@ namespace TicketBooking.Application.Features.Concerts.Commands.CreateConcert
                         GettingHere = request.JsonObj["GettingHere"].ToString(),
                         HeadLiner = request.JsonObj["HeadLiner"].ToString(),
                     };*/
-                    concert = JsonSerializer.Deserialize<OpenAir>(request.JsonObj);
+                    concert = JsonSerializer.Deserialize<OpenAir>(request.JsonObj, options);
                     break;
                 case nameof(Party):
                     /*concert = new Party()
@@ -73,7 +75,7 @@ namespace TicketBooking.Application.Features.Concerts.Commands.CreateConcert
 
                         AgeLimit = Convert.ToInt32(request.JsonObj["AgeLimit"].ToString()),
                     };*/
-                    concert = JsonSerializer.Deserialize<Party>(request.JsonObj);
+                    concert = JsonSerializer.Deserialize<Party>(request.JsonObj, options);
                     break;
                 default: 
                     throw new ArgumentException("There is no such concert type");

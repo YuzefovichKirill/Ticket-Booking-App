@@ -24,26 +24,27 @@ namespace TicketBooking.Application.Features.Concerts.Commands.UpdateConcert
             }
 
             string concertType = request.JsonObj["ConcertType"].ToString();
+            JsonSerializerOptions options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
             Concert concert;
 
             switch (concertType)
             {
                 case nameof(ClassicalConcert):
-                    var classicalConcert = JsonSerializer.Deserialize<ClassicalConcert>(request.JsonObj);
+                    var classicalConcert = JsonSerializer.Deserialize<ClassicalConcert>(request.JsonObj, options);
                     concert = classicalConcert;
                     var dbClassicalConcert = dbConcert as ClassicalConcert;
                     dbClassicalConcert.VoiceType = classicalConcert.VoiceType;
                     dbClassicalConcert.Composer = classicalConcert.Composer;
                     break;
                 case nameof(OpenAir):
-                    var openAir = JsonSerializer.Deserialize<OpenAir>(request.JsonObj);
+                    var openAir = JsonSerializer.Deserialize<OpenAir>(request.JsonObj, options);
                     concert = openAir;
                     var dbOpenAir = dbConcert as OpenAir;
                     dbOpenAir.Headliner = openAir.Headliner;
                     dbOpenAir.GettingHere = openAir.GettingHere;
                     break;
                 case nameof(Party):
-                    var party = JsonSerializer.Deserialize<Party>(request.JsonObj);
+                    var party = JsonSerializer.Deserialize<Party>(request.JsonObj, options);
                     concert = party;
                     var dbParty = dbConcert as Party;
                     dbParty.AgeLimit = party.AgeLimit;

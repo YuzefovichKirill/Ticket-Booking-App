@@ -1,8 +1,42 @@
 .concert {
     padding: 5px;
-    background-color: aqua;
+    width: 100%;
+    background-color: #EBEBEB;
     margin-bottom: 10px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+
+    border: 4px solid #CCC;
     border-radius: 15px;
+
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.concert .concert-payload {
+    display: flex;
+    align-items: flex-start;
+    text-align: center;
+    gap: 10px;
+    max-height: 300px;
+    padding: 16px 0px;
+
+}
+
+.info {
+    display: flex;
+    padding-bottom: 0px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.concert .buttons {
+    margin-left: auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    padding: 16px 16px 26px 0px;   
 }
 
 .title {
@@ -32,8 +66,10 @@
     grid-row-start: 1;
     grid-row-end: 2;
 
-    width: 250px;
-    height: 150px;
+    margin: auto auto;
+    /* width: 800px;
+    height: 150px; */
+    width: auto;
     text-align: center;
     background-color: aqua;
     border-radius: 9px;
@@ -50,6 +86,10 @@
 
     margin-left: auto;
     margin-right: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .map {
@@ -58,3 +98,4 @@
     grid-row-start: 2;
     grid-row-end: 3;
 }
+
