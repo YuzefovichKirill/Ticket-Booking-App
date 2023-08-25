@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { ConcertService } from "../../services/concert-service";
+import "./concert-create.css"
 
 export default function ConcertCreate() {
     const [concertType, setConcertType] = useState('ClassicalConcert')
@@ -61,86 +62,99 @@ export default function ConcertCreate() {
                 concert.ageLimit = ageLimit?.current?.value || 0
                 break;
         }
-        //console.log(concert)
         concertService.createConcert(concert).then((data) => () => {
             console.log(Date.now() + ' ' + data.data)
-            //console.log(data.data)
         })
     } 
 
     return (
-        <>
-            <strong>Create concert</strong>
+        <div className="container">
+            <p className="title"><strong>Create concert</strong></p>
             <form onSubmit={createConcert}>
-                <div>
-                    <label>Concert name</label>
-                    <input type="text" ref={concertName}/>
+                <div className="form-row">
+					<div className="input-data">
+						<label for="">Concert name</label>
+						<input type="text" ref={concertName}/>
+					</div>
+					<div className="input-data">
+						<label for="">Band name</label>
+						<input type="text" ref={bandName}/>						
+					</div>
                 </div>
-                <div>
-                    <label>Band name</label>
-                    <input type="text" ref={bandName}/>
+				<div className="form-row">
+					<div className="input-data">
+						<label for="">Amount of tickets</label>
+						<input type="number" ref={amountOfTickets}/>
+					</div>
+					<div className="input-data">
+						<label for="">Amount of available tickets</label>
+						<input type="number" ref={amountOfAvailableTickets}/>
+					</div>
                 </div>
-                <div>
-                    <label>Amount of tickets</label>
-                    <input type="number" ref={amountOfTickets}/>
+				<div className="form-row">
+					<div className="input-data">
+						<label for="">Geo longitude</label>
+						<input type="number" step='any' min={-180} max={180} ref={geoLng}/>
+					</div>
+					<div className="input-data">
+						<label for="">Geo latitude</label>
+						<input type="number" step='any' min={-90} max={90} ref={geoLat}/>
+					</div>
                 </div>
-                <div>
-                    <label>Amount of available tickets</label>
-                    <input type="number" ref={amountOfAvailableTickets}/>
+				<div className="form-row">
+					<div className="input-data">
+						<label for="">Date and Time</label>
+						<input type="datetime-local" ref={dateTime}/>
+					</div>
+					<div className="input-data">
+						<label for="">Place</label>
+						<input type="text" ref={place}/>
+					</div>
                 </div>
-                <div>
-                    <label>Date and Time</label>
-                    <input type="datetime-local" ref={dateTime}/>
-                </div>
-                <div>
-                    <label>Place</label>
-                    <input type="text" ref={place}/>
-                </div>
-                <div>
-                    <label>Geo longitude</label>
-                    <input type="number" step='any' min={-180} max={180} ref={geoLng}/>
-                </div>
-                <div>
-                    <label>Geo latitude</label>
-                    <input type="number" step='any' min={-90} max={90} ref={geoLat}/>
-                </div>
-                <div>
-                    <label>Concert type</label>
-                    <select onChange={(e) => changeType(e.target.value)}>
-                        <option value='ClassicalConcert'>Classical concert</option>
-                        <option value='OpenAir'>Open air</option>
-                        <option value='Party'>Party</option>
-                    </select>
+                <div className="form-row">
+					<div className="input-data">
+						<label for="">Concert type</label>
+						<select  onChange={(e) => changeType(e.target.value)}>
+							<option value='ClassicalConcert'>Classical concert</option>
+							<option value='OpenAir'>Open air</option>
+							<option value='Party'>Party</option>
+						</select>
+					</div>
                 </div>
                 {(concertType === 'ClassicalConcert') &&
-                <>
-                    <div>
-                        <label>Voice type</label>
-                        <input type="text" ref={voiceType}/>   
-                    </div>
-                    <div>
-                        <label>Composer</label>
-                        <input type="text" ref={composer}/>   
-                    </div>
-                </>}
-                {(concertType === 'OpenAir') &&
-                <>
-                    <div>
-                        <label>Getting Here</label>
-                        <input type="text" ref={gettingHere}/>   
-                    </div>
-                    <div>
-                        <label>Headliner</label>
-                        <input type="text" ref={headliner}/>   
-                    </div>
-                </>}
-                {(concertType === 'Party') &&
-                <div>
-                    <label>Age limit</label>
-                    <input type="number" min={1} ref={ageLimit}/>   
+				<div className="form-row">
+					<div className="input-data">
+						<label for="">Voice type</label>
+						<input type="text" ref={voiceType}/>
+					</div>
+					<div className="input-data">
+						<label for="">Composer</label>
+						<input type="text" ref={composer}/>
+					</div>
                 </div>}
-                <input type="submit" value="Submit" />
+                {(concertType === 'OpenAir') &&
+				<div className="form-row">
+					<div className="input-data">
+						<label for="">Getting Here</label>
+						<input type="text" ref={gettingHere}/>
+					</div>
+					<div className="input-data">
+						<label for="">Headliner</label>
+						<input type="text" ref={headliner}/>
+					</div>
+				</div>}	
+                {(concertType === 'Party') &&
+				<div className="form-row">
+					<div className="input-data">
+						<label for="">Age limit</label>
+						<input type="number" ref={ageLimit}/>
+					</div>
+				</div>}
+
+				<div className="submit-button">
+                	<input type="submit" value="Submit" />
+				</div>
             </form>
-        </>
+        </div>
     )
 }
