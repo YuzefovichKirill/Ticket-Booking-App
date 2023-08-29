@@ -1,6 +1,6 @@
 import React from "react"
 import { NavLink } from "react-router-dom";
-import { loginChanged , login, logout, isAuthenticated, getAccessToken } from "../services/auth-service";
+import { loginChanged , login, logout } from "../services/auth-service";
 import { useState } from "react";
 
 const styles = {
@@ -34,7 +34,8 @@ function onLogout() {
 function AuthButtons() {
     
     var [isUserAuthenticated, setUserAuthenticated] = useState(false);
-    loginChanged.subscribe(_ => {
+    loginChanged.subscribe(_isAuthenticated => {
+        setUserAuthenticated(_isAuthenticated);
     })
 
     return (
@@ -48,13 +49,6 @@ function AuthButtons() {
                 <NavLink style={styles.navBtnLink} onClick={() => onLogin()}>Login</NavLink>
             </nav>
         }
-        { isUserAuthenticated.toString() }
-        <nav style={styles.navBtn}>
-            <NavLink style={styles.navBtnLink} onClick={() => onLogout()}>Logout</NavLink>
-        </nav>
-        <nav style={styles.navBtn}>
-            <NavLink style={styles.navBtnLink} onClick={() => onLogin()}>Login</NavLink>
-        </nav>
     </>
     )
 }

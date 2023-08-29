@@ -39,20 +39,22 @@ namespace TicketBooking.WebAPI
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                //options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
                 .AddJwtBearer("Bearer", options =>
                 {
                     options.Authority = "https://localhost:7181/";
                     options.Audience = "TicketBookingAPI";
                     options.RequireHttpsMetadata = false;
-                });
-                /*.AddOpenIdConnect("oidc", options =>
+                })//;
+                .AddOpenIdConnect("oidc", options =>
                 {
+                    options.Authority = "https://localhost:7181/";
+                    options.ClientId = "TicketBookingAPI";
                     options.Scope.Add("roles");
                     options.ClaimActions.MapJsonKey("role", "role", "role");
                     options.TokenValidationParameters.RoleClaimType = "role";
-                });*/
+                });
+            services.AddAuthorization();
 
             // Configure
             var app = builder.Build();

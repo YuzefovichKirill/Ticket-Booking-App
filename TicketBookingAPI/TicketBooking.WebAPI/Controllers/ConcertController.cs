@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Nodes;
 using TicketBooking.Application.Features.Concerts.Commands.CreateConcert;
@@ -8,10 +9,12 @@ using TicketBooking.Application.Features.Concerts.Queries.GetConcert;
 using TicketBooking.Application.Features.Concerts.Queries.GetConcertList;
 using TicketBooking.Domain;
 
+using Microsoft.AspNetCore.Identity;
+
 namespace TicketBooking.WebAPI.Controllers
 {
     [Route("api/[controller]s")]
-    [AllowAnonymous]
+    //[AllowAnonymous]
     public class ConcertController : BaseController
     {
         [HttpGet]
@@ -51,9 +54,11 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize/*(Roles = "Admin")*/]
         public async Task<ActionResult> Delete(Guid id)
         {
+            var a = User.Identity;
+            var b = HttpContext.User.Claims;
             var command = new DeleteConcertCommand() { Id = id };
             await Mediator.Send(command);
             return NoContent();

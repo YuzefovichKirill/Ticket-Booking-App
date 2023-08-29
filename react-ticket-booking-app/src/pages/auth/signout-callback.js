@@ -6,8 +6,12 @@ function SignoutCallback() {
         async function signoutAsync() {
             await finishLogout()
         }
+        
         signoutAsync()
-        window.location.href = '/';
+            .then(() => {
+                window.location.href = '/';
+            })
+        //window.location.href = '/';
     }, [])
 
 

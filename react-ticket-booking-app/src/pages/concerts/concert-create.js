@@ -73,47 +73,47 @@ export default function ConcertCreate() {
             <form onSubmit={createConcert}>
                 <div className="form-row">
 					<div className="input-data">
-						<label for="">Concert name</label>
+						<label>Concert name</label>
 						<input type="text" ref={concertName}/>
 					</div>
 					<div className="input-data">
-						<label for="">Band name</label>
+						<label>Band name</label>
 						<input type="text" ref={bandName}/>						
 					</div>
                 </div>
 				<div className="form-row">
 					<div className="input-data">
-						<label for="">Amount of tickets</label>
+						<label>Amount of tickets</label>
 						<input type="number" ref={amountOfTickets}/>
 					</div>
 					<div className="input-data">
-						<label for="">Amount of available tickets</label>
+						<label>Amount of available tickets</label>
 						<input type="number" ref={amountOfAvailableTickets}/>
 					</div>
                 </div>
 				<div className="form-row">
 					<div className="input-data">
-						<label for="">Geo longitude</label>
+						<label>Geo longitude</label>
 						<input type="number" step='any' min={-180} max={180} ref={geoLng}/>
 					</div>
 					<div className="input-data">
-						<label for="">Geo latitude</label>
+						<label>Geo latitude</label>
 						<input type="number" step='any' min={-90} max={90} ref={geoLat}/>
 					</div>
                 </div>
 				<div className="form-row">
 					<div className="input-data">
-						<label for="">Date and Time</label>
+						<label>Date and Time</label>
 						<input type="datetime-local" ref={dateTime}/>
 					</div>
 					<div className="input-data">
-						<label for="">Place</label>
+						<label>Place</label>
 						<input type="text" ref={place}/>
 					</div>
                 </div>
                 <div className="form-row">
 					<div className="input-data">
-						<label for="">Concert type</label>
+						<label>Concert type</label>
 						<select  onChange={(e) => changeType(e.target.value)}>
 							<option value='ClassicalConcert'>Classical concert</option>
 							<option value='OpenAir'>Open air</option>
@@ -124,29 +124,29 @@ export default function ConcertCreate() {
                 {(concertType === 'ClassicalConcert') &&
 				<div className="form-row">
 					<div className="input-data">
-						<label for="">Voice type</label>
+						<label>Voice type</label>
 						<input type="text" ref={voiceType}/>
 					</div>
 					<div className="input-data">
-						<label for="">Composer</label>
+						<label>Composer</label>
 						<input type="text" ref={composer}/>
 					</div>
                 </div>}
                 {(concertType === 'OpenAir') &&
 				<div className="form-row">
 					<div className="input-data">
-						<label for="">Getting Here</label>
+						<label>Getting Here</label>
 						<input type="text" ref={gettingHere}/>
 					</div>
 					<div className="input-data">
-						<label for="">Headliner</label>
+						<label>Headliner</label>
 						<input type="text" ref={headliner}/>
 					</div>
 				</div>}	
                 {(concertType === 'Party') &&
 				<div className="form-row">
 					<div className="input-data">
-						<label for="">Age limit</label>
+						<label>Age limit</label>
 						<input type="number" ref={ageLimit}/>
 					</div>
 				</div>}

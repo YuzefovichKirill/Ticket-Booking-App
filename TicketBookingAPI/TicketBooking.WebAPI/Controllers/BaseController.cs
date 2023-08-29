@@ -13,7 +13,8 @@ namespace TicketBooking.WebAPI.Controllers
             _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
         public Guid UserId => User.Identity.IsAuthenticated
-            ? Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
+            ? Guid.Parse(User.FindFirstValue("sub"))
+            //? Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
             : Guid.Empty;
     }
 }

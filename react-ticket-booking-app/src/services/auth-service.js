@@ -11,7 +11,7 @@ const settings = {
     post_logout_redirect_uri: environment.clientUrl + '/signout-callback'
 }
 
-export const userManager = new UserManager(settings);
+const userManager = new UserManager(settings);
 var user = null;
 const loginChangedSubject = new Subject();
 export var loginChanged = loginChangedSubject.asObservable();
@@ -23,7 +23,6 @@ export function login() {
 export function finishLogin() {
     return userManager.signinRedirectCallback()
         .then(_user => {
-            localStorage.setItem('token', _user.access_token)
             user = _user;
             loginChangedSubject.next(checkUser(user));
             return user;
@@ -31,15 +30,13 @@ export function finishLogin() {
 }
 
 export function logout() {
-    userManager.clearStaleState();
-    userManager.removeUser();
     return userManager.signoutRedirect();
 }
 
 export function finishLogout() {
-    userManager.clearStaleState();
-    userManager.removeUser();
     user = null;
+    // userManager.clearStaleState();
+    // userManager.removeUser();
     return userManager.signoutRedirectCallback();
 }
 
@@ -65,3 +62,5 @@ export function getAccessToken() {
             return !!_user && !_user.expired ? _user.access_token : null;
         })
 }
+
+export default userManager
