@@ -6,7 +6,6 @@ export default function TicketList() {
     var ticketService = new TicketService();
     useEffect(() => {
         ticketService.getTicketList().then(data => {
-            console.log(data.data.tickets);
             setTickets(data.data.tickets);
     })}, [])
 

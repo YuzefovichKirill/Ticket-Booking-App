@@ -2,6 +2,7 @@
 using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace IdentityServer
 {
@@ -19,7 +20,7 @@ namespace IdentityServer
             new List<ApiResource>
             {
                 new ApiResource("TicketBookingAPI", "My ticket booking API",
-                    new [] { JwtClaimTypes.Email})
+                    new [] { JwtClaimTypes.Email, JwtClaimTypes.Role, JwtClaimTypes.Name })
                 {
                     Scopes = { "TicketBookingAPI" }
                 }
@@ -38,9 +39,10 @@ namespace IdentityServer
                 {
                     ClientId = "react-web-app",
                     ClientName = "React client",
-                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedGrantTypes = GrantTypes.Implicit,
                     RequireClientSecret = false,
                     RequirePkce = true,
+                    UpdateAccessTokenClaimsOnRefresh = true,
                     AllowAccessTokensViaBrowser = true,
                     RedirectUris =
                     {

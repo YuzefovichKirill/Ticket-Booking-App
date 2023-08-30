@@ -9,7 +9,11 @@ function SignoutCallback() {
         
         signoutAsync()
             .then(() => {
-                window.location.href = '/';
+                console.log('signout result')
+                //window.location.href = '/';
+            })
+            .catch(() => {
+                console.log('2signout result')
             })
         //window.location.href = '/';
     }, [])

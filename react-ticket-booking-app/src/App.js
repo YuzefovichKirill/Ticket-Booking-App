@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, AuthorizeRoute, Routes, Route } from "react-router-dom";
 
 import userManager from "./services/auth-service";
 import AuthProvider from "./services/auth-provider";
@@ -30,6 +30,8 @@ function App() {
           <Route path="/signin-callback" element={<SigninCallback/>} />
           <Route path="/signout-callback" element={<SignoutCallback/>} />
           <Route path="*" element={<NotFound/>} />
+        
+          {/* <AuthorizeRoute path="/tickets/ticket-list" element={<TicketList/>}/> */}
         </Routes>
       </Router>    
     </AuthProvider>

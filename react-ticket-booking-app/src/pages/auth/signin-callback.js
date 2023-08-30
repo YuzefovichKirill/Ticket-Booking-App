@@ -1,24 +1,33 @@
 import { useEffect } from "react"
-import { finishLogin } from "../../services/auth-service"
+import { finishLogin, getAccessToken } from "../../services/auth-service"
 
 function SigninCallback() {
 
     // finishLogin()
     //     .then(() => {
-    //         window.location.href = '/';
+    //         console.log('signin result')  
+    //         //window.location.href = '/';
     //     })
     //     .catch(() => {
-    //         window.location.href = '/';
+    //         console.log('2signin result')  
+    //         //window.location.href = '/';
     //     })
     useEffect(() => {
         async function signinAsync() {
             await finishLogin()
         }
         
-        signinAsync().then(() => {
-            console.log('signin result')
-            window.location.href = '/';
-        })
+        signinAsync()
+            .then(() => {
+                console.log('signin result')
+                getAccessToken().then((str) => console.log(str))
+                
+            })
+            .catch(() => {
+                 console.log('2signin result')
+            })
+
+        //window.location.href = '/';
     })
         
     //     // signinAsync().then(() => {

@@ -10,11 +10,11 @@ using TicketBooking.Application.Features.Concerts.Queries.GetConcertList;
 using TicketBooking.Domain;
 
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace TicketBooking.WebAPI.Controllers
 {
     [Route("api/[controller]s")]
-    //[AllowAnonymous]
     public class ConcertController : BaseController
     {
         [HttpGet]
@@ -54,11 +54,13 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize/*(Roles = "Admin")*/]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(Guid id)
         {
-            var a = User.Identity;
+            /*var a = User.Identity;
             var b = HttpContext.User.Claims;
+            var Is = User.IsInRole("Admin");
+            var t = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);*/
             var command = new DeleteConcertCommand() { Id = id };
             await Mediator.Send(command);
             return NoContent();

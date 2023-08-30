@@ -7,7 +7,7 @@ const settings = {
     client_id: environment.clientId,
     redirect_uri: environment.clientUrl + '/signin-callback',
     scope: 'openid profile roles TicketBookingAPI',
-    response_type: 'code',
+    response_type: 'id_token token',
     post_logout_redirect_uri: environment.clientUrl + '/signout-callback'
 }
 

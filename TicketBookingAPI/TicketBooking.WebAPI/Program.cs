@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using TicketBooking.Application;
@@ -34,7 +35,6 @@ namespace TicketBooking.WebAPI
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
             services.AddSwaggerGen();
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -45,14 +45,17 @@ namespace TicketBooking.WebAPI
                     options.Authority = "https://localhost:7181/";
                     options.Audience = "TicketBookingAPI";
                     options.RequireHttpsMetadata = false;
-                })//;
+                })
                 .AddOpenIdConnect("oidc", options =>
                 {
                     options.Authority = "https://localhost:7181/";
                     options.ClientId = "TicketBookingAPI";
-                    options.Scope.Add("roles");
-                    options.ClaimActions.MapJsonKey("role", "role", "role");
-                    options.TokenValidationParameters.RoleClaimType = "role";
+                    options.ResponseType = "id_token token";
+                    options.GetClaimsFromUserInfoEndpoint = true;
+
+                    /*options.Scope.Add("roles");
+                    options.ClaimActions.MapJsonKey("role", "role");
+                    options.TokenValidationParameters.RoleClaimType = "role";*/
                 });
             services.AddAuthorization();
 

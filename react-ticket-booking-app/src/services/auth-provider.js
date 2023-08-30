@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from "react";
 
 
 const AuthProvider = ({userManager: manager, children}) => {
-  let userManager = useRef(null)
+  let userManager = useRef(manager)
 
   useEffect(() => {
-    userManager.current = manager;
+    //userManager.current = manager;
     const onUserLoaded = (user) => {
         console.log('User loaded: ', user);
     };
