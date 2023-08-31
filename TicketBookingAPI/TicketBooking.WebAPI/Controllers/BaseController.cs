@@ -14,7 +14,7 @@ namespace TicketBooking.WebAPI.Controllers
 
         public Guid UserId => User.Identity.IsAuthenticated
             //? Guid.Parse(User.FindFirstValue("sub"))
-            ? Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
+            ? Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))
             : Guid.Empty;
     }
 }

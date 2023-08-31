@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 using TicketBooking.Application;
+using TicketBooking.Email;
 using TicketBooking.Persistence;
 
 namespace TicketBooking.WebAPI
@@ -21,6 +21,13 @@ namespace TicketBooking.WebAPI
             services.AddApplication();
             services.AddPersistence(configuration);
             services.AddControllers();
+             
+            var emailConfig = configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+            emailConfig.Password = configuration["Gmail:Password"];
+            services.AddSingleton(emailConfig);
+            services.AddScoped<IEmailSender, EmailSender>();
 
             services.AddCors(options =>
             {

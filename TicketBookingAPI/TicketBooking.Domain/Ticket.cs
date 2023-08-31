@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace TicketBooking.Domain
 {
@@ -11,6 +9,7 @@ namespace TicketBooking.Domain
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
+        public bool IsConfirmed { get; set; } = false;
 
         [ForeignKey(nameof(Concert))]
         public Guid ConcertId { get; set; }

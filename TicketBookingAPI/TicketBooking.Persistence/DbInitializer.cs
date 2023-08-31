@@ -73,31 +73,36 @@ namespace TicketBooking.Persistence
                 {
                     Id = ticketGuids[0],
                     UserId = Guid.Empty,
-                    ConcertId = concertGuids[0]
+                    ConcertId = concertGuids[0],
+                    IsConfirmed = true
                 },
                 new Ticket()
                 {
                     Id = ticketGuids[1],
                     UserId = Guid.Empty,
-                    ConcertId = concertGuids[0]
+                    ConcertId = concertGuids[0],
+                    IsConfirmed = true
                 },
                 new Ticket()
                 {
                     Id = ticketGuids[2],
                     UserId = Guid.Empty,
-                    ConcertId = concertGuids[0]
+                    ConcertId = concertGuids[0],
+                    IsConfirmed = true
                 },
                 new Ticket()
                 {
                     Id = ticketGuids[3],
                     UserId = Guid.Empty,
-                    ConcertId = concertGuids[2]
+                    ConcertId = concertGuids[2],
+                    IsConfirmed = true
                 },
                 new Ticket()
                 {
                     Id = ticketGuids[4],
                     UserId = Guid.Empty,
-                    ConcertId = concertGuids[2]
+                    ConcertId = concertGuids[2],
+                    IsConfirmed = true
                 },
             });
 

@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TicketBooking.Application\TicketBooking.Application.csproj" />
+    <ProjectReference Include="..\TicketBooking.Email\TicketBooking.Email.csproj" />
     <ProjectReference Include="..\TicketBooking.Persistence\TicketBooking.Persistence.csproj" />
   </ItemGroup>
 

@@ -20,10 +20,11 @@ namespace TicketBooking.Application.Features.Tickets.Commands.CreateTicket
             CancellationToken cancellationToken)
         {
             Ticket ticket = new Ticket()
-            { 
+            {
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,
-                ConcertId = request.ConcertId
+                ConcertId = request.ConcertId,
+                IsConfirmed = false
             };
 
             await _ticketBookingDbContext.Tickets.AddAsync(ticket, cancellationToken);
