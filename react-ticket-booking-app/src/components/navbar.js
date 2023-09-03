@@ -47,6 +47,12 @@ const Navbar = () => {
             <NavLink style={styles.navLink} to='tickets/ticket-list'>
                 Tickets
             </NavLink>
+            <NavLink style={styles.navLink} to='coupon/coupon-create'>
+                Create coupon
+            </NavLink>
+            {/* <NavLink>
+                Coupons
+            </NavLink> */}
         </div>
         
         <div style={styles.navMenu}>

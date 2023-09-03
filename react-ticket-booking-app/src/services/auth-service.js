@@ -35,8 +35,6 @@ export function logout() {
 
 export function finishLogout() {
     user = null;
-    // userManager.clearStaleState();
-    // userManager.removeUser();
     return userManager.signoutRedirectCallback();
 }
 

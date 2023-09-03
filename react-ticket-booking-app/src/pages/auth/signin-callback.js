@@ -1,17 +1,10 @@
 import { useEffect } from "react"
 import { finishLogin, getAccessToken } from "../../services/auth-service"
+import { useNavigate } from 'react-router-dom';
 
 function SigninCallback() {
+    const navigate = useNavigate();
 
-    // finishLogin()
-    //     .then(() => {
-    //         console.log('signin result')  
-    //         //window.location.href = '/';
-    //     })
-    //     .catch(() => {
-    //         console.log('2signin result')  
-    //         //window.location.href = '/';
-    //     })
     useEffect(() => {
         async function signinAsync() {
             await finishLogin()
@@ -20,25 +13,19 @@ function SigninCallback() {
         signinAsync()
             .then(() => {
                 console.log('signin result')
-                getAccessToken().then((str) => console.log(str))
-                
             })
             .catch(() => {
                  console.log('2signin result')
             })
 
-        //window.location.href = '/';
-    })
-        
-    //     // signinAsync().then(() => {
-    //     //     //window.location.href = '/';
-    //     // })
-    //     //window.location.href = '/';
-    // }, [])
+        navigate('../' , { replace: true})
+        //navigate('/concerts/concert-list' , { replace: true})
+    }, [])
 
     return (
         <div>Redirecting...</div>
     )
+    
 }
 
 export default SigninCallback

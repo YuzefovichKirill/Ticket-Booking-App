@@ -12,6 +12,7 @@ import ConcertList from "./pages/concerts/concert-list";
 import ConcertCreate from "./pages/concerts/concert-create";
 import TicketList from "./pages/tickets/ticket-list";
 import ConcertInfo from "./pages/concerts/concert-info";
+import CouponCreate from "./pages/coupons/coupon-create";
 
 
 function App() {
@@ -22,14 +23,17 @@ function App() {
         <Navbar />
 
         <Routes>
+          <Route path="*" element={<NotFound/>} />
           <Route path="/" exact element={<Home/>}/>
+          <Route path="/signin-callback" element={<SigninCallback/>}/>
+          <Route path="/signout-callback" element={<SignoutCallback/>}/>
           <Route path="/concerts/concert-list" element={<ConcertList/>}/>
           <Route path="/concerts/concert-info" element={<ConcertInfo/>}/>
-          <Route path="/concerts/concert-create"  element={<ConcertCreate/>}/>
+          
           <Route path="/tickets/ticket-list" element={<TicketList/>}/>
-          <Route path="/signin-callback" element={<SigninCallback/>} />
-          <Route path="/signout-callback" element={<SignoutCallback/>} />
-          <Route path="*" element={<NotFound/>} />
+
+          <Route path="/concerts/concert-create" element={<ConcertCreate/>}/>
+          <Route path="/coupon/coupon-create" element={<CouponCreate/>}/>
         
           {/* <AuthorizeRoute path="/tickets/ticket-list" element={<TicketList/>}/> */}
         </Routes>

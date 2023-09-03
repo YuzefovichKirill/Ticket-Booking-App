@@ -18,6 +18,8 @@ namespace TicketBooking.Persistence
                 Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid() };
             Guid[] ticketGuids = { Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(),
                 Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid() };
+            Guid[] couponGuids = { Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(),
+                Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid() };
 
             context.Concerts.AddRange(new List<Concert>
             {
@@ -104,6 +106,24 @@ namespace TicketBooking.Persistence
                     ConcertId = concertGuids[2],
                     IsConfirmed = true
                 },
+            });
+
+            context.Coupons.AddRange(new List<Coupon>()
+            {
+                new Coupon()
+                {
+                    Id = couponGuids[0],
+                    ConcertId = concertGuids[0],
+                    DiscountPercentage = 10.0,
+                    Name = "Classical concert"
+                },
+                new Coupon()
+                {
+                    Id = couponGuids[1],
+                    ConcertId = concertGuids[2],
+                    DiscountPercentage = 12.5,
+                    Name = "Open Air"
+                }
             });
 
             context.SaveChanges();
