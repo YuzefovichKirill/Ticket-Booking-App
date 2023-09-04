@@ -51,7 +51,8 @@ namespace TicketBooking.Application.Features.Concerts.Queries.GetConcertList
                 DateTime = c.DateTime,
                 Place = c.Place,
                 GeoLat = c.GeoLat,
-                GeoLng = c.GeoLng
+                GeoLng = c.GeoLng,
+                Price = c.Price
             }).ToList();
 
             return new ConcertListVm() { Concerts = ConcertListDtos };

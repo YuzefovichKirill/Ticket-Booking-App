@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, AuthorizeRoute, Routes, Route } from "react-router-dom";
 
 import userManager from "./services/auth-service";
-import AuthProvider from "./services/auth-provider";
+import AuthProvider from "./providers/auth-provider";
 import SigninCallback from './pages/auth/signin-callback'
 import SignoutCallback from './pages/auth/signout-callback'
 
@@ -13,6 +13,7 @@ import ConcertCreate from "./pages/concerts/concert-create";
 import TicketList from "./pages/tickets/ticket-list";
 import ConcertInfo from "./pages/concerts/concert-info";
 import CouponCreate from "./pages/coupons/coupon-create";
+import CouponList from "./pages/coupons/coupon-list";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
 
           <Route path="/concerts/concert-create" element={<ConcertCreate/>}/>
           <Route path="/coupon/coupon-create" element={<CouponCreate/>}/>
+          <Route path="/coupon/coupon-list" element={<CouponList/>}/>
         
           {/* <AuthorizeRoute path="/tickets/ticket-list" element={<TicketList/>}/> */}
         </Routes>

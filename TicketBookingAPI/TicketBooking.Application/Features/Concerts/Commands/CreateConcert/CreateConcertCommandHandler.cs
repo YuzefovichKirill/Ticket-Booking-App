@@ -22,59 +22,12 @@ namespace TicketBooking.Application.Features.Concerts.Commands.CreateConcert
             switch (concertType)
             {
                 case nameof(ClassicalConcert):
-                    /*concert = new ClassicalConcert()
-                    {
-                        Id = Guid.NewGuid(),
-                        ConcertName = request.JsonObj["ConcertName"].ToString(),
-                        BandName = request.JsonObj["BandName"].ToString(),
-                        AmountOfTickets = Convert.ToInt32(request.JsonObj["AmountOfTickets"].ToString()),
-                        AmountOfAvailableTickets = Convert.ToInt32(request.JsonObj["AmountOfAvailableTickets"].ToString()),
-                        DateTime = new DateTime(Convert.ToInt64(request.JsonObj["DateTime"].ToString())),
-                        Place = request.JsonObj["Place"].ToString(),
-                        GeoLong = Convert.ToDouble(request.JsonObj["GeoLong"].ToString()),
-                        GeoLat = Convert.ToDouble(request.JsonObj["GeoLat"].ToString()),
-                        ConcertType = concertType,
-
-                        VoiceType = request.JsonObj["VoiceType"].ToString(),
-                        Composer = request.JsonObj["Composer"].ToString(),
-                    };*/
                     concert = JsonSerializer.Deserialize<ClassicalConcert>(request.JsonObj, options);
                     break;
                 case nameof(OpenAir):
-                    /*concert = new OpenAir()
-                    {
-                        Id = Guid.NewGuid(),
-                        ConcertName = request.JsonObj["ConcertName"].ToString(),
-                        BandName = request.JsonObj["BandName"].ToString(),
-                        AmountOfTickets = Convert.ToInt32(request.JsonObj["AmountOfTickets"].ToString()),
-                        AmountOfAvailableTickets = Convert.ToInt32(request.JsonObj["AmountOfAvailableTickets"].ToString()),
-                        DateTime = new DateTime(Convert.ToInt64(request.JsonObj["DateTime"].ToString())),
-                        Place = request.JsonObj["Place"].ToString(),
-                        GeoLong = Convert.ToDouble(request.JsonObj["GeoLong"].ToString()),
-                        GeoLat = Convert.ToDouble(request.JsonObj["GeoLat"].ToString()),
-                        ConcertType = concertType,
-
-                        GettingHere = request.JsonObj["GettingHere"].ToString(),
-                        HeadLiner = request.JsonObj["HeadLiner"].ToString(),
-                    };*/
                     concert = JsonSerializer.Deserialize<OpenAir>(request.JsonObj, options);
                     break;
                 case nameof(Party):
-                    /*concert = new Party()
-                    {
-                        Id = Guid.NewGuid(),
-                        ConcertName = request.JsonObj["ConcertName"].ToString(),
-                        BandName = request.JsonObj["BandName"].ToString(),
-                        AmountOfTickets = Convert.ToInt32(request.JsonObj["AmountOfTickets"].ToString()),
-                        AmountOfAvailableTickets = Convert.ToInt32(request.JsonObj["AmountOfAvailableTickets"].ToString()),
-                        DateTime = new DateTime(Convert.ToInt64(request.JsonObj["DateTime"].ToString())),
-                        Place = request.JsonObj["Place"].ToString(),
-                        GeoLong = Convert.ToDouble(request.JsonObj["GeoLong"].ToString()),
-                        GeoLat = Convert.ToDouble(request.JsonObj["GeoLat"].ToString()),
-                        ConcertType = concertType,
-
-                        AgeLimit = Convert.ToInt32(request.JsonObj["AgeLimit"].ToString()),
-                    };*/
                     concert = JsonSerializer.Deserialize<Party>(request.JsonObj, options);
                     break;
                 default: 

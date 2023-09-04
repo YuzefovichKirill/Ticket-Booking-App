@@ -12,6 +12,8 @@
         public double GeoLng { get; set; }
         public double GeoLat { get; set; }
         public string? ConcertType { get; } = nameof(Concert);
+        public int Price { get; set; }
+
         public List<Ticket> Tickets { get; set; } = new();
    
         public Concert(string concertType) => ConcertType = concertType;    

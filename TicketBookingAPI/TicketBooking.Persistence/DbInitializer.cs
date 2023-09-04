@@ -34,6 +34,7 @@ namespace TicketBooking.Persistence
                     Place = "Vitebsk",
                     GeoLng = 55.1904,
                     GeoLat = 30.2049,
+                    Price = 5,
 
                     Composer = "Very famous composer", 
                     VoiceType = "Tenor"
@@ -49,6 +50,7 @@ namespace TicketBooking.Persistence
                     Place = "Minsk",
                     GeoLng = 53.9,
                     GeoLat = 27.5667,
+                    Price = 4,
 
                     GettingHere = "Some guide",
                     Headliner = "Some band"
@@ -63,7 +65,8 @@ namespace TicketBooking.Persistence
                     DateTime = DateTime.Now,
                     Place = "Minsk",
                     GeoLng = 53.94,
-                    GeoLat = 27.55,           
+                    GeoLat = 27.55,
+                    Price = 3,
                 
                     AgeLimit = 16,
                 }

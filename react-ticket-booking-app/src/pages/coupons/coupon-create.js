@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ConcertService } from "../../services/concert-service";
+import { CouponService } from "../../services/coupon-service";
 
 export default function CouponCreate() {
-	const [concertId, setConcertId] = useState('')
+	const couponService = new CouponService()
 	var [concerts, setConcerts] = useState([])
+
+	const concertId = useRef(null)
 	const couponName = useRef(null)
-	const discountPercentage = useRef()
+	const discountPercentage = useRef(null)
 	const coupon = {
 		concertId: '',
 		name: '',
@@ -21,12 +24,11 @@ export default function CouponCreate() {
 
 	const createCoupon = (event) => {
 		event.preventDefault()
-		coupon.concertId = concertId
+		coupon.concertId = concertId?.current?.value || ''
 		coupon.name = couponName?.current?.value || ''
 		coupon.discountPercentage = discountPercentage?.current?.value || 0
-		
-		console.log(coupon)
-		//couponService.
+
+		couponService.createCoupon(coupon)
 	}
 
 	return (
@@ -36,13 +38,12 @@ export default function CouponCreate() {
 				<div className="form-row">
 					<div className="input-data">
 						<label>Concert name</label>
-						<select onChange={(e) => setConcertId(e.target.value)} required>
+						<select ref={concertId} required>
 							{concerts?.map(concert => {
 								return (
 									<option value={concert.Id}>{concert.concertName}</option>
 								)
-							})
-							}
+							})}
 						</select>
 				</div>
 				</div>
@@ -55,7 +56,7 @@ export default function CouponCreate() {
 				<div className="form-row">
 					<div className="input-data">
 						<label>Discount percentage</label>
-						<input type="number" step="any" min={1} ref={discountPercentage} required/>						
+						<input type="number" step="any" min={1} max={99} ref={discountPercentage} required/>						
 					</div>
 				</div>
 

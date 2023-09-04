@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TicketBooking.Application.Features.Coupons.Commands.CreateCoupon
 {
-    public class CreateCouponCommand: IRequest
+    public class CreateCouponCommand: IRequest<Guid>
     {
         public Guid ConcertId { get; set; }
         public string? Name { get; set; }

@@ -57,10 +57,6 @@ namespace TicketBooking.WebAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(Guid id)
         {
-            /*var a = User.Identity;
-            var b = HttpContext.User.Claims;
-            var Is = User.IsInRole("Admin");
-            var t = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);*/
             var command = new DeleteConcertCommand() { Id = id };
             await Mediator.Send(command);
             return NoContent();

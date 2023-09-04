@@ -47,8 +47,8 @@ const Navbar = () => {
             <NavLink style={styles.navLink} to='tickets/ticket-list'>
                 Tickets
             </NavLink>
-            <NavLink style={styles.navLink} to='coupon/coupon-create'>
-                Create coupon
+            <NavLink style={styles.navLink} to='coupon/coupon-list'>
+                Coupons
             </NavLink>
             {/* <NavLink>
                 Coupons

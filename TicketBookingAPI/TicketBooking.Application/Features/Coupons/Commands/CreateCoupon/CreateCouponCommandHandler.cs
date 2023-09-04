@@ -9,14 +9,14 @@ using TicketBooking.Domain;
 
 namespace TicketBooking.Application.Features.Coupons.Commands.CreateCoupon
 {
-    internal class CreateCouponCommandHandler : IRequestHandler<CreateCouponCommand>
+    internal class CreateCouponCommandHandler : IRequestHandler<CreateCouponCommand, Guid>
     {
         private readonly ITicketBookingDbContext _ticketBookingDbContext;
 
         public CreateCouponCommandHandler(ITicketBookingDbContext ticketBookingDbContext) => 
             _ticketBookingDbContext = ticketBookingDbContext;
 
-        public async Task Handle(CreateCouponCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateCouponCommand request, CancellationToken cancellationToken)
         {
             Coupon coupon = new Coupon()
             {
@@ -28,6 +28,7 @@ namespace TicketBooking.Application.Features.Coupons.Commands.CreateCoupon
 
             await _ticketBookingDbContext.Coupons.AddAsync(coupon, cancellationToken);
             await _ticketBookingDbContext.SaveChangesAsync(cancellationToken);
+            return coupon.Id;
         }
     }
 }

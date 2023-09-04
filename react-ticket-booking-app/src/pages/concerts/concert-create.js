@@ -12,6 +12,7 @@ export default function ConcertCreate() {
     const place = useRef(null)
     const geoLng = useRef(null)
     const geoLat = useRef(null)
+    const price = useRef(null)
     const concert = {
         concertName: '',
         bandName: '',
@@ -21,7 +22,8 @@ export default function ConcertCreate() {
         place: '',
         geoLng: 0,
         geoLat: 0,
-        concertType: ''
+        concertType: '',
+        price: 0
     }
 
     const voiceType = useRef(null)
@@ -47,6 +49,7 @@ export default function ConcertCreate() {
         concert.place = place?.current?.value || ''
         concert.geoLng = geoLng?.current?.value || 0
         concert.geoLat = geoLat?.current?.value || 0
+        concert.price = price?.current?.value || 0
         concert.concertType = concertType
 
         switch (concert.concertType) {
@@ -74,44 +77,48 @@ export default function ConcertCreate() {
                 <div className="form-row">
 					<div className="input-data">
 						<label>Concert name</label>
-						<input type="text" ref={concertName}/>
+						<input type="text" ref={concertName} required/>
 					</div>
 					<div className="input-data">
 						<label>Band name</label>
-						<input type="text" ref={bandName}/>						
+						<input type="text" ref={bandName} required/>						
 					</div>
                 </div>
 				<div className="form-row">
 					<div className="input-data">
 						<label>Amount of tickets</label>
-						<input type="number" ref={amountOfTickets}/>
+						<input type="number" ref={amountOfTickets} required/>
 					</div>
 					<div className="input-data">
 						<label>Amount of available tickets</label>
-						<input type="number" ref={amountOfAvailableTickets}/>
+						<input type="number" ref={amountOfAvailableTickets} required/>
 					</div>
                 </div>
 				<div className="form-row">
 					<div className="input-data">
 						<label>Geo longitude</label>
-						<input type="number" step='any' min={-180} max={180} ref={geoLng}/>
+						<input type="number" step='any' min={-180} max={180} ref={geoLng} required/>
 					</div>
 					<div className="input-data">
 						<label>Geo latitude</label>
-						<input type="number" step='any' min={-90} max={90} ref={geoLat}/>
+						<input type="number" step='any' min={-90} max={90} ref={geoLat} required/>
 					</div>
                 </div>
 				<div className="form-row">
 					<div className="input-data">
 						<label>Date and Time</label>
-						<input type="datetime-local" ref={dateTime}/>
+						<input type="datetime-local" ref={dateTime} required/>
 					</div>
 					<div className="input-data">
 						<label>Place</label>
-						<input type="text" ref={place}/>
+						<input type="text" ref={place} required/>
 					</div>
                 </div>
                 <div className="form-row">
+                    <div className="input-data">
+						<label>Price</label>
+						<input type="number" step="any" min={0.1} ref={price} required/>
+					</div>
 					<div className="input-data">
 						<label>Concert type</label>
 						<select  onChange={(e) => changeType(e.target.value)}>
@@ -125,29 +132,29 @@ export default function ConcertCreate() {
 				<div className="form-row">
 					<div className="input-data">
 						<label>Voice type</label>
-						<input type="text" ref={voiceType}/>
+						<input type="text" ref={voiceType} required/>
 					</div>
 					<div className="input-data">
 						<label>Composer</label>
-						<input type="text" ref={composer}/>
+						<input type="text" ref={composer} required/>
 					</div>
                 </div>}
                 {(concertType === 'OpenAir') &&
 				<div className="form-row">
 					<div className="input-data">
 						<label>Getting Here</label>
-						<input type="text" ref={gettingHere}/>
+						<input type="text" ref={gettingHere} required/>
 					</div>
 					<div className="input-data">
 						<label>Headliner</label>
-						<input type="text" ref={headliner}/>
+						<input type="text" ref={headliner} required/>
 					</div>
 				</div>}	
                 {(concertType === 'Party') &&
 				<div className="form-row">
 					<div className="input-data">
 						<label>Age limit</label>
-						<input type="number" ref={ageLimit}/>
+						<input type="number" ref={ageLimit} required/>
 					</div>
 				</div>}
 

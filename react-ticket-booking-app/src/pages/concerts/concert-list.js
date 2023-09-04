@@ -18,13 +18,17 @@ export default function ConcertList() {
 
     function getConcertListWithFilters() {
         concertService.getConcertList(concertName?.current?.value, concertType)
-        .then(data => setConcerts(data.data.concerts))
-        .catch(error => console.log(error.toJSON()));
+            .then(data => setConcerts(data.data.concerts))
+            .catch(error => console.log(error.toJSON()));
     }
 
     function deleteConcert(id) {
         concertService.deleteConcert(id)
-        .then(() => setConcerts(concerts.filter(concert => concert.id !== id)))
+        .then(() => {
+            concertService.getConcertList(concertName?.current?.value, concertType)
+                .then(data => setConcerts(data.data.concerts))
+                .catch(error => console.log(error.toJSON()));
+        })
         .catch((error) => console.log(error.toJSON()));
     }
 
@@ -97,8 +101,13 @@ export default function ConcertList() {
                                 <div className="info">
                                     <div>{new Date(Date.parse(concert.dateTime)).toLocaleDateString()}</div>
                                     <div>{new Date(Date.parse(concert.dateTime)).getHours() + ':' + new Date(Date.parse(concert.dateTime)).getMinutes()}</div>
+                                </div>
+                                <div className="info">
+                                    <div>{concert.price} $</div>
                                 </div> 
-                                <div>{concert.concertType}</div>
+                                <div className="info">
+                                    <div>{concert.concertType}</div>
+                                </div>
                             </div>
                             <div className="buttons">
                                 <Link to='/concerts/concert-info' state={{concertId: concert.id}}>Get concert info</Link>

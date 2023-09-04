@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System.IdentityModel.Tokens.Jwt;
 using TicketBooking.Application;
 using TicketBooking.Email;
@@ -28,6 +30,13 @@ namespace TicketBooking.WebAPI
             emailConfig.Password = configuration["Gmail:Password"];
             services.AddSingleton(emailConfig);
             services.AddScoped<IEmailSender, EmailSender>();
+
+            JsonConvert.DefaultSettings = () =>
+            {
+                var settings = new JsonSerializerSettings();
+                settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                return settings;
+            };
 
             services.AddCors(options =>
             {
