@@ -24,10 +24,6 @@ export default function ConcertInfo() {
         ticketService.createTicket(id)
     }
 
-    function buyTicket() {
-
-    }
-
     return (
         <>
             <div>
@@ -54,7 +50,7 @@ export default function ConcertInfo() {
             </div>
             <Button onClick={() => bookTicket()}>Book Ticket</Button>
             {concert &&
-            <PaypalPayment price={concert?.price} concertName={concert?.concertName}/>}
+            <PaypalPayment concertId={concert?.id} price={concert?.price} concertName={concert?.concertName}/>}
         </>
     )
 }

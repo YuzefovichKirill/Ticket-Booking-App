@@ -8,10 +8,12 @@ using TicketBooking.Application.Features.Tickets.Queries.GetTicketList;
 using TicketBooking.Application.Features.Concerts.Queries.GetConcert;
 using TicketBooking.Email;
 using TicketBooking.Application.Features.Tickets.Commands.ConfirmTicket;
+using TicketBooking.Application.Features.Tickets.Commands.ApprovePaymentTicket;
 
 namespace TicketBooking.WebAPI.Controllers
 {
     [Route("api/[controller]s")]
+    [Authorize]
     public class TicketController : BaseController
     {
         private readonly IEmailSender _emailSender;
@@ -20,7 +22,6 @@ namespace TicketBooking.WebAPI.Controllers
             => _emailSender = emailSender;
 
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<TicketListVm>> GetAll()
         {
             var query = new GetTicketListQuery() { UserId = UserId };
@@ -38,13 +39,13 @@ namespace TicketBooking.WebAPI.Controllers
         }*/
 
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult<Guid>> Create([FromBody] Guid concertId)
         {
             var command = new CreateTicketCommand() { UserId = UserId, ConcertId = concertId };
             var ticketId = await Mediator.Send(command);
 
-            var query = new GetConcertQuery() { Id = concertId };
+            // email confirmation
+            /*var query = new GetConcertQuery() { Id = concertId };
             var concert = await Mediator.Send(query);
 
             var email = User.FindFirstValue(ClaimTypes.Email);
@@ -52,7 +53,7 @@ namespace TicketBooking.WebAPI.Controllers
                 $"Booking ticket for \"{concert.ConcertName}\"", 
                 $"Confirm the booking of the ticket for the \"{concert.ConcertName}\" concert at {concert.DateTime.ToString("dddd, dd MMMM yyyy HH:mm")}.",
                 ticketId);
-            await _emailSender.SendConfirmationAsync(message);
+            await _emailSender.SendConfirmationAsync(message);*/
 
             return Ok(ticketId);
         }
@@ -67,8 +68,16 @@ namespace TicketBooking.WebAPI.Controllers
             return NoContent();
         }
 
+        [HttpPost]
+        [Route("approve-payment")]
+        public async Task<ActionResult> ApprovePayment([FromBody] Guid id)
+        {
+            var command = new ApprovePaidTicketCommand() { Id = id };
+            await Mediator.Send(command);
+            return NoContent();
+        }
+
         [HttpDelete("{id}")]
-        [Authorize]
         public async Task<ActionResult> Delete(Guid id)
         {
             var command = new DeleteTicketCommand() { Id = id };

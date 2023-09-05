@@ -17,6 +17,10 @@ export class TicketService {
                                                         //{ concertId: id }
     }
 
+    ApprovePaidTicket(body){
+        return this.ticketBookingApi.post(`/api/tickets/approve-payment`, body)
+    }
+
     deleteTicket(id) {
         return this.ticketBookingApi.delete(`/api/tickets/${id}`)
     }

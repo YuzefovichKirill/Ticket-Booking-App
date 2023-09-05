@@ -26,8 +26,8 @@ namespace TicketBooking.WebAPI.Controllers
             return Ok(couponId);
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> Delete([FromBody] DeleteCouponCommand command)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete([FromHeader] DeleteCouponCommand command)
         {
             await Mediator.Send(command);
             return NoContent();

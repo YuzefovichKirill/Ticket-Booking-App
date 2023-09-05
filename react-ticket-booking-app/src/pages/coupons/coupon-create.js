@@ -41,7 +41,7 @@ export default function CouponCreate() {
 						<select ref={concertId} required>
 							{concerts?.map(concert => {
 								return (
-									<option value={concert.Id}>{concert.concertName}</option>
+									<option value={concert.id}>{concert.concertName}</option>
 								)
 							})}
 						</select>
@@ -64,8 +64,6 @@ export default function CouponCreate() {
           <input type="submit" value="Submit" />
 				</div>
 			</form>
-		
-		
 		</div>
 	)
 

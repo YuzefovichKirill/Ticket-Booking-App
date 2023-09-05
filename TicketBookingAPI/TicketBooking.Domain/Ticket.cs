@@ -8,6 +8,7 @@ namespace TicketBooking.Domain
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public bool IsConfirmed { get; set; } = false;
+        public bool IsPaid { get; set; } = false;
 
         [ForeignKey(nameof(Concert))]
         public Guid ConcertId { get; set; }
