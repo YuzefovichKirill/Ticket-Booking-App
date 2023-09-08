@@ -1,25 +1,37 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { getRole } from "../services/auth-service";
 
+export const AuthContext = React.createContext()
 
 const AuthProvider = ({userManager: manager, children}) => {
   let userManager = useRef(manager)
 
+  var [isAuth, setIsAuth] = useState(false)
+  var [userRole, setUserRole] = useState(null)
+
   useEffect(() => {
-    //userManager.current = manager;
     const onUserLoaded = (user) => {
         console.log('User loaded: ', user);
+        setIsAuth(true)
+        setUserRole(getRole(user))
     };
     const onUserUnloaded = () => {
         console.log('User unloaded');
+        setIsAuth(false)
+        setUserRole(null)
     };
     const onAccessTokenExpiring = () => {
         console.log('User token expiring');
     };
     const onAccessTokenExpired = () => {
         console.log('User token expired');
+        setIsAuth(false)
+        setUserRole(null)
     };
     const onUserSignedOut = () => {
         console.log('User signed out');
+        setIsAuth(false)
+        setUserRole(null)
     };
 
     userManager.current.events.addUserLoaded(onUserLoaded);
@@ -39,7 +51,14 @@ const AuthProvider = ({userManager: manager, children}) => {
     };
   }, [manager]);
 
-  return React.Children.only(children);
+  return (
+    <AuthContext.Provider 
+      value={{
+        isAuth: isAuth,
+        userRole: userRole}}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export default AuthProvider;

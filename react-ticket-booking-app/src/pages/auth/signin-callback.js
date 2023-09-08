@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { finishLogin, getAccessToken } from "../../services/auth-service"
+import { finishLogin } from "../../services/auth-service"
 import { useNavigate } from 'react-router-dom';
 
 function SigninCallback() {

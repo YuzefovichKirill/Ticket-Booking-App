@@ -5,14 +5,15 @@ export default function TicketList() {
     var [tickets, setTickets] = useState();
     var ticketService = new TicketService();
     useEffect(() => {
-        ticketService.getTicketList().then(data => {
-            setTickets(data.data.tickets);
-    })}, [])
+        ticketService.getTicketList()
+            .then(data => setTickets(data.data.tickets))
+            .catch(error => console.log(error.toJSON()))
+    }, [])
 
     function deleteTicket(id) {
-        ticketService.deleteTicket(id).then(() => {
-            setTickets(tickets.filter(ticket => ticket.id !== id))
-        });
+        ticketService.deleteTicket(id)
+            .then(() => setTickets(tickets.filter(ticket => ticket.id !== id)))
+            .catch(error => console.log(error.toJSON()))
     }
 
     if (!tickets) return <div>There is no tickets</div>

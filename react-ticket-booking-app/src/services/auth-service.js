@@ -1,6 +1,7 @@
 import { UserManager } from 'oidc-client'
 import environment from '../environments/environment'
 import { Subject } from 'rxjs';
+import jwt_decode from 'jwt-decode'
 
 const settings = {
     authority: environment.AuthorityUrl,
@@ -38,18 +39,6 @@ export function finishLogout() {
     return userManager.signoutRedirectCallback();
 }
 
-export function isAuthenticated() {
-    return userManager.getUser()
-        .then(_user => {
-            if (user !== _user) {
-                loginChangedSubject.next(checkUser(user))
-            }   
-            
-            user = _user;
-            return checkUser(user);
-        })
-}
-
 export function checkUser(_user) {
     return !!_user && !_user.expired;
 }
@@ -59,6 +48,14 @@ export function getAccessToken() {
         .then(_user => {
             return !!_user && !_user.expired ? _user.access_token : null;
         })
+}
+
+export function getRole(user) {
+    var token = user?.access_token
+    if (!token) return null
+    const decodedToken = jwt_decode(token)
+    const role = decodedToken.role
+    return role
 }
 
 export default userManager
