@@ -14,6 +14,7 @@
 .container .title {
   text-align: center;
   font-size: 41px;
+  margin: auto;
 }
 
 .container form {

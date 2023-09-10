@@ -4,21 +4,33 @@
     <link href=@Url.Content("~/Styles/app.css") rel="stylesheet" type="text/css" />
 </head>
 
-<form asp-controller="Auth" asp-action="Login" method="post">
-    <input type="hidden" asp-for="ReturnUrl" />
-    <div class="header">Login</div>
-    <div class="block">
-        <label>Email</label>
-        <input type="email" asp-for="Email" class="input" />
-    </div>
-    <div class="block">
-        <label>Password</label>
-        <input type="password" asp-for="Password" class="input" />
-    </div>
-    <div class="block">
-        <button type="submit" class="button">Sign In</button>
-    </div>
+<body>
+    <div class="container">
+        <p class="title">Login</p>
+        <form asp-controller="Auth" asp-action="Login" method="post">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div class="form-row">
+                <div class="input-data">
+                    <label>Email</label>
+                    <input type="email" asp-for="Email" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <label>Password</label>
+                    <input type="password" asp-for="Password" />
+                </div>
+            </div>
+            <div class="submit-button">
+                <input type="submit" value="Submit" />
+            </div>
 
-    <a asp-controller="Auth" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl"
-       class="switch-button">Register</a>
-</form>
+        </form>
+
+        <p>
+            Don't have an account?
+            <a asp-controller="Auth" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl"
+               class="switch-button">Register</a>
+        </p>
+    </div>
+</body>
