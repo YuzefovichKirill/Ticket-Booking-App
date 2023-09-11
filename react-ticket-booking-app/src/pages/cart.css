@@ -1,0 +1,27 @@
+.cart-container {
+  display: flex;
+}
+
+.cart-left-column {
+  flex: 70%;
+  padding: 10px;
+}
+
+.cart-right-column  {
+  flex: 30%;
+  padding: 10px;
+}
+
+.payment-block {
+  padding: 5px;
+  width: 100%;
+  background-color: #EBEBEB;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+
+  border-radius: 15px;
+}

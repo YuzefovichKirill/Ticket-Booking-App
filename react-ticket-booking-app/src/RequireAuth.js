@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { AuthContext } from "./providers/auth-provider";
+import { AuthContext } from "./contexts/auth-context";
 
 const RequireAuth = ({role}) => {
   const {isAuth, userRole} = useContext(AuthContext);

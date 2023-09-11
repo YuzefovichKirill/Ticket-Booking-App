@@ -54,8 +54,8 @@ const AuthProvider = ({userManager: manager, children}) => {
   return (
     <AuthContext.Provider 
       value={{
-        isAuth: isAuth,
-        userRole: userRole}}>
+        isAuth,
+        userRole}}>
       {children}
     </AuthContext.Provider>
   )

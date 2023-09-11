@@ -1,62 +1,39 @@
-import React from "react";
+import React, { useContext } from "react";
 import AuthButtons from "./auth-buttons.js"
 import { NavLink } from "react-router-dom";
-
-const styles = {
-    nav: {
-        background: '#63D471',
-        height: '85px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        padding: '0.2rem calc((100vw - 1000px) / 2)',
-        zIndex: '12'
-    },
-    navLink: {
-        color: '#808080',
-        display: 'flex',
-        alignItems: 'center',
-        textDecoration: 'none',
-        padding: '0 1rem',
-        height: '100%',
-        cursor: 'pointer',
-        active : {
-        color: '#000000',
-        }
-    },
-    navMenu: {
-        color: 'blue',
-        display: 'flex',
-        alignItems: 'center',
-        marginRight: '-24px',
-    }
-}
+import "./navbar.css"
+import cart from "../assets/cart.png"
+import { CartContext } from "../contexts/cart-context.js";
 
 const Navbar = () => {
+    const { amount } = useContext(CartContext) 
+
     return (
-    <nav style={styles.nav}>
-        <div style={styles.navMenu}>
-            <NavLink style={styles.navLink} to='/'>
+    <nav>
+        <div className="link-group">
+            <NavLink className="nav-link" to='/'>
                 Home page
             </NavLink>
-            <NavLink style={styles.navLink} to='concerts/concert-list'>
+            <NavLink className="nav-link" to='concerts/concert-list'>
                 Concerts
             </NavLink>
-            <NavLink style={styles.navLink} to='concerts/concert-create'>
-                Create Concert
-            </NavLink>
-            <NavLink style={styles.navLink} to='tickets/ticket-list'>
+            <NavLink className="nav-link" to='tickets/ticket-list'>
                 Tickets
             </NavLink>
-            <NavLink style={styles.navLink} to='coupon/coupon-list'>
+            <NavLink className="nav-link" to='concerts/concert-create'>
+                Create Concert
+            </NavLink>
+            <NavLink className="nav-link" to='coupon/coupon-list'>
                 Coupons
             </NavLink>
-            {/* <NavLink>
-                Coupons
-            </NavLink> */}
         </div>
         
-        <div style={styles.navMenu}>
-            <AuthButtons />
+        <div className="link-group">
+            <NavLink className="cart-link" to='cart'>
+                <img className="cart-img" src={cart}/>
+                <div className="cart-amount">{amount > 0 ? amount : ''}</div>    
+            </NavLink>
+            <AuthButtons/>
         </div>
     </nav>
     )

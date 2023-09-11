@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ConcertService } from "../../services/concert-service";
 import { TicketService } from "../../services/ticket-service";
 import { Button } from "style-components";
 import { useLocation } from "react-router-dom";
 import PaypalPayment from "../../components/paypal-buttons"
+import { CartContext } from "../../contexts/cart-context";
 
 export default function ConcertInfo() {
     var location = useLocation()
     var id = location.state.concertId
-    var [concert, setConcert] = useState();
-    var concertService = new ConcertService();
-    var ticketService = new TicketService();
-    
+    var [concert, setConcert] = useState()
+    var concertService = new ConcertService()
+    var ticketService = new TicketService()
+    const {addToCart} = useContext(CartContext)
     useEffect(() => {
         if (!id) return;
 
@@ -20,8 +21,12 @@ export default function ConcertInfo() {
         })
     }, [id])
 
-    function bookTicket() {
-        ticketService.createTicket(id)
+    // function bookTicket() {
+    //     ticketService.createTicket(id)
+    // }
+
+    const handleAddToCart = (item) => {
+        addToCart(item)
     }
 
     return (
@@ -48,7 +53,8 @@ export default function ConcertInfo() {
                 {(concert?.concertType === 'Party') &&
                 <div>Age limit: {concert?.ageLimit}</div>}
             </div>
-            <Button onClick={() => bookTicket()}>Book Ticket</Button>
+            <Button onClick={() => handleAddToCart({id: concert.id, concertName: concert.concertName, 
+                                                                        dateTime: concert.dateTime, price: concert.price})}>Add to cart</Button>
             {concert &&
             <PaypalPayment concertId={concert?.id} price={concert?.price} concertName={concert?.concertName}/>}
         </>

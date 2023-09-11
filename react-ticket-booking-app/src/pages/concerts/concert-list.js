@@ -1,15 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ConcertService } from "../../services/concert-service";
 import { Link } from "react-router-dom";
 import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
 import "./concert-list.css"
+import { CartContext } from "../../contexts/cart-context";
 
 export default function ConcertList() {
-    var [concerts, setConcerts] = useState([])
-
+    const [concerts, setConcerts] = useState([])
     const concertName = useRef(null)
     const [concertType, setConcertType] = useState('')
     var concertService = new ConcertService();
+    const { addToCart } = useContext(CartContext)
+
     useEffect(() => {
         concertService.getConcertList(concertName?.current?.value, concertType)
             .then(data => setConcerts(data.data.concerts))
@@ -34,6 +36,10 @@ export default function ConcertList() {
 
     const changeType = (value) => {
         setConcertType(value);
+    }
+
+    const handleAddToCart = (item) => {
+        addToCart(item)
     }
 
     return (
@@ -111,6 +117,8 @@ export default function ConcertList() {
                             </div>
                             <div className="buttons">
                                 <Link to='/concerts/concert-info' state={{concertId: concert.id}}>Get concert info</Link>
+                                <button onClick={() => handleAddToCart({id: concert.id, concertName: concert.concertName, 
+                                                                        dateTime: concert.dateTime, price: concert.price})}>Add to cart</button>
                                 <button onClick={() => deleteConcert(concert.id)}>Delete concert</button>
                             </div>
                         </div>

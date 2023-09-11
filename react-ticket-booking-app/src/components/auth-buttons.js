@@ -2,26 +2,7 @@ import React from "react"
 import { NavLink } from "react-router-dom";
 import { loginChanged , login, logout } from "../services/auth-service";
 import { useState } from "react";
-
-const styles = {
-    navBtn: {
-        display: 'flex',
-        alignItems: 'center',
-        marginRight: '24px'
-    },
-    navBtnLink: {
-        borderRadius: '4px',
-        background: '#808080',
-        padding: '10px 22px',
-        color: '#000000',
-        outline: 'none',
-        border: 'none',
-        cursor: 'pointer',
-        transition: 'all 0.2s ease-in-out',
-        textDecoration: 'none',
-        marginLeft: '24px'
-    }
-}
+import "./auth-buttons.css"
 
 function onLogin() {
     login();
@@ -42,12 +23,12 @@ function AuthButtons() {
     <>
         {
             isUserAuthenticated ? 
-            <nav style={styles.navBtn}>
-                <NavLink style={styles.navBtnLink} onClick={() => onLogout()}>Logout</NavLink>
-            </nav> :
-            <nav style={styles.navBtn}>
-                <NavLink style={styles.navBtnLink} onClick={() => onLogin()}>Login</NavLink>
-            </nav>
+            <div className="nav-btn">
+                <NavLink className="nav-btn-link" onClick={() => onLogout()}>Logout</NavLink>
+            </div> :
+            <div className="nav-btn">
+                <NavLink className="nav-btn-link" onClick={() => onLogin()}>Login</NavLink>
+            </div>
         }
     </>
     )
