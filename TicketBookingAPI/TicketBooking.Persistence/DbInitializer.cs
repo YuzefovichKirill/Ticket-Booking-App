@@ -128,7 +128,7 @@ namespace TicketBooking.Persistence
                 new Coupon()
                 {
                     Id = couponGuids[1],
-                    ConcertId = concertGuids[2],
+                    ConcertId = concertGuids[1],
                     DiscountPercentage = 12.5,
                     Name = "Open Air"
                 }

@@ -7,6 +7,10 @@ export class CouponService {
     return this.ticketBookingApi.get('api/coupons')
   }
 
+  getCoupon(name) {
+    return this.ticketBookingApi.get(`api/coupons/${name}`)
+  }
+
   createCoupon(body) {
     return this.ticketBookingApi.post('/api/coupons', body)
   }

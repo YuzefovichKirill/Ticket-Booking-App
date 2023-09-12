@@ -65,9 +65,7 @@ export default function ConcertCreate() {
                 concert.ageLimit = ageLimit?.current?.value || 0
                 break;
         }
-        concertService.createConcert(concert).then((data) => () => {
-            console.log(Date.now() + ' ' + data.data)
-        })
+        concertService.createConcert(concert)
     } 
 
     return (

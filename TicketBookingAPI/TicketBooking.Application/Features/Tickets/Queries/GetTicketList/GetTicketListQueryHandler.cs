@@ -17,7 +17,7 @@ namespace TicketBooking.Application.Features.Tickets.Queries.GetTicketList
             var ConcertIds = ticketsList.Select(t => t.ConcertId).ToList();
             var concertsList = await _ticketBookingDbContext.Concerts.Where(c => ConcertIds.Contains(c.Id)).ToListAsync();
 
-            List<TicketDto> ticketDtos = ticketsList.Join(concertsList, t => t.ConcertId, c => c.Id, (t, c) => new TicketDto()
+            List<TicketVm> ticketVms = ticketsList.Join(concertsList, t => t.ConcertId, c => c.Id, (t, c) => new TicketVm()
             {
                 Id = t.Id,
                 ConcertId = t.ConcertId,
@@ -25,7 +25,7 @@ namespace TicketBooking.Application.Features.Tickets.Queries.GetTicketList
                 ConcertTime = c.DateTime
             }).ToList();
 
-            return new TicketListVm() { Tickets = ticketDtos };
+            return new TicketListVm() { Tickets = ticketVms };
         }
     }
 }

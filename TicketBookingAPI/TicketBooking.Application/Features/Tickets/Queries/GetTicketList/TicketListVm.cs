@@ -8,6 +8,6 @@ namespace TicketBooking.Application.Features.Tickets.Queries.GetTicketList
 {
     public class TicketListVm
     {
-        public List<TicketDto> Tickets { get; set; }
+        public List<TicketVm> Tickets { get; set; }
     }
 }

@@ -38,25 +38,25 @@ namespace TicketBooking.WebAPI.Controllers
             return Ok(vm);
         }*/
 
-        [HttpPost]
+        /*[HttpPost]
         public async Task<ActionResult<Guid>> Create([FromBody] Guid concertId)
         {
             var command = new CreateTicketCommand() { UserId = UserId, ConcertId = concertId };
             var ticketId = await Mediator.Send(command);
 
             // email confirmation
-            /*var query = new GetConcertQuery() { Id = concertId };
+            *//*var query = new GetConcertQuery() { Id = concertId };
             var concert = await Mediator.Send(query);
 
             var email = User.FindFirstValue(ClaimTypes.Email);
-            var message = new Message(new[] { email }, 
-                $"Booking ticket for \"{concert.ConcertName}\"", 
+            var message = new Message(new[] { email },
+                $"Booking ticket for \"{concert.ConcertName}\"",
                 $"Confirm the booking of the ticket for the \"{concert.ConcertName}\" concert at {concert.DateTime.ToString("dddd, dd MMMM yyyy HH:mm")}.",
                 ticketId);
-            await _emailSender.SendConfirmationAsync(message);*/
+            await _emailSender.SendConfirmationAsync(message);*//*
 
             return Ok(ticketId);
-        }
+        }*/
 
         [AllowAnonymous]
         [HttpPost]

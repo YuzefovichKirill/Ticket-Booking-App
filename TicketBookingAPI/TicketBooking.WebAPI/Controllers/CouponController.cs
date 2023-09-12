@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TicketBooking.Application.Features.Coupons.Commands.CreateCoupon;
 using TicketBooking.Application.Features.Coupons.Commands.DeleteCoupon;
+using TicketBooking.Application.Features.Coupons.Queries.GetCoupon;
 using TicketBooking.Application.Features.Coupons.Queries.GetCouponList;
 
 namespace TicketBooking.WebAPI.Controllers
@@ -17,6 +18,14 @@ namespace TicketBooking.WebAPI.Controllers
             var query = new GetCouponListQuery();
             var couponList = await Mediator.Send(query);
             return Ok(couponList);
+        }
+
+        [HttpGet("{name}")]
+        public async Task<ActionResult<CouponListVm>> Get(string name)
+        {
+            var query = new GetCouponQuery() { UserId = UserId, Name = name };
+            var coupon = await Mediator.Send(query);
+            return Ok(coupon);
         }
 
         [HttpPost]
