@@ -1,41 +1,36 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
-import { TicketService } from "../services/ticket-service";
+import { OrderService } from "../services/order-service";
 
-export default function PaypalPayment({concertId, concertName, price}) {
-  const ticketService = new TicketService()
-  let ticketId;
+export default function PaypalPayment({items, coupons, price}) {
+  const orderService = new OrderService()
+ 
+  let body = {
+    tickets: items.map((item) => ({...item, concertId: item.id})),
+    coupons: coupons.map((coupon) => ({...coupon, couponId: coupon.id})) 
+  };
 
-  const createOrder = async (data, actions) => {
-    try{
-      const response = await ticketService.createTicket(concertId)
-      ticketId = response.data
-    }
-    catch (error) {
-      throw new Error(error)
-    }
+  const createOrder = useCallback(async (data, actions) => {
 
     return actions.order.create({
-      purchase_units: [
-        {
-          description: "Concert:" + concertName,
+      purchase_units: [{
+          description: "Buy cart items",
           amount: {
-            value: price
-          },
-        },
-      ],
-    });
-  }
+            value: price,
+            currency_code: 'USD'
+          }
+      }]
+    })
+  }, [items, coupons, price]);
 
   const onApprove = async (data, actions) => {
     await actions.order.capture();
     try {
-      await ticketService.ApprovePaidTicket(ticketId) 
+      await orderService.createOrder(body)
     }
     catch (error) {
       throw new Error(error)
     }
-
     alert("Transaction funds captured");
   }
 
@@ -43,14 +38,12 @@ export default function PaypalPayment({concertId, concertName, price}) {
     alert(error);
   }
 
-  const deleteOrder = async (data, actions) => {
-    await ticketService.deleteTicket(ticketId)
-  }
+  const deleteOrder = async (data, actions) => {}
 
   return (
     <PayPalScriptProvider options={{ clientId: "AQNSKnFHMKn3x0GvuApehmAWybUdcS1cZ59Kyxtk_I_l0VmUofn_yLQN54cSEdhzUgCJOXsDvIQSLiT8", currency: "USD", }}>
       <PayPalButtons createOrder={createOrder}
-        onApprove={onApprove} onError={onError} onCancel={deleteOrder} />
+        onApprove={onApprove} onError={onError} onCancel={deleteOrder} forceReRender={[items, coupons, price]}/>
     </PayPalScriptProvider>
   )
 }

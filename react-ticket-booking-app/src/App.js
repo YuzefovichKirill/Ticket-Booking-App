@@ -28,7 +28,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="*" element={<NotFound/>} />
-            <Route path="/" exact element={<Home/>}/>
+            <Route path="/" element={<Home/>} exact/>
             <Route path="/signin-callback" element={<SigninCallback/>}/>
             <Route path="/signout-callback" element={<SignoutCallback/>}/>
             <Route path="/concerts/concert-list" element={<ConcertList/>}/>

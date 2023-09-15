@@ -55,8 +55,6 @@ export default function ConcertInfo() {
             </div>
             <Button onClick={() => handleAddToCart({id: concert.id, concertName: concert.concertName, 
                                                                         dateTime: concert.dateTime, price: concert.price})}>Add to cart</Button>
-            {concert &&
-            <PaypalPayment concertId={concert?.id} price={concert?.price} concertName={concert?.concertName}/>}
         </>
     )
 }

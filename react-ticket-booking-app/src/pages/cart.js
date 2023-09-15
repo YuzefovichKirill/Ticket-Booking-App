@@ -2,11 +2,9 @@ import React, { useContext, useRef } from "react";
 import { CartContext } from "../contexts/cart-context";
 import "./cart.css"
 import PaypalPayment from "../components/paypal-buttons";
-import { CouponService } from "../services/coupon-service";
 
 export default function Cart() {
   const { cartItems, appliedCoupons, addToCart, removeFromCart, clearCart, getCartTotal, applyCoupon } = useContext(CartContext)
-  const couponService = new CouponService()
   var promocode = useRef(null)
 
   const handleApplyCoupon = (event) => {
@@ -16,37 +14,47 @@ export default function Cart() {
   }
 
   return (
-    <div className="cart-container">
-      <div className="cart-left-column">
-        <p>Your Cart</p>
-        {cartItems.map(item => {
-          return (
-            <div>{JSON.stringify(item)}</div>
-          )
-        })}
-        <hr/>
-        {appliedCoupons.map(coupon => {
-          return (
-            <div>{JSON.stringify(coupon)}</div>
-          )
-        })}
-      </div>
+    <>
+      <p className="title">Your Cart</p>
+      <div className="cart-container">
+        <div className="cart-left-column">
+          <div className="cart">
+          {cartItems.map(item => {
+            return (
+              <div className="cart-item">
+                <div className="concert-name">{item.concertName}</div>
+                <div className="date-time">{item.dateTime}</div>
+                <div className="cart-buttons">
+                  <button onClick={() => addToCart(item)}>Add</button>
+                  <div>{item.quantity}</div>
+                  <button onClick={() => removeFromCart(item)}>Remove</button>
+                </div>
+                <div className="cart-price">{item.price * item.quantity}$</div>
 
-      <div className="cart-right-column">
-        <p style={{visibility: "hidden"}}>hidden</p>
-        <div className="payment-block">
-          <p>Payment</p>
-          <p>Total: {getCartTotal()}</p>
-          {/* <PaypalPayment concertId={cartItems[0]?.id} price={getCartTotal()} concertName={cartItems[0]?.concertName}/> */}
+              </div>
+            );
+          })}
+          </div>
+          <button className="clear-cart-button" onClick={() => clearCart()}>Clear cart</button>
         </div>
-        <div>
-          <form onSubmit={handleApplyCoupon}>
-            <input type="text" maxLength="20" placeholder="Enter the promocode" ref={promocode}/>
-            <button type="submit">Submit</button>
-          </form>
+
+        <div className="cart-right-column">
+          <div className="payment-block">
+            <div><p>Payment</p></div>
+            <div><p>Total: {getCartTotal()}$</p></div>
+            <div className="paypal-buttons">
+              <PaypalPayment items={cartItems} coupons={appliedCoupons} price={getCartTotal()} />
+            </div>
+          </div>
+          <div className="promo-container">
+            <form onSubmit={handleApplyCoupon}>
+              <input className="promo-input" type="text" maxLength="20" placeholder="Enter the promocode" ref={promocode} />
+              <button className="promo-submit" type="submit">Submit</button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

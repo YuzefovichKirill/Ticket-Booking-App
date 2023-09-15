@@ -61,7 +61,7 @@ namespace TicketBooking.Persistence
                     ConcertName = "Party concert 1",
                     BandName = "Party band",
                     AmountOfTickets = 30,
-                    AmountOfAvailableTickets = 0,
+                    AmountOfAvailableTickets = 10,
                     DateTime = DateTime.Now,
                     Place = "Minsk",
                     GeoLng = 53.94,

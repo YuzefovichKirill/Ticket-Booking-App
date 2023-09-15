@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
 
@@ -16,29 +17,26 @@ namespace TicketBooking.Application.Features.Orders.CreateOrder
             foreach (var couponDto in request.Coupons)
             {
                 var coupon = await _ticketBookingDbContext.Coupons.FindAsync(new object[] { couponDto.CouponId });
-
                 if (coupon is null)
                 {
                     throw new Exception($"There is no such coupon (Coupon name: {couponDto.Name})");
                 }
 
-                var usedCoupon = await _ticketBookingDbContext.UsedCoupons.FindAsync(new object[] { request.UserId, couponDto.CouponId });
-
+                var usedCoupon = await _ticketBookingDbContext.UsedCoupons.FirstOrDefaultAsync(uc => uc.UserId == request.UserId && uc.Id == couponDto.CouponId, cancellationToken);
                 if (usedCoupon is not null)
                 {
                     throw new Exception($"This coupon is already used (Coupon name: {couponDto.Name})");
                 }
 
-                usedCoupon = new UsedCoupon()
+                var newUsedCoupon = new UsedCoupon()
                 {
                     Id = Guid.NewGuid(),
                     CouponId = couponDto.CouponId,
                     UserId = request.UserId
                 };
 
-                await _ticketBookingDbContext.UsedCoupons.AddAsync(usedCoupon, cancellationToken);
+                await _ticketBookingDbContext.UsedCoupons.AddAsync(newUsedCoupon, cancellationToken);
             }
-
 
             foreach (var ticketDto in request.Tickets)
             {
@@ -56,6 +54,18 @@ namespace TicketBooking.Application.Features.Orders.CreateOrder
                 else
                 {
                     concert.AmountOfAvailableTickets -= ticketDto.Quantity;
+                }
+
+                for (int i =  0; i < ticketDto.Quantity; i++)
+                {
+                    await _ticketBookingDbContext.Tickets.AddAsync(new Ticket() 
+                    { 
+                        Id = Guid.NewGuid(),
+                        UserId = request.UserId,
+                        IsConfirmed = false,
+                        IsPaid = true,
+                        ConcertId = ticketDto.ConcertId,
+                    }, cancellationToken);
                 }
             }
 
