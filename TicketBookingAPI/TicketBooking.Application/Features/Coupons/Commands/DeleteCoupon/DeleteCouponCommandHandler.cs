@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Interfaces;
 
 namespace TicketBooking.Application.Features.Coupons.Commands.DeleteCoupon
@@ -16,7 +17,7 @@ namespace TicketBooking.Application.Features.Coupons.Commands.DeleteCoupon
         
             if (coupon is null) 
             {
-                throw new Exception("There is no coupon in db with this id");
+                throw new NotFoundException("There is no such coupon");
             }
 
             _ticketBookingDbContext.Coupons.Remove(coupon);

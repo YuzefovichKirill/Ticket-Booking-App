@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
 
@@ -17,7 +18,7 @@ namespace TicketBooking.Application.Features.Concerts.Queries.GetConcert
 
             if (concert is null)
             {
-                throw new Exception("There is no concert in db with this id");
+                throw new NotFoundException("There is no such concert");
             }
 
             switch (concert.ConcertType)

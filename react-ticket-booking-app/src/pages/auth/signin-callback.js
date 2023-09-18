@@ -11,15 +11,9 @@ function SigninCallback() {
         }
         
         signinAsync()
-            .then(() => {
-                console.log('signin result')
-            })
-            .catch(() => {
-                 console.log('2signin result')
-            })
-
-        navigate('../' , { replace: true})
-        //navigate('/concerts/concert-list' , { replace: true})
+            .then(() => {})
+            .catch(() => {})
+        navigate('../concerts/concert-list' , { replace: true})
     }, [])
 
     return (

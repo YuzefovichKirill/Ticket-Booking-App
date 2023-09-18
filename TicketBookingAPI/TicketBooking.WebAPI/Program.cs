@@ -4,6 +4,7 @@ using Newtonsoft.Json.Serialization;
 using TicketBooking.Application;
 using TicketBooking.Email;
 using TicketBooking.Persistence;
+using TicketBooking.WebAPI.Middleware;
 
 namespace TicketBooking.WebAPI
 {
@@ -63,10 +64,6 @@ namespace TicketBooking.WebAPI
                     options.ClientId = "TicketBookingAPI";
                     options.ResponseType = "id_token token";
                     options.GetClaimsFromUserInfoEndpoint = true;
-
-                    /*options.Scope.Add("roles");
-                    options.ClaimActions.MapJsonKey("role", "role");
-                    options.TokenValidationParameters.RoleClaimType = "role";*/
                 });
             services.AddAuthorization();
 
@@ -94,6 +91,7 @@ namespace TicketBooking.WebAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ticket booking v1"));
             }
 
+            app.UseMyExceptionHandler();
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");

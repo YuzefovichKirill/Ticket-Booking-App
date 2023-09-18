@@ -6,7 +6,6 @@ import SigninCallback from './pages/auth/signin-callback'
 import SignoutCallback from './pages/auth/signout-callback'
 
 import Navbar from "./components/navbar";
-import Home from "./pages/home";
 import NotFound from "./pages/not-found";
 import ConcertList from "./pages/concerts/concert-list";
 import ConcertCreate from "./pages/concerts/concert-create";
@@ -17,6 +16,8 @@ import CouponList from "./pages/coupons/coupon-list";
 import RequireAuth from "./RequireAuth";
 import Cart from "./pages/cart";
 import CartProvider from "./contexts/cart-context";
+import Unauthorized from "./pages/unauthorized";
+import Restricted from "./pages/restricted";
 
 
 function App() {
@@ -28,7 +29,8 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="*" element={<NotFound/>} />
-            <Route path="/" element={<Home/>} exact/>
+            <Route path="/unauthorized" element={<Unauthorized/>}/>
+            <Route path="/restricted" element={<Restricted/>}/>
             <Route path="/signin-callback" element={<SigninCallback/>}/>
             <Route path="/signout-callback" element={<SignoutCallback/>}/>
             <Route path="/concerts/concert-list" element={<ConcertList/>}/>

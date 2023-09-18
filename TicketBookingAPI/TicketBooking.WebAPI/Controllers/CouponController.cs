@@ -8,11 +8,11 @@ using TicketBooking.Application.Features.Coupons.Queries.GetCouponList;
 namespace TicketBooking.WebAPI.Controllers
 {
     [Route("api/[controller]s")]
-    [Authorize(Roles = "Admin")]
     [ApiController]
     public class CouponController : BaseController
     {
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<CouponListVm>> GetAll()
         {
             var query = new GetCouponListQuery();
@@ -21,6 +21,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpGet("{name}")]
+        [Authorize]
         public async Task<ActionResult<CouponListVm>> Get(string name)
         {
             var query = new GetCouponQuery() { UserId = UserId, Name = name };
@@ -29,6 +30,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create([FromBody] CreateCouponCommand command)
         {
             var couponId = await Mediator.Send(command);
@@ -36,6 +38,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete([FromHeader] DeleteCouponCommand command)
         {
             await Mediator.Send(command);

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { TicketService } from "../../services/ticket-service";
+import "./ticket-list.css"
+import Datetime from "../../components/date-time";
 
 export default function TicketList() {
     var [tickets, setTickets] = useState();
@@ -10,27 +12,21 @@ export default function TicketList() {
             .catch(error => console.log(error.toJSON()))
     }, [])
 
-    function deleteTicket(id) {
-        ticketService.deleteTicket(id)
-            .then(() => setTickets(tickets.filter(ticket => ticket.id !== id)))
-            .catch(error => console.log(error.toJSON()))
-    }
-
     if (!tickets) return <div>There is no tickets</div>
 
     return (
         <>
-            <strong>Tickets</strong>
-            <ul>{
-                tickets?.map(ticket => {
+            <p className="title">Your tickets</p>
+            <div className="tickets-list">
+                {tickets?.map(ticket => {
                     return (
-                        <li>
-                            {ticket.id} {ticket.concertName} {ticket.concertTime}
-                            <button onClick={() => deleteTicket(ticket.id)}>Delete ticket</button>
-                        </li>
+                        <div className="ticket">
+                            <div className="concert-name">{ticket.concertName}</div>
+                            <Datetime datetime={ticket.concertTime}/>
+                        </div>
                     )
-                })
-            }</ul>
+                })}
+            </div>
         </>
     )
 } 

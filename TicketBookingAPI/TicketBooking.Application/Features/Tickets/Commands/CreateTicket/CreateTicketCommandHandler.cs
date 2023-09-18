@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicketBooking.Application.Exceptions;
+using TicketBooking.Application.Features.Orders.CreateOrder;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
 
@@ -23,12 +25,11 @@ namespace TicketBooking.Application.Features.Tickets.Commands.CreateTicket
 
             if (concert is null)
             {
-                throw new Exception("There is no such concert in db");
+                throw new NotFoundException("There is no such concert");
             }
-
             if (concert.AmountOfAvailableTickets == 0) 
             {
-                throw new Exception("There is no available tickets for this concert");
+                throw new NotEnoughTicketsException($"There is no available tickets for this concert ({1} for concert { concert.ConcertName})");
             }
             else
             {

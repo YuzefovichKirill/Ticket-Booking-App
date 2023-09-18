@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
 
@@ -19,13 +20,13 @@ namespace TicketBooking.Application.Features.Orders.CreateOrder
                 var coupon = await _ticketBookingDbContext.Coupons.FindAsync(new object[] { couponDto.CouponId });
                 if (coupon is null)
                 {
-                    throw new Exception($"There is no such coupon (Coupon name: {couponDto.Name})");
+                    throw new NotFoundException($"There is no such coupon (Coupon name: {couponDto.Name})");
                 }
 
                 var usedCoupon = await _ticketBookingDbContext.UsedCoupons.FirstOrDefaultAsync(uc => uc.UserId == request.UserId && uc.Id == couponDto.CouponId, cancellationToken);
                 if (usedCoupon is not null)
                 {
-                    throw new Exception($"This coupon is already used (Coupon name: {couponDto.Name})");
+                    throw new AlreadyUsedException($"This coupon is already used", couponDto.Name);
                 }
 
                 var newUsedCoupon = new UsedCoupon()
@@ -44,12 +45,12 @@ namespace TicketBooking.Application.Features.Orders.CreateOrder
 
                 if (concert is null)
                 {
-                    throw new Exception($"There is no such concert (Concert name: {ticketDto.ConcertName})");
+                    throw new NotFoundException($"There is no such concert (Concert name: {ticketDto.ConcertName})");
                 }
 
                 if (concert.AmountOfAvailableTickets < ticketDto.Quantity)
                 {
-                    throw new Exception($"There is no such quantity of available tickets for this concert ({ticketDto.Quantity} for concert {ticketDto.ConcertName})");
+                    throw new NotEnoughTicketsException($"There is no such quantity of available tickets for this concert ({ticketDto.Quantity} for concert {ticketDto.ConcertName})");
                 }
                 else
                 {

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
 
@@ -21,14 +22,14 @@ namespace TicketBooking.Application.Features.Tickets.Queries.GetTicket
 
             if (!tickets.Any())
             {
-                throw new Exception("There is no tickets in db with this ids");
+                throw new NotFoundException("There is no such tickets");
             }
 
             var concert = await _ticketBookingDbContext.Concerts.FindAsync(new object[] { request.ConcertId });
 
             if (concert is null)
             {
-                throw new Exception("There is no concert in db with this id");
+                throw new NotFoundException("There is no such concert");
             }
 
             string concertName = concert.ConcertName;

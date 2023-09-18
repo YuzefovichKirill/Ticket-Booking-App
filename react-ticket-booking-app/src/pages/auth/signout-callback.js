@@ -11,14 +11,8 @@ function SignoutCallback() {
         }
         
         signoutAsync()
-            .then(() => {
-                console.log('signout result')
-            })
-            .catch(() => {
-                console.log('2signout result')
-            })
-
-        navigate('../' , { replace: true})
+            .then(() => {})
+            .catch(() => {})
         navigate('/concerts/concert-list' , { replace: true})
     }, [])
 

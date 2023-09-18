@@ -1,8 +1,8 @@
-import React from "react"
+import React, { useContext } from "react"
 import { NavLink } from "react-router-dom";
-import { loginChanged , login, logout } from "../services/auth-service";
-import { useState } from "react";
+import { login, logout } from "../services/auth-service";
 import "./auth-buttons.css"
+import { AuthContext } from "../contexts/auth-context";
 
 function onLogin() {
     login();
@@ -13,16 +13,12 @@ function onLogout() {
 }
 
 function AuthButtons() {
-    
-    var [isUserAuthenticated, setUserAuthenticated] = useState(false);
-    loginChanged.subscribe(_isAuthenticated => {
-        setUserAuthenticated(_isAuthenticated);
-    })
+    const {isAuth} = useContext(AuthContext)
 
     return (
     <>
         {
-            isUserAuthenticated ? 
+            isAuth ? 
             <div className="nav-btn">
                 <NavLink className="nav-btn-link" onClick={() => onLogout()}>Logout</NavLink>
             </div> :

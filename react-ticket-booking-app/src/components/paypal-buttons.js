@@ -1,10 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { OrderService } from "../services/order-service";
+import { CartContext } from "../contexts/cart-context";
 
 export default function PaypalPayment({items, coupons, price}) {
   const orderService = new OrderService()
- 
+  const {clearCart} = useContext(CartContext)
   let body = {
     tickets: items.map((item) => ({...item, concertId: item.id})),
     coupons: coupons.map((coupon) => ({...coupon, couponId: coupon.id})) 
@@ -27,6 +28,7 @@ export default function PaypalPayment({items, coupons, price}) {
     await actions.order.capture();
     try {
       await orderService.createOrder(body)
+      clearCart()
     }
     catch (error) {
       throw new Error(error)

@@ -54,7 +54,7 @@ export default function ConcertInfo() {
                 <div>Age limit: {concert?.ageLimit}</div>}
             </div>
             <Button onClick={() => handleAddToCart({id: concert.id, concertName: concert.concertName, 
-                                                                        dateTime: concert.dateTime, price: concert.price})}>Add to cart</Button>
+                                                    dateTime: concert.dateTime, price: concert.price})}>Add to cart</Button>
         </>
     )
 }

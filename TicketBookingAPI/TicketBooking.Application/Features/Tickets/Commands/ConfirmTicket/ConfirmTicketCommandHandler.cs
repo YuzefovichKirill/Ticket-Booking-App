@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Interfaces;
 
 namespace TicketBooking.Application.Features.Tickets.Commands.ConfirmTicket
@@ -16,7 +17,7 @@ namespace TicketBooking.Application.Features.Tickets.Commands.ConfirmTicket
 
             if (ticket is null) 
             {
-                throw new Exception("There is no ticket in db with this id");
+                throw new NotFoundException("There is no such ticket");
             }
 
             ticket.IsConfirmed = true;

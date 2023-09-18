@@ -1,7 +1,11 @@
 nav {
   background: cornflowerblue;
+  box-sizing: border-box;
+  position: relative;
   height: 85px;
+  min-width: 100%;
   display: flex;
+
   justify-content: space-between;
   z-index: 12;
 }
@@ -17,6 +21,10 @@ nav {
   :active {
   color: #ffffff;
   }
+  cursor: pointer;
+  &.active {
+    color: #000000;
+  }
 }
 
 .link-group {
@@ -24,6 +32,11 @@ nav {
   display: flex;
   align-items: center;
   margin: 0 6px;
+}
+
+.end {
+  /* margin-left: auto; */
+  margin-right: 0; 
 }
 
 .cart-link {

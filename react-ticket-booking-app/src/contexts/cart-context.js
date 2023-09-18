@@ -24,7 +24,7 @@ const CartProvider = ({children}) => {
       );
     }
     else {
-      setCartItems([...cartItems, {...item, quantity: 1, couponName: ""}]);
+      setCartItems([...cartItems, {...item, quantity: 1, totalPrice: item.price, couponName: ""}]);
     }
 
     setAmount(prev => prev + 1)
@@ -57,7 +57,7 @@ const CartProvider = ({children}) => {
   }
 
   const getCartTotal = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
+    return cartItems.reduce((total, item) => total + item.totalPrice * item.quantity, 0)
   }
 
   const applyCoupon = async (name) => {
@@ -76,13 +76,12 @@ const CartProvider = ({children}) => {
       setCartItems(
         cartItems.map((cartItem) => 
           cartItem.id === coupon.concertId
-            ? { ...cartItem, couponName: coupon.name}
+            ? { ...cartItem, totalPrice: cartItem.price * (1 - coupon.discountPercentage/100), couponName: coupon.name}
             : cartItem
-        )
+        ) 
       );
       setAppliedCoupons([...appliedCoupons, coupon])
     }
-
     return coupon
   }
 

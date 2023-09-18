@@ -2,6 +2,7 @@ import React, { useContext, useRef } from "react";
 import { CartContext } from "../contexts/cart-context";
 import "./cart.css"
 import PaypalPayment from "../components/paypal-buttons";
+import Datetime from "../components/date-time";
 
 export default function Cart() {
   const { cartItems, appliedCoupons, addToCart, removeFromCart, clearCart, getCartTotal, applyCoupon } = useContext(CartContext)
@@ -23,13 +24,14 @@ export default function Cart() {
             return (
               <div className="cart-item">
                 <div className="concert-name">{item.concertName}</div>
-                <div className="date-time">{item.dateTime}</div>
+                <Datetime datetime={item.dateTime}/>
                 <div className="cart-buttons">
                   <button onClick={() => addToCart(item)}>Add</button>
                   <div>{item.quantity}</div>
                   <button onClick={() => removeFromCart(item)}>Remove</button>
                 </div>
-                <div className="cart-price">{item.price * item.quantity}$</div>
+                <div className="cart-price" style={{textDecoration: (item.totalPrice < item.price) ? 'line-through' : ''}} >{item.price * item.quantity}$</div>
+                {(item.totalPrice < item.price) && <div className="cart-price">{item.totalPrice * item.quantity}$</div>}
 
               </div>
             );
@@ -43,7 +45,7 @@ export default function Cart() {
             <div><p>Payment</p></div>
             <div><p>Total: {getCartTotal()}$</p></div>
             <div className="paypal-buttons">
-              <PaypalPayment items={cartItems} coupons={appliedCoupons} price={getCartTotal()} />
+              {getCartTotal() > 0 && <PaypalPayment items={cartItems} coupons={appliedCoupons} price={getCartTotal()} />}
             </div>
           </div>
           <div className="promo-container">

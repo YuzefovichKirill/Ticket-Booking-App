@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Features.Orders.CreateOrder;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
@@ -19,14 +20,14 @@ namespace TicketBooking.Application.Features.Coupons.Queries.GetCoupon
 
             if (coupon is null) 
             {
-                throw new Exception($"There is no such coupon (Coupon name: {request.Name})");
+                throw new NotFoundException($"There is no such coupon (Coupon name: {request.Name})");
             }
 
-            var usedCoupon = await _ticketBookingDbContext.UsedCoupons.FirstOrDefaultAsync(uc => uc.UserId == request.UserId && uc.Id == coupon.Id, cancellationToken);
+            var usedCoupon = await _ticketBookingDbContext.UsedCoupons.FirstOrDefaultAsync(uc => uc.UserId == request.UserId && uc.CouponId == coupon.Id, cancellationToken);
 
             if (usedCoupon is not null)
             {
-                throw new Exception($"This coupon is already used (Coupon name: {coupon.Name})");
+                throw new AlreadyUsedException($"This coupon is already used", coupon.Name);
             }
 
             return coupon;

@@ -2,6 +2,7 @@
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
 using System.Text.Json;
+using TicketBooking.Application.Exceptions;
 
 namespace TicketBooking.Application.Features.Concerts.Commands.UpdateConcert
 {
@@ -20,10 +21,15 @@ namespace TicketBooking.Application.Features.Concerts.Commands.UpdateConcert
 
             if (dbConcert is null)
             {
-                throw new Exception("There is no concert in db with this id");
+                throw new NotFoundException("There is no such concert");
             }
 
-            string concertType = request.JsonObj["ConcertType"].ToString();
+            string? concertType = request?.JsonObj["ConcertType"]?.ToString();
+            if (concertType is null)
+            {
+                throw new ArgumentNullException(nameof(concertType));
+            }
+
             JsonSerializerOptions options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
             Concert concert;
 
@@ -50,7 +56,7 @@ namespace TicketBooking.Application.Features.Concerts.Commands.UpdateConcert
                     dbParty.AgeLimit = party.AgeLimit;
                     break;
                 default: 
-                    throw new ArgumentException("There is no such concert type");
+                    throw new ArgumentException($"There is no such concert type ({concertType})");
             }
 
             dbConcert.AmountOfAvailableTickets = concert.AmountOfAvailableTickets;

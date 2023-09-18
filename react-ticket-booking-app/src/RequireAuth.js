@@ -7,11 +7,11 @@ const RequireAuth = ({role}) => {
 
   if (role) {
     return isAuth ?
-    (userRole === role  ? <Outlet/> : <Navigate to="/"/>) :
-    <Navigate to="/"/>
+    (userRole === role  ? <Outlet/> : <Navigate to="/restricted"/>) :
+    <Navigate to="/unauthorized"/>
   }
-  else{
-    return isAuth ? <Outlet/> : <Navigate to="/"/>
+  else {
+    return isAuth ? <Outlet/> : <Navigate to="/unauthorized"/>
   }
 }
 
