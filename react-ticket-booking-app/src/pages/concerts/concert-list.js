@@ -22,21 +22,23 @@ export default function ConcertList() {
     }, [])
 
     useEffect(() => {
-        setPoints(concerts.map((concert, id) => {
+        setPoints(prev => [])
+        setPoints( prev => concerts.map((concert, id) => {
             return {
                 id: id,
                 type: "Feature",
                 geometry: {
                     type: "Point",
-                    coordinates: [concert.geoLng, concert.geoLat]
+                    coordinates: [concert.geoLat, concert.geoLng]
                 },
                 properties: {
-                //balloonContent: `<div>${concert.concertName}</div>`,
-                iconCaption: concert.concertName,
+                balloonContent: `<div>${concert.concertName}</div>`,
+                //iconCaption: concert.concertName,
                 clusterCaption: `Метка №${id + 1}`
                 }
             };
         }))
+        console.log(points)
         console.log(points)
     }, [concerts])
 
@@ -122,6 +124,7 @@ export default function ConcertList() {
                                                 modules={["control.ZoomControl", "control.FullscreenControl"]} >
                                 <ObjectManager
                                     objects={{
+
                                         preset: 'islands#blueDotIconWithCaption',
                                         iconColor: '#0096FF',
                                         controls: [],

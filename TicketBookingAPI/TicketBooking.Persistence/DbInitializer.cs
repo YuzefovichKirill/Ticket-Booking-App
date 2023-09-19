@@ -32,8 +32,8 @@ namespace TicketBooking.Persistence
                     AmountOfAvailableTickets = 145,
                     DateTime = DateTime.Now,
                     Place = "Vitebsk",
-                    GeoLng = 55.1904,
-                    GeoLat = 30.2049,
+                    GeoLat = 55.1904,
+                    GeoLng = 30.2049,
                     Price = 5,
 
                     Composer = "Very famous composer", 
@@ -48,8 +48,8 @@ namespace TicketBooking.Persistence
                     AmountOfAvailableTickets = 500,
                     DateTime = DateTime.Now,
                     Place = "Minsk",
-                    GeoLng = 53.9,
-                    GeoLat = 27.5667,
+                    GeoLat = 53.9,
+                    GeoLng = 27.5667,
                     Price = 4,
 
                     GettingHere = "Some guide",
@@ -64,8 +64,8 @@ namespace TicketBooking.Persistence
                     AmountOfAvailableTickets = 10,
                     DateTime = DateTime.Now,
                     Place = "Mogilev",
-                    GeoLng = 53.887,
-                    GeoLat = 30.329,
+                    GeoLat = 53.887,
+                    GeoLng = 30.329,
                     Price = 3,
                 
                     AgeLimit = 16,

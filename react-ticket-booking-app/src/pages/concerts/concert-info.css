@@ -1,0 +1,51 @@
+.concert-info {
+  display: flex;
+  margin: 40px auto;
+  justify-content: center;
+  margin: 40px auto;
+  max-width: 800px;
+  background-color: white;
+  padding: 25px 40px 10px 40px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+.concert-info .primary-container {
+  display: flex;
+  flex-direction: column;
+  flex: 60%
+}
+
+.concert-info .secondary-container {
+  display: flex;
+  flex-direction: column;
+  flex: 40%
+}
+
+.concert-info .main-info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.concert-info .tickets-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.concert-info .payment-info {
+  margin-top: auto;
+  /* display: flex;
+  flex-direction: column;
+  align-self: self-end; */
+}
+
+.concert-info .payment-info .add-to-cart {
+  height: 30px;
+  width: 100px;
+}
+
+.concert-info .additional-details {
+  display: flex;
+  flex-direction: column;
+
+}

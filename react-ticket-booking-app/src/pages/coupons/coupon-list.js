@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {CouponService} from "../../services/coupon-service"
 import { Link } from "react-router-dom";
-
+import "./coupon-list.css"
 
 export default function CouponList() {
   var [coupons, setCoupons] = useState([])
@@ -26,16 +26,21 @@ export default function CouponList() {
 
   return (
     <div>
-      <p><strong>Coupons</strong></p>
-      <Link to='/coupon/coupon-create'>Create coupon</Link>
-      {coupons?.map(coupon => {
-        return (
-          <div>
-            {coupon.concertName} {coupon.name} {coupon.discountPercentage}%
-            <button onClick={() => deleteCoupon(coupon.id)}>Delete coupon</button>
-          </div>
-        )
-      })}
+      <p className="title">Coupons</p>
+      <Link to='/coupon/coupon-create'><div className="coupon-create-link">Create coupon</div></Link>
+      <div className="coupon-list">
+        {coupons?.map(coupon => {
+          return (
+            <div className="coupon">
+              <div className="concert-name">{coupon.concertName}</div>
+              <div className="coupon-name">{coupon.name} </div>
+              <div className="discount">{coupon.discountPercentage}%</div>
+              <button className="delete-coupon-button" onClick={() => deleteCoupon(coupon.id)}>Delete coupon</button>
+            </div>
+          )
+        })}
+      </div>
+
       <div>
       </div>   
     </div>

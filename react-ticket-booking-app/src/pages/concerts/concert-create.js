@@ -10,8 +10,8 @@ export default function ConcertCreate() {
     const amountOfAvailableTickets = useRef(null)
     const dateTime = useRef(null)
     const place = useRef(null)
-    const geoLng = useRef(null)
     const geoLat = useRef(null)
+    const geoLng = useRef(null)
     const price = useRef(null)
     const concert = {
         concertName: '',
@@ -20,8 +20,8 @@ export default function ConcertCreate() {
         amountOfAvailableTickets: 0,
         dateTime: Date.now(),
         place: '',
-        geoLng: 0,
         geoLat: 0,
+        geoLng: 0,
         concertType: '',
         price: 0
     }
@@ -47,8 +47,8 @@ export default function ConcertCreate() {
         concert.amountOfAvailableTickets = amountOfAvailableTickets?.current?.value || 0
         concert.dateTime = dateTime?.current?.value || Date.now()
         concert.place = place?.current?.value || ''
-        concert.geoLng = geoLng?.current?.value || 0
         concert.geoLat = geoLat?.current?.value || 0
+        concert.geoLng = geoLng?.current?.value || 0
         concert.price = price?.current?.value || 0
         concert.concertType = concertType
 
@@ -93,13 +93,13 @@ export default function ConcertCreate() {
 					</div>
                 </div>
 				<div className="form-row">
-					<div className="input-data">
-						<label>Geo longitude</label>
-						<input type="number" step='any' min={-180} max={180} ref={geoLng} required/>
-					</div>
-					<div className="input-data">
+                    <div className="input-data">
 						<label>Geo latitude</label>
 						<input type="number" step='any' min={-90} max={90} ref={geoLat} required/>
+					</div>
+                    <div className="input-data">
+						<label>Geo longitude</label>
+						<input type="number" step='any' min={-180} max={180} ref={geoLng} required/>
 					</div>
                 </div>
 				<div className="form-row">
