@@ -31,7 +31,7 @@ export default function CouponList() {
       {coupons?.map(coupon => {
         return (
           <div>
-            {coupon.id} {coupon.concertId} {coupon.name} {coupon.discountPercentage}
+            {coupon.concertName} {coupon.name} {coupon.discountPercentage}%
             <button onClick={() => deleteCoupon(coupon.id)}>Delete coupon</button>
           </div>
         )

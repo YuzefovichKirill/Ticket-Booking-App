@@ -16,7 +16,22 @@ namespace TicketBooking.Application.Features.Coupons.Queries.GetCouponList
         {
             List<Coupon> coupons = await _ticketBookingDbContext.Coupons.ToListAsync();
             
-            return new CouponListVm() { Coupons = coupons }; 
+            var concertInfos = await _ticketBookingDbContext.Concerts.Select(c => new { c.Id, c.ConcertName }).ToListAsync();
+
+            List<CouponVm> couponVms = coupons
+                .Join(concertInfos,
+                     coupon => coupon.ConcertId,
+                     concertInfo => concertInfo.Id, 
+                     (coupon, concertInfo) =>
+                         new CouponVm()
+                         {
+                             Id = coupon.Id,
+                             ConcertName = concertInfo.ConcertName,
+                             DiscountPercentage = coupon.DiscountPercentage,
+                             Name = coupon.Name
+                         }).ToList();
+
+            return new CouponListVm() { Coupons = couponVms }; 
         }
     }
 }

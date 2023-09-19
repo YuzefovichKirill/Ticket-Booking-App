@@ -63,9 +63,9 @@ namespace TicketBooking.Persistence
                     AmountOfTickets = 30,
                     AmountOfAvailableTickets = 10,
                     DateTime = DateTime.Now,
-                    Place = "Minsk",
-                    GeoLng = 53.94,
-                    GeoLat = 27.55,
+                    Place = "Mogilev",
+                    GeoLng = 53.887,
+                    GeoLat = 30.329,
                     Price = 3,
                 
                     AgeLimit = 16,
@@ -79,40 +79,30 @@ namespace TicketBooking.Persistence
                     Id = ticketGuids[0],
                     UserId = Guid.Empty,
                     ConcertId = concertGuids[0],
-                    IsConfirmed = true,
-                    IsPaid = true                    
                 },
                 new Ticket()
                 {
                     Id = ticketGuids[1],
                     UserId = Guid.Empty,
                     ConcertId = concertGuids[0],
-                    IsConfirmed = true,
-                    IsPaid = true
                 },
                 new Ticket()
                 {
                     Id = ticketGuids[2],
                     UserId = Guid.Empty,
                     ConcertId = concertGuids[0],
-                    IsConfirmed = true,
-                    IsPaid = true
                 },
                 new Ticket()
                 {
                     Id = ticketGuids[3],
                     UserId = Guid.Empty,
                     ConcertId = concertGuids[2],
-                    IsConfirmed = true,
-                    IsPaid = true
                 },
                 new Ticket()
                 {
                     Id = ticketGuids[4],
                     UserId = Guid.Empty,
                     ConcertId = concertGuids[2],
-                    IsConfirmed = true,
-                    IsPaid = true
                 },
             });
 

@@ -20,7 +20,7 @@ namespace TicketBooking.Application.Features.Tickets.Commands.ApprovePaymentTick
                 throw new NotFoundException("There is no such ticket");
             }
 
-            ticket.IsPaid = true;
+            //ticket.IsPaid = true;
             await _ticketBookingDbContext.SaveChangesAsync(cancellationToken);
         }
     }

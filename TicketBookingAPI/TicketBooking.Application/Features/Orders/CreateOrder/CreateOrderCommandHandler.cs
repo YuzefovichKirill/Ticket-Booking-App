@@ -63,8 +63,6 @@ namespace TicketBooking.Application.Features.Orders.CreateOrder
                     { 
                         Id = Guid.NewGuid(),
                         UserId = request.UserId,
-                        IsConfirmed = false,
-                        IsPaid = true,
                         ConcertId = ticketDto.ConcertId,
                     }, cancellationToken);
                 }

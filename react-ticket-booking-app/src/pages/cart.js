@@ -30,8 +30,10 @@ export default function Cart() {
                   <div>{item.quantity}</div>
                   <button onClick={() => removeFromCart(item)}>Remove</button>
                 </div>
-                <div className="cart-price" style={{textDecoration: (item.totalPrice < item.price) ? 'line-through' : ''}} >{item.price * item.quantity}$</div>
-                {(item.totalPrice < item.price) && <div className="cart-price">{item.totalPrice * item.quantity}$</div>}
+                <div className="cart-price">
+                  <div style={{textDecoration: (item.totalPrice < item.price) ? 'line-through' : ''}} >{item.price * item.quantity}$</div>
+                  {(item.totalPrice < item.price) && <div>{item.totalPrice * item.quantity}$</div>}
+                </div>
 
               </div>
             );

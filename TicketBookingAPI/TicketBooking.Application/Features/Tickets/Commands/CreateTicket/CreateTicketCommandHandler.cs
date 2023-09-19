@@ -41,8 +41,6 @@ namespace TicketBooking.Application.Features.Tickets.Commands.CreateTicket
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,
                 ConcertId = request.ConcertId,
-                IsConfirmed = false,
-                IsPaid = false
             };
 
             await _ticketBookingDbContext.Tickets.AddAsync(ticket, cancellationToken);

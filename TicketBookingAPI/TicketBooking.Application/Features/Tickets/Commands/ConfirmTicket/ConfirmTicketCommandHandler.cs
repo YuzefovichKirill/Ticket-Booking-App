@@ -20,7 +20,7 @@ namespace TicketBooking.Application.Features.Tickets.Commands.ConfirmTicket
                 throw new NotFoundException("There is no such ticket");
             }
 
-            ticket.IsConfirmed = true;
+            //ticket.IsConfirmed = true;
             await _ticketBookingDbContext.SaveChangesAsync(cancellationToken);
         }
     }

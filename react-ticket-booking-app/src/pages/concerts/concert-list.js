@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { ConcertService } from "../../services/concert-service";
 import { Link } from "react-router-dom";
-import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
+import { YMaps, Map, Placemark, ObjectManager } from '@pbe/react-yandex-maps';
 import "./concert-list.css"
 import { CartContext } from "../../contexts/cart-context";
 import Datetime from "../../components/date-time";
@@ -14,12 +14,31 @@ export default function ConcertList() {
     var concertService = new ConcertService();
     const { addToCart } = useContext(CartContext)
     const { userRole } = useContext(AuthContext)
-
+    var [points, setPoints] = useState([])
     useEffect(() => {
         concertService.getConcertList(concertName?.current?.value, concertType)
             .then(data => setConcerts(data.data.concerts))
             .catch(error => console.log(error.toJSON()))
     }, [])
+
+    useEffect(() => {
+        setPoints(concerts.map((concert, id) => {
+            return {
+                id: id,
+                type: "Feature",
+                geometry: {
+                    type: "Point",
+                    coordinates: [concert.geoLng, concert.geoLat]
+                },
+                properties: {
+                //balloonContent: `<div>${concert.concertName}</div>`,
+                iconCaption: concert.concertName,
+                clusterCaption: `Метка №${id + 1}`
+                }
+            };
+        }))
+        console.log(points)
+    }, [concerts])
 
     function getConcertListWithFilters() {
         concertService.getConcertList(concertName?.current?.value, concertType)
@@ -48,41 +67,6 @@ export default function ConcertList() {
     return (
         <>
             <div className="wrapper">
-
-                {/* {(concerts && concerts.length > 0 ) 
-                ?
-                <div className="concert-list">
-                    <p className="title"><strong>Concerts</strong></p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>&nbsp;</th>
-                                <th>Concert Name</th>
-                                <th>Band name</th>
-                                <th>Date and Time</th>
-                                <th>Concert Type</th>
-                                <th>&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {concerts?.map(concert => {
-                                return (
-                                    <tr className="concert">
-                                        <td><Link to='/concerts/concert-info' state={{concertId: concert.id}}>Get concert info</Link></td>
-                                        <td>{concert.concertName}</td>
-                                        <td>{concert.bandName}</td>
-                                        <td>{concert.dateTime}</td>
-                                        <td>{concert.concertType}</td>
-                                        <td><button onClick={() => deleteConcert(concert.id)}>Delete concert</button></td>
-                                    </tr>
-                                )   
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-                : 
-                <div className="title">There is no concerts</div>} */}
-
                 <div className="concert-list-left-column">
                     {(concerts && concerts.length > 0 ) 
                     ?
@@ -134,16 +118,26 @@ export default function ConcertList() {
                     <p className="title"><strong>Location on map</strong></p>
                     <div className="map">
                         <YMaps>
-                            <Map defaultState={{ center: [53.8839926266, 27.58253953370], zoom: 6 }} >
-                                {concerts?.map(concert => {
-                                    return (
-                                        <Placemark
-                                            modules={["geoObject.addon.balloon"]}
-                                            defaultGeometry={[concert.geoLng, concert.geoLat]}
-                                            properties={{ balloonContentBody: concert.concertName }}
-                                        />
-                                    )
-                                })}
+                            <Map defaultState={{ center: [53.8839926266, 27.58253953370], zoom: 3, controls: ["zoomControl", "fullscreenControl"]}}
+                                                modules={["control.ZoomControl", "control.FullscreenControl"]} >
+                                <ObjectManager
+                                    objects={{
+                                        preset: 'islands#blueDotIconWithCaption',
+                                        iconColor: '#0096FF',
+                                        controls: [],
+                                    }}
+                                    clusters={{}}
+                                    options={{
+                                        clusterize: true,
+
+                                        gridSize: 32,
+                                    }}
+                                    features={{ type: 'FeatureCollection', features: points }}
+                                    modules={[
+                                        'objectManager.addon.objectsBalloon',
+                                        'objectManager.addon.clustersBalloon',
+                                    ]}
+                                    />
                             </Map>
                         </YMaps>
                     </div>
