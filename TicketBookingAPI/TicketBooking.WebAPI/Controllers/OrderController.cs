@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TicketBooking.Application.Features.Orders.CreateOrder;
+using TicketBooking.Application.Features.Orders.CreatePreOrder;
+using TicketBooking.Application.Features.Orders.DeletePreOrder;
 
 namespace TicketBooking.WebAPI.Controllers
 {
@@ -11,11 +13,29 @@ namespace TicketBooking.WebAPI.Controllers
     public class OrderController : BaseController
     {
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] CreateOrderCommand command)
+        [Route("pre-order")]
+        public async Task<ActionResult> CreatePreOrder([FromBody] CreatePreOrderCommand command)
         {
             command.UserId = UserId;
             await Mediator.Send(command);
-            return Ok();
+            return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateOrder([FromBody] CreateOrderCommand command)
+        {
+            command.UserId = UserId;
+            await Mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpPut]
+        [Route("pre-order")]
+        public async Task<ActionResult> DeletePreorder([FromBody] DeletePreOrderCommand command)
+        {
+            command.UserId = UserId;
+            await Mediator.Send(command);
+            return NoContent();
         }
     }
 }

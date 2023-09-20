@@ -29,15 +29,6 @@ namespace TicketBooking.WebAPI.Controllers
             return Ok(vm);
         }
 
-        /*[HttpGet("{id}")]
-        [Authorize]
-        public async Task<ActionResult<TicketVm>> Get(Guid concertId)
-        {
-            var query = new GetTicketQuery() { UserId = UserId, ConcertId = concertId };
-            var vm = await Mediator.Send(query);
-            return Ok(vm);
-        }*/
-
         /*[HttpPost]
         public async Task<ActionResult<Guid>> Create([FromBody] Guid concertId)
         {
@@ -58,7 +49,7 @@ namespace TicketBooking.WebAPI.Controllers
             return Ok(ticketId);
         }*/
 
-        [AllowAnonymous]
+        /*[AllowAnonymous]
         [HttpPost]
         [Route("confirm/{ticketId}")]
         public async Task<ActionResult> ConfirmTicket(Guid ticketId)
@@ -66,23 +57,23 @@ namespace TicketBooking.WebAPI.Controllers
             var command = new ConfirmTicketCommand() { Id = ticketId };
             await Mediator.Send(command);
             return NoContent();
-        }
+        }*/
 
-        [HttpPost]
+        /*[HttpPost]
         [Route("approve-payment")]
         public async Task<ActionResult> ApprovePayment([FromBody] Guid id)
         {
             var command = new ApprovePaidTicketCommand() { Id = id };
             await Mediator.Send(command);
             return NoContent();
-        }
+        }*/
 
-        [HttpDelete("{id}")]
+        /*[HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
             var command = new DeleteTicketCommand() { Id = id };
             await Mediator.Send(command);
             return NoContent();
-        }
+        }*/
     }
 }

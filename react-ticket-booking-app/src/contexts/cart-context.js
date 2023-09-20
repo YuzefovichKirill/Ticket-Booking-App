@@ -62,6 +62,9 @@ const CartProvider = ({children}) => {
 
   const applyCoupon = async (name) => {
     var data = await couponService.getCoupon(name)
+      .catch(error => alert(error.response.data.error))
+    if (!data) return
+    
     var coupon = data.data
     const isCouponUsed = appliedCoupons.find((coupon) => coupon.name === name)
     if (isCouponUsed) {

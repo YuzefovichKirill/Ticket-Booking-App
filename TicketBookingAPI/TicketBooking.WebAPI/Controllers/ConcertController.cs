@@ -44,14 +44,14 @@ namespace TicketBooking.WebAPI.Controllers
             return Ok(concertId);
         }
 
-        [HttpPut]
+        /*[HttpPut]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Update([FromBody] JsonObject jsonObj)
         {
             var command = new UpdateConcertCommand() { JsonObj = jsonObj };
             await Mediator.Send(command);
             return NoContent();
-        }
+        }*/
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
