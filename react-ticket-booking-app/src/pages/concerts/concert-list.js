@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { ConcertService } from "../../services/concert-service";
 import { Link } from "react-router-dom";
-import { YMaps, Map, Placemark, ObjectManager } from '@pbe/react-yandex-maps';
+import { YMaps, Map, ObjectManager } from '@pbe/react-yandex-maps';
 import "./concert-list.css"
 import { CartContext } from "../../contexts/cart-context";
 import Datetime from "../../components/date-time";
@@ -18,12 +18,11 @@ export default function ConcertList() {
     useEffect(() => {
         concertService.getConcertList(concertName?.current?.value, concertType)
             .then(data => setConcerts(data.data.concerts))
-            .catch(error => console.log(error.toJSON()))
+            .catch((error) => alert('Server is not responding. Try later'))	
     }, [])
 
     useEffect(() => {
-        setPoints(prev => [])
-        setPoints( prev => concerts.map((concert, id) => {
+        setPoints(concerts.map((concert, id) => {
             return {
                 id: id,
                 type: "Feature",
@@ -38,14 +37,12 @@ export default function ConcertList() {
                 }
             };
         }))
-        console.log(points)
-        console.log(points)
     }, [concerts])
 
     function getConcertListWithFilters() {
         concertService.getConcertList(concertName?.current?.value, concertType)
             .then(data => setConcerts(data.data.concerts))
-            .catch(error => console.log(error.toJSON()));
+            .catch((error) => alert(error?.response?.data?.error))	
     }
 
     function deleteConcert(id) {
@@ -53,9 +50,9 @@ export default function ConcertList() {
         .then(() => {
             concertService.getConcertList(concertName?.current?.value, concertType)
                 .then(data => setConcerts(data.data.concerts))
-                .catch(error => console.log(error.toJSON()));
+                .catch((error) => alert(alert('Server is not responding. Try later')))	
         })
-        .catch((error) => console.log(error.toJSON()));
+        .catch((error) => alert(error.response.data.error))	
     }
 
     const changeType = (value) => {
@@ -67,86 +64,85 @@ export default function ConcertList() {
     }
 
     return (
-        <>
-            <div className="wrapper">
-                <div className="concert-list-left-column">
-                    {(concerts && concerts.length > 0 ) 
-                    ?
-                    <div className="concert-list">
-                        <p className="title"><strong>Concerts</strong></p>
-                        {concerts?.map(concert => {
-                            return (
-                            <div className="concert">
-                                <div className="concert-payload">
-                                    <div className="info">
-                                        <div>{concert.concertName}</div>
-                                        <div>{concert.bandName}</div>
-                                    </div>    
+        <div className="concert-list-page">
+            <div className="concert-list-left-column">
+                {(concerts && concerts.length > 0 ) 
+                ?
+                <div className="concert-list">
+                    <p className="title">Concerts</p>
+                    {concerts?.map(concert => {
+                        return (
+                        <div className="concert">
+                            <div className="concert-payload">
+                                <div className="info concert-name">
+                                    <div style={{fontSize: '20px'}}>{concert.concertName}</div>
+                                    <div style={{fontSize: '18px'}}>{concert.bandName}</div>
+                                </div>    
+                                <div className="info date-time">
                                     <Datetime datetime={concert.dateTime}/>
-                                    <div className="info">
-                                        <div>{concert.price} $</div>
-                                    </div> 
-                                    <div className="info">
-                                        <div>{concert.concertType}</div>
-                                    </div>
                                 </div>
-                                <div className="buttons">
-                                    <Link to='/concerts/concert-info' state={{concertId: concert.id}}>Get concert info</Link>
-                                    <button onClick={() => handleAddToCart({id: concert.id, concertName: concert.concertName, 
-                                                                            dateTime: concert.dateTime, price: concert.price})}>Add to cart</button>
-                                    {userRole === "Admin" &&<button onClick={() => deleteConcert(concert.id)}>Delete concert</button>}
+                                <div className="info price">
+                                    <div>{concert.price} $</div>
+                                </div> 
+                                <div className="info concert-type">
+                                    <div>{concert.concertType}</div>
                                 </div>
                             </div>
-                            )   
-                        })}
-                    </div>
-                    : 
-                    <div className="title">There is no concerts</div>}
+                            <div className="buttons">
+                                <Link to='/concerts/concert-info' state={{concertId: concert.id}}>Get info</Link>
+                                <button onClick={() => handleAddToCart({id: concert.id, concertName: concert.concertName, 
+                                                                        dateTime: concert.dateTime, price: concert.price})}>Add to cart</button>
+                                {userRole === "Admin" &&<button onClick={() => deleteConcert(concert.id)}>Delete concert</button>}
+                            </div>
+                        </div>
+                        )   
+                    })}
                 </div>
-
-                <div className="concert-list-right-column">
-                    <div className="concert-search">
-                        <label>Name of concert</label>
-                        <input type="text" ref={concertName}/>
-                        <label >Type of Concert</label>
-                        <select className="select-type" onChange={(e) => changeType(e.target.value)}>
-                            <option value=''/>
-                            <option value='ClassicalConcert'>Classical concert</option>
-                            <option value='OpenAir'>Open air</option>
-                            <option value='Party'>Party</option>
-                        </select>
-                        <button onClick={getConcertListWithFilters.bind(null, concertName, concertType)}>Find concerts</button>
-                    </div>
-                    <p className="title"><strong>Location on map</strong></p>
-                    <div className="map">
-                        <YMaps>
-                            <Map defaultState={{ center: [53.8839926266, 27.58253953370], zoom: 3, controls: ["zoomControl", "fullscreenControl"]}}
-                                                modules={["control.ZoomControl", "control.FullscreenControl"]} >
-                                <ObjectManager
-                                    objects={{
-
-                                        preset: 'islands#blueDotIconWithCaption',
-                                        iconColor: '#0096FF',
-                                        controls: [],
-                                    }}
-                                    clusters={{}}
-                                    options={{
-                                        clusterize: true,
-
-                                        gridSize: 32,
-                                    }}
-                                    features={{ type: 'FeatureCollection', features: points }}
-                                    modules={[
-                                        'objectManager.addon.objectsBalloon',
-                                        'objectManager.addon.clustersBalloon',
-                                    ]}
-                                    />
-                            </Map>
-                        </YMaps>
-                    </div>
-                </div>
-                
+                : 
+                <div className="title">There is no concerts</div>}
             </div>
-        </>
+
+            <div className="concert-list-right-column">
+                <div className="concert-search">
+                    <label>Name of concert</label>
+                    <input type="text" ref={concertName}/>
+                    <label >Type of Concert</label>
+                    <select className="select-type" onChange={(e) => changeType(e.target.value)}>
+                        <option value=''/>
+                        <option value='ClassicalConcert'>Classical concert</option>
+                        <option value='OpenAir'>Open air</option>
+                        <option value='Party'>Party</option>
+                    </select>
+                    <button onClick={getConcertListWithFilters.bind(null, concertName, concertType)}>Find concerts</button>
+                </div>
+                <p className="title"><strong>Location on map</strong></p>
+                <div className="map">
+                    <YMaps>
+                        <Map defaultState={{ center: [53.8839926266, 27.58253953370], zoom: 3, controls: ["zoomControl", "fullscreenControl"]}}
+                                            modules={["control.ZoomControl", "control.FullscreenControl"]} >
+                            <ObjectManager
+                                objects={{
+
+                                    preset: 'islands#blueDotIconWithCaption',
+                                    iconColor: '#0096FF',
+                                    controls: [],
+                                }}
+                                clusters={{}}
+                                options={{
+                                    clusterize: true,
+
+                                    gridSize: 32,
+                                }}
+                                features={{ type: 'FeatureCollection', features: points }}
+                                modules={[
+                                    'objectManager.addon.objectsBalloon',
+                                    'objectManager.addon.clustersBalloon',
+                                ]}
+                                />
+                        </Map>
+                    </YMaps>
+                </div>
+            </div>
+        </div>
     )
 }

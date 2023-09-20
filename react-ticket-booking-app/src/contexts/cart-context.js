@@ -64,14 +64,21 @@ const CartProvider = ({children}) => {
     var data = await couponService.getCoupon(name)
     var coupon = data.data
     const isCouponUsed = appliedCoupons.find((coupon) => coupon.name === name)
-    if (isCouponUsed)  throw "This coupon is already used"
-
+    if (isCouponUsed) {
+      alert("This coupon is already used")
+      return
+    }
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === coupon.concertId)
-    if (!isItemInCart)  throw "Cart has no concert for this coupon"
+    if (!isItemInCart)  {
+      alert("Cart has no concert for this coupon")
+      return
+    }
 
     const isWithoutCoupon = isItemInCart.couponName === ""
-    if (!isWithoutCoupon) throw "Concert already have applied coupon"
-    
+    if (!isWithoutCoupon) {
+      alert("Concert already have applied coupon")
+      return
+    }
     else {
       setCartItems(
         cartItems.map((cartItem) => 
@@ -82,7 +89,6 @@ const CartProvider = ({children}) => {
       );
       setAppliedCoupons([...appliedCoupons, coupon])
     }
-    return coupon
   }
 
   useEffect(() => {

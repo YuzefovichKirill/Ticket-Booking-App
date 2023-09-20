@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ConcertService } from "../../services/concert-service";
 import { CouponService } from "../../services/coupon-service";
+import { useNavigate } from "react-router-dom";
 
 export default function CouponCreate() {
+	var navigate = useNavigate()
 	const couponService = new CouponService()
 	var [concerts, setConcerts] = useState([])
 
@@ -19,7 +21,7 @@ export default function CouponCreate() {
 		var concertService = new ConcertService();
 		concertService.getConcertList()
 			.then(data => setConcerts(data.data.concerts))
-			.catch(error => console.log(error.toJSON()));
+			.catch((error) => alert(error.response.data))
 	}, [])
 
 	const createCoupon = (event) => {
@@ -29,6 +31,8 @@ export default function CouponCreate() {
 		coupon.discountPercentage = discountPercentage?.current?.value || 0
 
 		couponService.createCoupon(coupon)
+			.then(() => navigate('../coupons/coupon-list' , { replace: true}))
+			.catch((error) => alert(error.response.data.error))	
 	}
 
 	return (

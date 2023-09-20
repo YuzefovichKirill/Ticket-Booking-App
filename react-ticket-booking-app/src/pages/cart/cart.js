@@ -1,8 +1,8 @@
 import React, { useContext, useRef } from "react";
-import { CartContext } from "../contexts/cart-context";
+import { CartContext } from "../../contexts/cart-context";
 import "./cart.css"
-import PaypalPayment from "../components/paypal-buttons";
-import Datetime from "../components/date-time";
+import PaypalPayment from "../../components/paypal-buttons";
+import Datetime from "../../components/date-time";
 
 export default function Cart() {
   const { cartItems, appliedCoupons, addToCart, removeFromCart, clearCart, getCartTotal, applyCoupon } = useContext(CartContext)
@@ -11,7 +11,10 @@ export default function Cart() {
   const handleApplyCoupon = (event) => {
     event.preventDefault()
     var promo = promocode?.current?.value
-    if (promo) applyCoupon(promo)
+    if (promo) {
+      applyCoupon(promo)
+      promocode.current.value = ''
+    }
   }
 
   return (

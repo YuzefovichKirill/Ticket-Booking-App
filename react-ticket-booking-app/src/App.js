@@ -14,7 +14,7 @@ import ConcertInfo from "./pages/concerts/concert-info";
 import CouponCreate from "./pages/coupons/coupon-create";
 import CouponList from "./pages/coupons/coupon-list";
 import RequireAuth from "./RequireAuth";
-import Cart from "./pages/cart";
+import Cart from "./pages/cart/cart";
 import CartProvider from "./contexts/cart-context";
 import Unauthorized from "./pages/unauthorized";
 import Restricted from "./pages/restricted";
@@ -43,8 +43,8 @@ function App() {
 
             <Route  element={<RequireAuth role="Admin"/>}>
               <Route path="/concerts/concert-create" element={<ConcertCreate/>}/>
-              <Route path="/coupon/coupon-create" element={<CouponCreate/>}/>
-              <Route path="/coupon/coupon-list" element={<CouponList/>}/>
+              <Route path="/coupons/coupon-create" element={<CouponCreate/>}/>
+              <Route path="/coupons/coupon-list" element={<CouponList/>}/>
             </Route>
           </Routes>
         </Router>

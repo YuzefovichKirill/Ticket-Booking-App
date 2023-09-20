@@ -25,7 +25,7 @@ const Navbar = () => {
             <NavLink className="nav-link" to='concerts/concert-create'>
                 Create Concert
             </NavLink>
-            <NavLink className="nav-link" to='coupon/coupon-list'>
+            <NavLink className="nav-link" to='coupons/coupon-list'>
                 Coupons
             </NavLink>
             </>}

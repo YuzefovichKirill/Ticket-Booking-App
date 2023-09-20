@@ -1,6 +1,5 @@
 import { UserManager } from 'oidc-client'
 import environment from '../environments/environment'
-import { Subject } from 'rxjs';
 import jwt_decode from 'jwt-decode'
 
 const settings = {
@@ -13,9 +12,7 @@ const settings = {
 }
 
 const userManager = new UserManager(settings);
-var user = null;
-const loginChangedSubject = new Subject();
-export var loginChanged = loginChangedSubject.asObservable();
+var user = null
 
 export function login() {
     return userManager.signinRedirect();
@@ -25,7 +22,6 @@ export function finishLogin() {
     return userManager.signinRedirectCallback()
         .then(_user => {
             user = _user;
-            loginChangedSubject.next(checkUser(user));
             return user;
         })
 }
@@ -37,10 +33,6 @@ export function logout() {
 export function finishLogout() {
     user = null;
     return userManager.signoutRedirectCallback();
-}
-
-export function checkUser(_user) {
-    return !!_user && !_user.expired;
 }
 
 export function getAccessToken() {

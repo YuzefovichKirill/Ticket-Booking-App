@@ -19,7 +19,6 @@ function SigninCallback() {
     return (
         <div>Redirecting...</div>
     )
-    
 }
 
 export default SigninCallback

@@ -9,7 +9,7 @@ export default function TicketList() {
     useEffect(() => {
         ticketService.getTicketList()
             .then(data => setTickets(data.data.tickets))
-            .catch(error => console.log(error.toJSON()))
+            .catch(error => alert('Server is not responding. Try later'))
     }, [])
 
     if (!tickets) return <div>There is no tickets</div>

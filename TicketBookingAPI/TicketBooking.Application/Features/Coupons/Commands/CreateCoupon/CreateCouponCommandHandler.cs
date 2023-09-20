@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
 
@@ -18,7 +19,14 @@ namespace TicketBooking.Application.Features.Coupons.Commands.CreateCoupon
 
         public async Task<Guid> Handle(CreateCouponCommand request, CancellationToken cancellationToken)
         {
-            Coupon coupon = new Coupon()
+            var coupon = _ticketBookingDbContext.Coupons.FirstOrDefault(c => c.Name == request.Name);
+
+            if (coupon is not null)
+            {
+                throw new AlreadyUsedException("This coupon name is already used", coupon.Name);
+            }
+
+            coupon = new Coupon()
             {
                 Id = Guid.NewGuid(),
                 ConcertId = request.ConcertId,

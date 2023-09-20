@@ -10,7 +10,7 @@ export default function CouponList() {
   useEffect(() => {
     couponService.getCouponList()
       .then(data => setCoupons(data.data.coupons))
-      .catch(error => console.log(error.toJSON()))
+      .catch((error) => alert('Server is not responding. Try later'))
   }, []) 
 
   function deleteCoupon(id) {
@@ -18,16 +18,16 @@ export default function CouponList() {
       .then(() => {
         couponService.getCouponList()
         .then(data => setCoupons(data.data.coupons))
-        .catch(error => console.log(error.toJSON()))
+        .catch((error) => alert('Server is not responding. Try later'))	
       })
-      .catch(error => console.log(error.toJSON()))
+      .catch((error) => alert(error.response.data.error))	
   }
 
 
   return (
     <div>
       <p className="title">Coupons</p>
-      <Link to='/coupon/coupon-create'><div className="coupon-create-link">Create coupon</div></Link>
+      <Link to='/coupons/coupon-create'><div className="coupon-create-link">Create coupon</div></Link>
       <div className="coupon-list">
         {coupons?.map(coupon => {
           return (

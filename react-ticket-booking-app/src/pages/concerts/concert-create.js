@@ -1,8 +1,10 @@
 import React, { useRef, useState } from "react";
 import { ConcertService } from "../../services/concert-service";
 import "./concert-create.css"
+import { useNavigate } from 'react-router-dom';
 
 export default function ConcertCreate() {
+    var navigate = useNavigate()
     const [concertType, setConcertType] = useState('ClassicalConcert')
     const concertName = useRef(null)
     const bandName = useRef(null)
@@ -66,6 +68,8 @@ export default function ConcertCreate() {
                 break;
         }
         concertService.createConcert(concert)
+            .then(() => navigate('../concerts/concert-list' , { replace: true}))
+            .catch((error) => alert(error.response.data.error))	
     } 
 
     return (

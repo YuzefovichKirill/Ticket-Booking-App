@@ -16,7 +16,6 @@ function SignoutCallback() {
         navigate('/concerts/concert-list' , { replace: true})
     }, [])
 
-
     return (
         <div>Redirecting...</div>
     )
