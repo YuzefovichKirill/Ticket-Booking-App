@@ -16,10 +16,9 @@ namespace TicketBooking.WebAPI.Controllers
     [Authorize]
     public class TicketController : BaseController
     {
-        private readonly IEmailSender _emailSender;
-
+        /*private readonly IEmailSender _emailSender;
         public TicketController(IEmailSender emailSender) 
-            => _emailSender = emailSender;
+            => _emailSender = emailSender;*/
 
         [HttpGet]
         public async Task<ActionResult<TicketListVm>> GetAll()

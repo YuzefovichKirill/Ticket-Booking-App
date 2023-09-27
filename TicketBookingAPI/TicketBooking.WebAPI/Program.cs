@@ -20,12 +20,12 @@ namespace TicketBooking.WebAPI
             services.AddPersistence(configuration);
             services.AddControllers();
              
-            var emailConfig = configuration
+            /*var emailConfig = configuration
                 .GetSection("EmailConfiguration")
                 .Get<EmailConfiguration>();
             emailConfig.Password = configuration["Gmail:Password"];
             services.AddSingleton(emailConfig);
-            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<IEmailSender, EmailSender>();*/
 
             JsonConvert.DefaultSettings = () =>
             {

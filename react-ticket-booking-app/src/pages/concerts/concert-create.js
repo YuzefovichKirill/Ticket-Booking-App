@@ -69,7 +69,7 @@ export default function ConcertCreate() {
         }
         concertService.createConcert(concert)
             .then(() => navigate('../concerts/concert-list' , { replace: true}))
-            .catch((error) => alert(error.response.data.error))	
+            .catch((error) => alert(error.response.data.error))
     } 
 
     return (
