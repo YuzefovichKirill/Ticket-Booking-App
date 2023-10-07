@@ -42,7 +42,6 @@ namespace IdentityServer
                 .AddInMemoryClients(Configuration.Clients)
                 .AddDeveloperSigningCredential();
 
-            Configuration.CreateRoles(services).Wait();
 
             services.ConfigureApplicationCookie(configuration =>
             {
@@ -71,6 +70,7 @@ namespace IdentityServer
                 {
                     var context = serviceProvider.GetRequiredService<AuthDbContext>();
                     DbInitializer.Initialize(context);
+                    Configuration.CreateRoles(services).Wait();
                 }
                 catch (Exception exception)
                 {
