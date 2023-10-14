@@ -8,7 +8,7 @@ import { AuthContext } from "../contexts/auth-context.js";
 
 const Navbar = () => {
     const { amount } = useContext(CartContext) 
-    const { userRole } = useContext(AuthContext)
+    const { isAuth, userRole } = useContext(AuthContext)
 
     return (
     <nav>
@@ -34,7 +34,7 @@ const Navbar = () => {
         <div className="link-group end">
             <NavLink className="cart-link" to='cart'>
                 <img className="cart-img" src={cart}/>
-                <div className="cart-amount">{amount > 0 ? amount : ''}</div>    
+                {isAuth && (amount > 0) && <div className="cart-amount">{amount}</div>}  
             </NavLink>
             <AuthButtons/>
         </div>
