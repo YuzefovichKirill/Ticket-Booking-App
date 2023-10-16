@@ -1,5 +1,4 @@
-﻿using System.IO;
-using IdentityServer.Models;
+﻿using IdentityServer.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +42,7 @@ namespace IdentityServer.Controllers
 
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "User not found");
+                ModelState.AddModelError("WrongAuthData", "Wrong login or password");
                 return View(vm);
             }
 
@@ -54,7 +53,7 @@ namespace IdentityServer.Controllers
             {
                 return Redirect(vm.ReturnUrl);
             }
-            ModelState.AddModelError(string.Empty, "Login error");
+            ModelState.AddModelError("WrongAuthData", "Wrong login or password");
             return View(vm);
         }
 
@@ -77,6 +76,14 @@ namespace IdentityServer.Controllers
                 return View(vm);
             }
 
+            var _user = await _userManager.FindByEmailAsync(vm.Email);
+
+            if (_user is not null)
+            {
+                ModelState.AddModelError("UsedEmail", "This email is already registered");
+                return View(vm);
+            }
+
             var user = new IdentityUser
             {
                 UserName = vm.UserName,
@@ -93,10 +100,11 @@ namespace IdentityServer.Controllers
                 else
                     await _userManager.AddToRoleAsync(user, "User");
 
-                return Redirect(vm.ReturnUrl);
+                return RedirectToAction("Login", "Auth", new { vm.ReturnUrl });
             }
 
-            ModelState.AddModelError(string.Empty, "Error occured");
+            foreach(var error in result.Errors)
+                ModelState.AddModelError(string.Empty, error.Description.ToString());
             return View(vm);
         }
 

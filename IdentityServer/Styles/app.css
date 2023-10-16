@@ -6,6 +6,10 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.alert {
+    color: red
+}
+
 .container {
     display: flex;
     flex-direction: column;

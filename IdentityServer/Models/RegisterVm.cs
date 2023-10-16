@@ -11,10 +11,12 @@ namespace IdentityServer.Models
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
+        [MinLength(4)]
         public string Password { get; set; }
         [Required]
         [DataType(DataType.Password)]
         [Compare(nameof(Password))]
+        [MinLength(4)]
         public string ConfirmPassword { get; set; }
         [Required]
         public bool AdminRole { get; set; }

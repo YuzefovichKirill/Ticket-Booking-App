@@ -7,6 +7,17 @@
 <body>
     <div class="container">
         <p class="title">Login</p>
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div >
+                <il>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li class="alert">@error.ErrorMessage</li>
+                    }
+                </il>
+            </div>
+        }
         <form asp-controller="Auth" asp-action="Login" method="post">
             <input type="hidden" asp-for="ReturnUrl" />
             <div class="form-row">
