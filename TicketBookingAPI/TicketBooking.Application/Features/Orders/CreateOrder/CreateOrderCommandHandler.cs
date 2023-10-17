@@ -1,23 +1,31 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using TicketBooking.Application.Exceptions;
-using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
+using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Orders.CreateOrder
 {
     public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand>
     {
-        private readonly ITicketBookingDbContext _ticketBookingDbContext;
+        private readonly IConcertRepository _concertRepository;
+        private readonly ITicketRepository _ticketRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateOrderCommandHandler(ITicketBookingDbContext ticketBookingDbContext)
-            => _ticketBookingDbContext = ticketBookingDbContext;
+        public CreateOrderCommandHandler(
+            IConcertRepository concertRepository,
+            ITicketRepository ticketRepository,
+            IUnitOfWork unitOfWork)
+        {
+            _concertRepository = concertRepository;
+            _ticketRepository = ticketRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         public async Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
             foreach (var ticketDto in request.Tickets)
             {
-                var concert = await _ticketBookingDbContext.Concerts.FindAsync(new object[] { ticketDto.ConcertId });
+                var concert = await _concertRepository.GetByIdAsync(ticketDto.ConcertId, cancellationToken);
 
                 if (concert is null)
                 {
@@ -26,7 +34,7 @@ namespace TicketBooking.Application.Features.Orders.CreateOrder
 
                 for (int i =  0; i < ticketDto.Quantity; i++)
                 {
-                    await _ticketBookingDbContext.Tickets.AddAsync(new Ticket() 
+                    await _ticketRepository.AddAsync(new Ticket() 
                     { 
                         Id = Guid.NewGuid(),
                         UserId = request.UserId,
@@ -35,7 +43,8 @@ namespace TicketBooking.Application.Features.Orders.CreateOrder
                 }
             }
 
-            await _ticketBookingDbContext.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
+
     }
 }

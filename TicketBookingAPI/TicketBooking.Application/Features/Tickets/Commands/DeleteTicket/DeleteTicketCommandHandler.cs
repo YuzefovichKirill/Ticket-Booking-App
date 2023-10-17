@@ -1,28 +1,36 @@
 ﻿using MediatR;
 using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Interfaces;
+using TicketBooking.Domain;
+using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Tickets.Commands.DeleteTicket
 {
     public class DeleteTicketCommandHandler : IRequestHandler<DeleteTicketCommand>
     {
-        private readonly ITicketBookingDbContext _ticketBookingDbContext;
+        private readonly ITicketRepository _ticketRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteTicketCommandHandler(ITicketBookingDbContext ticketBookingDbContext)
-            => _ticketBookingDbContext = ticketBookingDbContext;
+        public DeleteTicketCommandHandler(
+            ITicketRepository ticketRepository, 
+            IUnitOfWork unitOfWork)
+        {
+            _ticketRepository = ticketRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         public async Task Handle(DeleteTicketCommand request,
             CancellationToken cancellationToken)
         {
-            var ticket = await _ticketBookingDbContext.Tickets.FindAsync(new object[] { request.Id }, cancellationToken);
+            Ticket ticket = await _ticketRepository.GetByIdAsync(request.Id, cancellationToken);
             
             if (ticket is null)
             {
                 throw new NotFoundException("There is no such ticket");
             }
 
-            _ticketBookingDbContext.Tickets.Remove(ticket);
-            await _ticketBookingDbContext.SaveChangesAsync(cancellationToken);
+            _ticketRepository.Delete(ticket);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }

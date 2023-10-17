@@ -1,28 +1,35 @@
 ﻿using MediatR;
 using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Interfaces;
+using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Concerts.Commands.DeleteConcert
 {
     public class DeleteConcertCommandHandler : IRequestHandler<DeleteConcertCommand>
     {
-        private readonly ITicketBookingDbContext _ticketBookingDbContext;
+        private readonly IConcertRepository _concertRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteConcertCommandHandler(ITicketBookingDbContext ticketBookingDbContext) =>
-            _ticketBookingDbContext = ticketBookingDbContext;
+        public DeleteConcertCommandHandler(
+            IConcertRepository concertRepository, 
+            IUnitOfWork unitOfWork)
+        {
+            _concertRepository = concertRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         public async Task Handle(DeleteConcertCommand request,
             CancellationToken cancellationToken)
         {
-            var concert = await _ticketBookingDbContext.Concerts.FindAsync(new object[] { request.Id }, cancellationToken);
+            var concert = await _concertRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (concert is null)
             {
                 throw new NotFoundException($"There is no such concert");
             }
 
-            _ticketBookingDbContext.Concerts.Remove(concert);
-            await _ticketBookingDbContext.SaveChangesAsync(cancellationToken);
+            _concertRepository.Delete(concert);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }

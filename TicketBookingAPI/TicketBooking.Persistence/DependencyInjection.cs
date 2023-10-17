@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TicketBooking.Application.Interfaces;
+using TicketBooking.Domain.Interfaces;
+using TicketBooking.Persistence.Repositories;
 
 namespace TicketBooking.Persistence
 {
@@ -19,6 +21,15 @@ namespace TicketBooking.Persistence
             });
             services.AddScoped<ITicketBookingDbContext>(provider =>
                 provider.GetService<TicketBookingDbContext>());
+
+            services.AddScoped<IUnitOfWork>(provider =>
+                provider.GetService<TicketBookingDbContext>());
+
+            services.AddScoped<IConcertRepository, ConcertRepository>();
+            services.AddScoped<ITicketRepository, TicketRepository>();
+            services.AddScoped<ICouponRepository, CouponRepository>();
+            services.AddScoped<IUsedCouponRepository, UsedCouponRepository>();
+
             return services;
         }
 

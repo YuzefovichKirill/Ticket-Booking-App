@@ -1,23 +1,27 @@
 ﻿using MediatR;
-using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
 using System.Text.Json;
 using TicketBooking.Application.Exceptions;
+using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Concerts.Commands.UpdateConcert
 {
     public class UpdateConcertCommandHandler : IRequestHandler<UpdateConcertCommand>
     {
-        private readonly ITicketBookingDbContext _ticketBookingDbContext;
+        private readonly IConcertRepository _concertRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateConcertCommandHandler(ITicketBookingDbContext ticketBookingDbContext) =>
-            _ticketBookingDbContext = ticketBookingDbContext;
+        public UpdateConcertCommandHandler(IConcertRepository concertRepository, IUnitOfWork unitOfWork)
+        {
+            _concertRepository = concertRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         public async Task Handle(UpdateConcertCommand request,
             CancellationToken cancellationToken)
         {
             Guid id = Guid.Parse(request.JsonObj["Id"].ToString());
-            var dbConcert = await _ticketBookingDbContext.Concerts.FindAsync(new object[] { id }, cancellationToken);
+            var dbConcert = await _concertRepository.GetByIdAsync(id, cancellationToken);
 
             if (dbConcert is null)
             {
@@ -68,7 +72,7 @@ namespace TicketBooking.Application.Features.Concerts.Commands.UpdateConcert
             dbConcert.GeoLng = concert.GeoLng;
             dbConcert.Place = concert.Place;
 
-            await _ticketBookingDbContext.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }

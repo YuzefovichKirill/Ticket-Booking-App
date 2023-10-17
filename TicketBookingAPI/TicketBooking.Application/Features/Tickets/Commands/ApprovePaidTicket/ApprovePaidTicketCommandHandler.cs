@@ -1,19 +1,26 @@
 ﻿using MediatR;
 using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Interfaces;
+using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Tickets.Commands.ApprovePaymentTicket
 {
     public class ApprovePaidTicketCommandHandler: IRequestHandler<ApprovePaidTicketCommand>
     {
-        private readonly ITicketBookingDbContext _ticketBookingDbContext;
+        private readonly ITicketRepository _ticketRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ApprovePaidTicketCommandHandler(ITicketBookingDbContext ticketBookingDbContext)
-            => _ticketBookingDbContext = ticketBookingDbContext;
+        public ApprovePaidTicketCommandHandler(
+            ITicketRepository ticketRepository, 
+            IUnitOfWork unitOfWork)
+        {
+            _ticketRepository = ticketRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         public async Task Handle(ApprovePaidTicketCommand request, CancellationToken cancellationToken)
         {
-            var ticket = await _ticketBookingDbContext.Tickets.FindAsync(new object[] { request.Id });
+            var ticket = await _ticketRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (ticket is null)
             {
@@ -21,7 +28,7 @@ namespace TicketBooking.Application.Features.Tickets.Commands.ApprovePaymentTick
             }
 
             //ticket.IsPaid = true;
-            await _ticketBookingDbContext.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }

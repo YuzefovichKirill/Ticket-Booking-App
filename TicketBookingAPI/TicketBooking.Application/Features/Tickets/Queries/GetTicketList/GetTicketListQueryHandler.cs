@@ -1,21 +1,24 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using TicketBooking.Application.Interfaces;
+using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Tickets.Queries.GetTicketList
 {
     public class GetTicketListQueryHandler : IRequestHandler<GetTicketListQuery, TicketListVm>
     {
-        private readonly ITicketBookingDbContext _ticketBookingDbContext;
+        private readonly ITicketRepository _ticketRepository;
+        private readonly IConcertRepository _concertRepository;
 
-        public GetTicketListQueryHandler(ITicketBookingDbContext ticketBookingDbContext) =>
-            _ticketBookingDbContext = ticketBookingDbContext;
+        public GetTicketListQueryHandler(ITicketRepository ticketRepository = null, IConcertRepository concertRepository = null)
+        {
+            _ticketRepository = ticketRepository;
+            _concertRepository = concertRepository;
+        }
 
         public async Task<TicketListVm> Handle(GetTicketListQuery request, CancellationToken cancellationToken)
         {
-            var ticketsList = await _ticketBookingDbContext.Tickets.Where(t => t.UserId == request.UserId).ToListAsync();
+            var ticketsList = await _ticketRepository.GetByUserIdAsync(request.UserId, cancellationToken);
             var ConcertIds = ticketsList.Select(t => t.ConcertId).ToList();
-            var concertsList = await _ticketBookingDbContext.Concerts.Where(c => ConcertIds.Contains(c.Id)).ToListAsync();
+            var concertsList = await _concertRepository.GetListByConcertIdsAsync(ConcertIds, cancellationToken);
 
             List<TicketVm> ticketVms = ticketsList.Join(concertsList, t => t.ConcertId, c => c.Id, (t, c) => new TicketVm()
             {

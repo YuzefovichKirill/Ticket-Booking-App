@@ -7,19 +7,26 @@ using System.Threading.Tasks;
 using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
+using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Coupons.Commands.CreateCoupon
 {
     internal class CreateCouponCommandHandler : IRequestHandler<CreateCouponCommand, Guid>
     {
-        private readonly ITicketBookingDbContext _ticketBookingDbContext;
+        private readonly ICouponRepository _couponRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateCouponCommandHandler(ITicketBookingDbContext ticketBookingDbContext) => 
-            _ticketBookingDbContext = ticketBookingDbContext;
+        public CreateCouponCommandHandler(
+            ICouponRepository couponRepository, 
+            IUnitOfWork unitOfWork)
+        {
+            _couponRepository = couponRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         public async Task<Guid> Handle(CreateCouponCommand request, CancellationToken cancellationToken)
         {
-            var coupon = _ticketBookingDbContext.Coupons.FirstOrDefault(c => c.Name == request.Name);
+            var coupon = await _couponRepository.GetByNameAsync(request.Name, cancellationToken);
 
             if (coupon is not null)
             {
@@ -34,8 +41,8 @@ namespace TicketBooking.Application.Features.Coupons.Commands.CreateCoupon
                 DiscountPercentage = request.DiscountPercentage
             };
 
-            await _ticketBookingDbContext.Coupons.AddAsync(coupon, cancellationToken);
-            await _ticketBookingDbContext.SaveChangesAsync(cancellationToken);
+            await _couponRepository.AddAsync(coupon, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
             return coupon.Id;
         }
     }

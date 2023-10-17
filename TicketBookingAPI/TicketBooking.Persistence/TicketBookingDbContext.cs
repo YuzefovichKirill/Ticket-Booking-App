@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
+using TicketBooking.Domain.Interfaces;
 using TicketBooking.Persistence.Configuration;
 
 namespace TicketBooking.Persistence
 {
-    public class TicketBookingDbContext : DbContext, ITicketBookingDbContext
+    public class TicketBookingDbContext : DbContext, ITicketBookingDbContext, IUnitOfWork
     {
         public DbSet<Concert> Concerts { get; set; }
         public DbSet<ClassicalConcert> ClassicalConcerts { get; set; }

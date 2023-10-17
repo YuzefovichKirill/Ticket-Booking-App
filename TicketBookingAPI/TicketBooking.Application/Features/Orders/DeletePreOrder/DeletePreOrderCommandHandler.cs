@@ -3,38 +3,51 @@ using Microsoft.EntityFrameworkCore;
 using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
+using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Orders.DeletePreOrder
 {
     public class DeleteOrderCommandHandler : IRequestHandler<DeletePreOrderCommand>
     {
-        private readonly ITicketBookingDbContext _ticketBookingDbContext;
+        private readonly IConcertRepository _concertRepository;
+        private readonly ICouponRepository _couponRepository;
+        private readonly IUsedCouponRepository _usedCouponRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteOrderCommandHandler(ITicketBookingDbContext ticketBookingDbContext)
-            => _ticketBookingDbContext = ticketBookingDbContext;
+        public DeleteOrderCommandHandler(
+            IConcertRepository concertRepository, 
+            ICouponRepository couponRepository, 
+            IUsedCouponRepository usedCouponRepository, 
+            IUnitOfWork unitOfWork)
+        {
+            _concertRepository = concertRepository;
+            _couponRepository = couponRepository;
+            _usedCouponRepository = usedCouponRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         public async Task Handle(DeletePreOrderCommand request, CancellationToken cancellationToken)
         {
             List<UsedCoupon> usedCoupons = new List<UsedCoupon>();
             foreach (var couponDto in request.Coupons)
             {
-                var coupon = await _ticketBookingDbContext.Coupons.FindAsync(new object[] { couponDto.CouponId });
+                var coupon = await _couponRepository.GetByIdAsync(couponDto.CouponId, cancellationToken);
                 if (coupon is null)
                 {
                     continue;
                 }
 
-                var usedCoupon = await _ticketBookingDbContext.UsedCoupons.FirstOrDefaultAsync(uc => uc.UserId == request.UserId && uc.CouponId == couponDto.CouponId, cancellationToken);
+                var usedCoupon = await _usedCouponRepository.GetByCouponIdAsync(request.UserId, couponDto.CouponId, cancellationToken);
                 if (usedCoupon is not null)
                 {
                     usedCoupons.Add(usedCoupon);
                 }
             }
-            _ticketBookingDbContext.UsedCoupons.RemoveRange(usedCoupons);
+            _usedCouponRepository.DeleteRange(usedCoupons);
 
             foreach (var ticketDto in request.Tickets)
             {
-                var concert = await _ticketBookingDbContext.Concerts.FindAsync(new object[] { ticketDto.ConcertId });
+                var concert = await _concertRepository.GetByIdAsync(ticketDto.ConcertId, cancellationToken);
                 if (concert is null)
                 {
                     continue;
@@ -42,7 +55,7 @@ namespace TicketBooking.Application.Features.Orders.DeletePreOrder
                 concert.AmountOfAvailableTickets += ticketDto.Quantity;
             }
 
-            await _ticketBookingDbContext.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }

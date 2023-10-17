@@ -2,44 +2,25 @@
 using Microsoft.EntityFrameworkCore;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
+using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Concerts.Queries.GetConcertList
 {
     public class GetConcertListQueryHandler : IRequestHandler<GetConcertListQuery, ConcertListVm>
     {
-        private readonly ITicketBookingDbContext _ticketBookingDbContext;
+        private readonly IConcertRepository _concertRepository;
 
-        public GetConcertListQueryHandler(ITicketBookingDbContext ticketBookingDbContext) =>
-            _ticketBookingDbContext = ticketBookingDbContext;
+        public GetConcertListQueryHandler(
+            IConcertRepository concertRepository)
+        {
+            _concertRepository = concertRepository;
+        }
 
         public async Task<ConcertListVm> Handle(GetConcertListQuery request,
             CancellationToken cancellationToken)
         {
-            List<Concert> concerts;
-
-            if (!String.IsNullOrEmpty(request.ContainsInName) && !String.IsNullOrEmpty(request.ConcertType))
-            {
-                concerts = _ticketBookingDbContext.Concerts
-                    .AsEnumerable()
-                    .Where(c => c.ConcertName.Contains(request.ContainsInName) && String.Equals(c.ConcertType, request.ConcertType, StringComparison.OrdinalIgnoreCase))
-                    .ToList();
-            }
-            else if (!String.IsNullOrEmpty(request.ContainsInName))
-            {
-                concerts = await _ticketBookingDbContext.Concerts
-                    .Where(c => c.ConcertName.Contains(request.ContainsInName))
-                    .ToListAsync(cancellationToken);
-            }
-            else if (!String.IsNullOrEmpty(request.ConcertType))
-            {
-                concerts = _ticketBookingDbContext.Concerts
-                    .AsEnumerable().Where(c => c.ConcertType == request.ConcertType)
-                    .ToList();
-            }
-            else
-            {
-                concerts = await _ticketBookingDbContext.Concerts.ToListAsync(cancellationToken);
-            }
+            List<Concert> concerts = await _concertRepository.GetListWithFiltersAsync(request.ContainsInName,
+                request.ConcertType, cancellationToken);
 
             var ConcertListDtos = concerts.Select(c => new ConcertDto()
             {

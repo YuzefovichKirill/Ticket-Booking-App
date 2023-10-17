@@ -2,19 +2,26 @@
 using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
+using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Concerts.Queries.GetConcert
 {
     public class GetConcertQueryHandler : IRequestHandler<GetConcertQuery, Concert>
     {
-        private readonly ITicketBookingDbContext _ticketBookingDbContext;
+        private readonly IConcertRepository _concertRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetConcertQueryHandler(ITicketBookingDbContext ticketBookingDbContext) =>
-            _ticketBookingDbContext = ticketBookingDbContext;
+        public GetConcertQueryHandler(
+            IConcertRepository concertRepository, 
+            IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+            _concertRepository = concertRepository;
+        }
 
         public async Task<Concert> Handle(GetConcertQuery request, CancellationToken cancellationToken)
         {
-            var concert = await _ticketBookingDbContext.Concerts.FindAsync(new object[] { request.Id });
+            var concert = await _concertRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (concert is null)
             {

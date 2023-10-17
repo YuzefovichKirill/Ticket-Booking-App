@@ -8,20 +8,30 @@ using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Features.Orders.CreateOrder;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
+using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Tickets.Commands.CreateTicket
 {
     public class CreateTicketCommandHandler : IRequestHandler<CreateTicketCommand, Guid>
     {
-        private readonly ITicketBookingDbContext _ticketBookingDbContext;
+        private readonly ITicketRepository _ticketRepository;
+        private readonly IConcertRepository _concertRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateTicketCommandHandler(ITicketBookingDbContext ticketBookingDbContext) 
-            => _ticketBookingDbContext = ticketBookingDbContext;
+        public CreateTicketCommandHandler(
+            ITicketRepository ticketRepository,
+            IConcertRepository concertRepository, 
+            IUnitOfWork unitOfWork)
+        {
+            _ticketRepository = ticketRepository;
+            _concertRepository = concertRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         public async Task<Guid> Handle(CreateTicketCommand request, 
             CancellationToken cancellationToken)
         {
-            var concert = await _ticketBookingDbContext.Concerts.FindAsync(new object[] { request.ConcertId });
+            var concert = await _concertRepository.GetByIdAsync(request.ConcertId, cancellationToken);
 
             if (concert is null)
             {
@@ -43,8 +53,8 @@ namespace TicketBooking.Application.Features.Tickets.Commands.CreateTicket
                 ConcertId = request.ConcertId,
             };
 
-            await _ticketBookingDbContext.Tickets.AddAsync(ticket, cancellationToken);
-            await _ticketBookingDbContext.SaveChangesAsync(cancellationToken);
+            await _ticketRepository.AddAsync(ticket, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
             return ticket.Id;
         }
     }

@@ -3,27 +3,40 @@ using Microsoft.EntityFrameworkCore;
 using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
+using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Orders.CreatePreOrder
 {
     public class CreatePreOrderCommandHandler : IRequestHandler<CreatePreOrderCommand>
     {
-        private readonly ITicketBookingDbContext _ticketBookingDbContext;
+        private readonly ICouponRepository _couponRepository;
+        private readonly IConcertRepository _concertRepository;
+        private readonly IUsedCouponRepository _usedCouponRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreatePreOrderCommandHandler(ITicketBookingDbContext ticketBookingDbContext)
-            => _ticketBookingDbContext = ticketBookingDbContext;
+        public CreatePreOrderCommandHandler(
+            ICouponRepository couponRepository,
+            IConcertRepository concertRepository,
+            IUsedCouponRepository usedCouponRepository,
+            IUnitOfWork unitOfWork)
+        {
+            _couponRepository = couponRepository;
+            _concertRepository = concertRepository;
+            _usedCouponRepository = usedCouponRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         public async Task Handle(CreatePreOrderCommand request, CancellationToken cancellationToken)
         {
             foreach (var couponDto in request.Coupons)
             {
-                var coupon = await _ticketBookingDbContext.Coupons.FindAsync(new object[] { couponDto.CouponId });
+                var coupon = await _couponRepository.GetByIdAsync(couponDto.CouponId, cancellationToken);
                 if (coupon is null)
                 {
                     throw new NotFoundException($"There is no such coupon (Coupon name: {couponDto.Name})");
                 }
 
-                var usedCoupon = await _ticketBookingDbContext.UsedCoupons.FirstOrDefaultAsync(uc => uc.UserId == request.UserId && uc.Id == couponDto.CouponId, cancellationToken);
+                var usedCoupon = await _usedCouponRepository.GetByCouponIdAsync(request.UserId, couponDto.CouponId, cancellationToken);
                 if (usedCoupon is not null)
                 {
                     throw new AlreadyUsedException($"This coupon is already used", couponDto.Name);
@@ -36,12 +49,12 @@ namespace TicketBooking.Application.Features.Orders.CreatePreOrder
                     UserId = request.UserId
                 };
 
-                await _ticketBookingDbContext.UsedCoupons.AddAsync(newUsedCoupon, cancellationToken);
+                await _usedCouponRepository.AddAsync(newUsedCoupon, cancellationToken);
             }
 
             foreach (var ticketDto in request.Tickets)
             {
-                var concert = await _ticketBookingDbContext.Concerts.FindAsync(new object[] { ticketDto.ConcertId });
+                var concert = await _concertRepository.GetByIdAsync(ticketDto.ConcertId, cancellationToken);
 
                 if (concert is null)
                 {
@@ -58,7 +71,7 @@ namespace TicketBooking.Application.Features.Orders.CreatePreOrder
                 }
             }
 
-            await _ticketBookingDbContext.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }
