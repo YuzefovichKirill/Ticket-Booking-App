@@ -15,6 +15,7 @@
   flex: 60%
 }
 
+
 .concert-info .secondary-container {
   display: flex;
   flex-direction: column;
@@ -34,9 +35,6 @@
 
 .concert-info .payment-info {
   margin-top: auto;
-  /* display: flex;
-  flex-direction: column;
-  align-self: self-end; */
 }
 
 .concert-info .payment-info .add-to-cart {
@@ -47,5 +45,12 @@
 .concert-info .additional-details {
   display: flex;
   flex-direction: column;
+}
 
+.concert-name-text {
+  font-size: 24px;
+}
+
+.concert-band-text {
+  font-size: 20px;
 }

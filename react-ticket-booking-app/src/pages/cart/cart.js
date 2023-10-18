@@ -34,10 +34,9 @@ export default function Cart() {
                   <button onClick={() => removeFromCart(item)}>Remove</button>
                 </div>
                 <div className="cart-price">
-                  <div style={{textDecoration: (item.totalPrice < item.price) ? 'line-through' : ''}} >{item.price * item.quantity}$</div>
+                  <div className={(item.totalPrice < item.price) ? 'crossed-out' : ''}>{item.price * item.quantity}$</div>
                   {(item.totalPrice < item.price) && <div>{item.totalPrice * item.quantity}$</div>}
                 </div>
-
               </div>
             );
           })}

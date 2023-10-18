@@ -12,6 +12,10 @@
   padding: 10px;
 }
 
+.crossed-out {
+  text-decoration: line-through;
+}
+
 .payment-block {
   padding: 5px;
   width: 100%;

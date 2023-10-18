@@ -75,8 +75,8 @@ export default function ConcertList() {
                         <div className="concert">
                             <div className="concert-payload">
                                 <div className="info concert-name">
-                                    <div style={{fontSize: '20px'}}>{concert.concertName}</div>
-                                    <div style={{fontSize: '18px'}}>{concert.bandName}</div>
+                                    <div className="concert-name-text-list">{concert.concertName}</div>
+                                    <div className="concert-band-text-list">{concert.bandName}</div>
                                 </div>    
                                 <div className="info date-time">
                                     <Datetime datetime={concert.dateTime}/>

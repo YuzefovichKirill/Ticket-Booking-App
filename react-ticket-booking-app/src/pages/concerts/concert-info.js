@@ -28,8 +28,8 @@ export default function ConcertInfo() {
         <div className="concert-info">
             <div className="primary-container">
                 <div className="main-info">
-                    <div style={{fontSize: '24px',}}>{concert?.concertName}</div>
-                    <div style={{fontSize: '20px'}}>Band: {concert?.bandName}</div>
+                    <div className="concert-name-text">{concert?.concertName}</div>
+                    <div className="concert-band-text">Band: {concert?.bandName}</div>
                     <Datetime datetime={concert?.dateTime}/>
                     <div>Place: {concert?.place}</div>
                     <div>Concert type: {concert?.concertType}</div>

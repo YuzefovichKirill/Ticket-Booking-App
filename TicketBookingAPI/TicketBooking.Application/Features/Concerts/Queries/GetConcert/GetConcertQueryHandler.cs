@@ -22,23 +22,12 @@ namespace TicketBooking.Application.Features.Concerts.Queries.GetConcert
         public async Task<Concert> Handle(GetConcertQuery request, CancellationToken cancellationToken)
         {
             var concert = await _concertRepository.GetByIdAsync(request.Id, cancellationToken);
-
             if (concert is null)
             {
                 throw new NotFoundException("There is no such concert");
             }
 
-            switch (concert.ConcertType)
-            {
-                case nameof(ClassicalConcert):
-                    return concert as ClassicalConcert;
-                case nameof(OpenAir):
-                    return concert as OpenAir;
-                case nameof(Party):
-                    return concert as Party;
-                default:
-                    throw new ArgumentException("There is no such concert type");
-            }
+            return concert;
         }
     }
 }
