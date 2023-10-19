@@ -9,9 +9,6 @@ using TicketBooking.Application.Features.Concerts.Queries.GetConcert;
 using TicketBooking.Application.Features.Concerts.Queries.GetConcertList;
 using TicketBooking.Domain;
 
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
-
 namespace TicketBooking.WebAPI.Controllers
 {
     [Route("api/[controller]s")]

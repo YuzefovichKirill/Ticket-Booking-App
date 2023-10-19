@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { finishLogin } from "../../services/auth-service"
 import { useNavigate } from 'react-router-dom';
+import routes from "../../environments/routes";
 
 function SigninCallback() {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ function SigninCallback() {
         signinAsync()
             .then(() => {})
             .catch(() => {})
-        navigate('../concerts/concert-list' , { replace: true})
+        navigate(routes.CONCERT_LIST , { replace: true})
     }, [])
 
     return (

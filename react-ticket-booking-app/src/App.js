@@ -18,6 +18,7 @@ import Cart from "./pages/cart/cart";
 import CartProvider from "./contexts/cart-context";
 import Unauthorized from "./pages/unauthorized";
 import Restricted from "./pages/restricted";
+import routes from "./environments/routes";
 
 
 function App() {
@@ -28,23 +29,23 @@ function App() {
         <Router>
           <Navbar />
           <Routes>
-            <Route path="*" element={<NotFound/>} />
-            <Route path="/unauthorized" element={<Unauthorized/>}/>
-            <Route path="/restricted" element={<Restricted/>}/>
-            <Route path="/signin-callback" element={<SigninCallback/>}/>
-            <Route path="/signout-callback" element={<SignoutCallback/>}/>
-            <Route path="/concerts/concert-list" element={<ConcertList/>}/>
-            <Route path="/concerts/concert-info" element={<ConcertInfo/>}/>
+            <Route path={routes.NOT_FOUND} element={<NotFound/>} />
+            <Route path={routes.UNAUTHORIZED} element={<Unauthorized/>}/>
+            <Route path={routes.RESTRICTED} element={<Restricted/>}/>
+            <Route path={routes.SIGNIN_CALLBACK} element={<SigninCallback/>}/>
+            <Route path={routes.SIGNOUT_CALLBACK} element={<SignoutCallback/>}/>
+            <Route path={routes.CONCERT_LIST} element={<ConcertList/>}/>
+            <Route path={routes.CONCERT_INFO} element={<ConcertInfo/>}/>
 
             <Route  element={<RequireAuth/>}>
-              <Route path="/tickets/ticket-list" element={<TicketList/>}/>
-              <Route path="/cart" element={<Cart/>}/>
+              <Route path={routes.TICKET_LIST} element={<TicketList/>}/>
+              <Route path={routes.CART} element={<Cart/>}/>
             </Route>     
 
             <Route  element={<RequireAuth role="Admin"/>}>
-              <Route path="/concerts/concert-create" element={<ConcertCreate/>}/>
-              <Route path="/coupons/coupon-create" element={<CouponCreate/>}/>
-              <Route path="/coupons/coupon-list" element={<CouponList/>}/>
+              <Route path={routes.CONCERT_CREATE} element={<ConcertCreate/>}/>
+              <Route path={routes.COUPON_CREATE} element={<CouponCreate/>}/>
+              <Route path={routes.COUPON_LIST} element={<CouponList/>}/>
             </Route>
           </Routes>
         </Router>

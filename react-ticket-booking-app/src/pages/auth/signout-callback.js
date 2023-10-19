@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { finishLogout } from "../../services/auth-service"
 import { useNavigate } from "react-router-dom"
-
+import routes from "../../environments/routes"
 function SignoutCallback() {
     const navigate = useNavigate()
 
@@ -13,7 +13,7 @@ function SignoutCallback() {
         signoutAsync()
             .then(() => {})
             .catch(() => {})
-        navigate('/concerts/concert-list' , { replace: true})
+        navigate(routes.CONCERT_LIST , { replace: true})
     }, [])
 
     return (

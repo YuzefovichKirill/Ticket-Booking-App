@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {CouponService} from "../../services/coupon-service"
 import { Link } from "react-router-dom";
 import "./coupon-list.css"
+import routes from "../../environments/routes";
 
 export default function CouponList() {
   var [coupons, setCoupons] = useState([])
@@ -27,7 +28,7 @@ export default function CouponList() {
   return (
     <div>
       <p className="title">Coupons</p>
-      <Link to='/coupons/coupon-create'><div className="coupon-create-link">Create coupon</div></Link>
+      <Link to={routes.COUPON_CREATE}><div className="coupon-create-link">Create coupon</div></Link>
       <div className="coupon-list">
         {coupons?.map(coupon => {
           return (

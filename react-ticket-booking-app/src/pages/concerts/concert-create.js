@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { ConcertService } from "../../services/concert-service";
 import "./concert-create.css"
 import { useNavigate } from 'react-router-dom';
+import routes from "../../environments/routes";
 
 export default function ConcertCreate() {
     var navigate = useNavigate()
@@ -68,9 +69,9 @@ export default function ConcertCreate() {
                 break;
         }
         concertService.createConcert(concert)
-            .then(() => navigate('../concerts/concert-list' , { replace: true}))
+            .then(() => navigate(routes.CONCERT_LIST, { replace: true}))
             .catch((error) => alert(error.response.data.error))
-    } 
+    }
 
     return (
         <div className="container">

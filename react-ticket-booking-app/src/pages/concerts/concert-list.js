@@ -6,6 +6,7 @@ import "./concert-list.css"
 import { CartContext } from "../../contexts/cart-context";
 import Datetime from "../../components/date-time";
 import { AuthContext } from "../../contexts/auth-context";
+import routes from "../../environments/routes";
 
 export default function ConcertList() {
     const [concerts, setConcerts] = useState([])
@@ -89,7 +90,7 @@ export default function ConcertList() {
                                 </div>
                             </div>
                             <div className="buttons">
-                                <Link to='/concerts/concert-info' state={{concertId: concert.id}}>Get info</Link>
+                                <Link to={routes.CONCERT_INFO} state={{concertId: concert.id}}>Get info</Link>
                                 <button onClick={() => handleAddToCart({id: concert.id, concertName: concert.concertName, 
                                                                         dateTime: concert.dateTime, price: concert.price})}>Add to cart</button>
                                 {userRole === "Admin" &&<button onClick={() => deleteConcert(concert.id)}>Delete concert</button>}
