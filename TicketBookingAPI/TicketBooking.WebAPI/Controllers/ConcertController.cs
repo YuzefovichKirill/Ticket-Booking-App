@@ -1,10 +1,10 @@
 ﻿using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json.Nodes;
-using TicketBooking.Application.Features.Concerts.Commands.CreateConcert;
+using TicketBooking.Application.Features.Concerts.Commands.CreateClassicalConcert;
+using TicketBooking.Application.Features.Concerts.Commands.CreateOpenAir;
+using TicketBooking.Application.Features.Concerts.Commands.CreateParty;
 using TicketBooking.Application.Features.Concerts.Commands.DeleteConcert;
-using TicketBooking.Application.Features.Concerts.Commands.UpdateConcert;
 using TicketBooking.Application.Features.Concerts.Queries.GetConcert;
 using TicketBooking.Application.Features.Concerts.Queries.GetConcertList;
 using TicketBooking.Domain;
@@ -31,24 +31,30 @@ namespace TicketBooking.WebAPI.Controllers
             var vm = await Mediator.Send(query);
             return Ok(vm);
         }
-        
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<Guid>> Create([FromBody] JsonObject jsonObj)
+
+        [HttpPost("Classical-concert")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<ActionResult<Guid>> CreateClassicalConcert([FromBody] CreateClassicalConcertCommand command)
         {
-            var command = new CreateConcertCommand() { JsonObj = jsonObj };
             var concertId = await Mediator.Send(command);
             return Ok(concertId);
         }
 
-        /*[HttpPut]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Update([FromBody] JsonObject jsonObj)
+        [HttpPost("open-air")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<ActionResult<Guid>> CreateOpenAir([FromBody] CreateOpenAirCommand command)
         {
-            var command = new UpdateConcertCommand() { JsonObj = jsonObj };
-            await Mediator.Send(command);
-            return NoContent();
-        }*/
+            var concertId = await Mediator.Send(command);
+            return Ok(concertId);
+        }
+
+        [HttpPost("party")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<ActionResult<Guid>> CreateParty([FromBody] CreatePartyCommand command)
+        {
+            var concertId = await Mediator.Send(command);
+            return Ok(concertId);
+        }
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]

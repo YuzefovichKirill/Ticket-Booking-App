@@ -59,18 +59,24 @@ export default function ConcertCreate() {
             case 'ClassicalConcert':
                 concert.voiceType = voiceType?.current?.value || ''
                 concert.composer = composer?.current?.value || ''
-                break;
+                concertService.createClassicalConcert(concert)
+                    .then(() => navigate(routes.CONCERT_LIST, { replace: true}))
+                    .catch((error) => alert(error.response.data.error))
+                return;
             case 'OpenAir':
                 concert.gettingHere = gettingHere?.current?.value || ''
                 concert.headliner = headliner?.current?.value || ''
-                break;
+                concertService.createOpenAir(concert)
+                    .then(() => navigate(routes.CONCERT_LIST, { replace: true}))
+                    .catch((error) => alert(error.response.data.error))
+                return;
             case 'Party':
                 concert.ageLimit = ageLimit?.current?.value || 0
-                break;
+                concertService.createParty(concert)
+                    .then(() => navigate(routes.CONCERT_LIST, { replace: true}))
+                    .catch((error) => alert(error.response.data.error))        
+                return;
         }
-        concertService.createConcert(concert)
-            .then(() => navigate(routes.CONCERT_LIST, { replace: true}))
-            .catch((error) => alert(error.response.data.error))
     }
 
     return (

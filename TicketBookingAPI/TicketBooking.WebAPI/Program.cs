@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Text.Json.Serialization;
 using TicketBooking.Application;
 using TicketBooking.Email;
 using TicketBooking.Persistence;
@@ -18,8 +19,9 @@ namespace TicketBooking.WebAPI
             ConfigurationManager configuration = builder.Configuration;
             services.AddApplication();
             services.AddPersistence(configuration);
-            services.AddControllers();
-             
+            services.AddControllers().AddJsonOptions(options =>
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
             /*var emailConfig = configuration
                 .GetSection("EmailConfiguration")
                 .Get<EmailConfiguration>();

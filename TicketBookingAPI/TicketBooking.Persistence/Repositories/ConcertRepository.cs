@@ -31,27 +31,31 @@ namespace TicketBooking.Persistence.Repositories
 
         public async Task<List<Concert>> GetListWithFiltersAsync(string? containsInName, string? concertType, CancellationToken cancellationToken)
         {
+            var concerts = await _context.Concerts.ToListAsync();
+            if (!Enum.TryParse(concertType, out ConcertType eConcertType) && !String.IsNullOrEmpty(concertType))
+            {
+                throw new ArgumentException("Wrong concertType name", nameof(concertType));
+            }
+
             if (!String.IsNullOrEmpty(containsInName) && !String.IsNullOrEmpty(concertType))
             {
-                return _context.Concerts
-                    .AsEnumerable()
-                    .Where(c => c.ConcertName.Contains(containsInName) && String.Equals(c.ConcertType, concertType, StringComparison.OrdinalIgnoreCase))
+                return concerts
+                    .Where(c => c.ConcertName.Contains(containsInName) && c.ConcertType == eConcertType)
                     .ToList();
             }
             else if (!String.IsNullOrEmpty(containsInName))
             {
-                return await _context.Concerts
+                return concerts
                     .Where(c => c.ConcertName.Contains(containsInName))
-                    .ToListAsync(cancellationToken);
+                    .ToList();                   
             }
             else if (!String.IsNullOrEmpty(concertType))
             {
-                return _context.Concerts
-                    .AsEnumerable().Where(c => c.ConcertType == concertType)
+                return concerts
+                    .Where(c => c.ConcertType == eConcertType)
                     .ToList();
             }
-            
-            return await _context.Concerts.ToListAsync(cancellationToken);
+            return concerts;
         }
 
         public async Task<List<Concert>> GetListAsync(CancellationToken cancellationToken)

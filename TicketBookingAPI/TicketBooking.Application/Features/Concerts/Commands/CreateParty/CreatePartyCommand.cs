@@ -1,8 +1,10 @@
-﻿namespace TicketBooking.Domain
+﻿using MediatR;
+using TicketBooking.Domain;
+
+namespace TicketBooking.Application.Features.Concerts.Commands.CreateParty
 {
-    public abstract class Concert 
+    public class CreatePartyCommand : IRequest<Guid>
     {
-        public Guid Id { get; set; }
         public string? ConcertName { get; set; }
         public string? BandName { get; set; }
         public int AmountOfTickets { get; set; }
@@ -11,11 +13,9 @@
         public string? Place { get; set; }
         public double GeoLng { get; set; }
         public double GeoLat { get; set; }
-        public ConcertType ConcertType { get; } = ConcertType.Concert;
+        public ConcertType ConcertType { get; set; }
         public int Price { get; set; }
 
-        public List<Ticket> Tickets { get; set; } = new();
-   
-        public Concert(ConcertType concertType) => ConcertType = concertType;    
+        public int AgeLimit { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using TicketBooking.Application.Exceptions;
-using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
 using TicketBooking.Domain.Interfaces;
 

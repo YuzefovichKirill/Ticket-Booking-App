@@ -1,4 +1,6 @@
-﻿namespace TicketBooking.Application.Features.Concerts.Queries.GetConcertList
+﻿using TicketBooking.Domain;
+
+namespace TicketBooking.Application.Features.Concerts.Queries.GetConcertList
 {
     public class ConcertDto
     {
@@ -10,7 +12,7 @@
         public string? Place { get; set; }
         public double GeoLng { get; set; }
         public double GeoLat { get; set; }
-        public string? ConcertType { get; set; }
+        public ConcertType ConcertType { get; set; }
         public int Price { get; set; }
 
     }

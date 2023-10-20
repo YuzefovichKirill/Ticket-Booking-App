@@ -14,8 +14,16 @@ export class ConcertService {
         return this.ticketBookingApi.get(`/api/concerts/${id}`)
     }
 
-    createConcert(body) {
-        return this.ticketBookingApi.post(`/api/concerts`, body)
+    createClassicalConcert(body) {
+        return this.ticketBookingApi.post(`/api/concerts/classical-concert`, body)
+    }
+    
+    createOpenAir(body) {
+        return this.ticketBookingApi.post(`/api/concerts/open-air`, body)
+    }
+
+    createParty(body) {
+        return this.ticketBookingApi.post(`/api/concerts/party`, body)
     }
 
     deleteConcert(id) {
