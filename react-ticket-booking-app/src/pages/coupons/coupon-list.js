@@ -30,9 +30,9 @@ export default function CouponList() {
       <p className="title">Coupons</p>
       <Link to={routes.COUPON_CREATE}><div className="coupon-create-link">Create coupon</div></Link>
       <div className="coupon-list">
-        {coupons?.map(coupon => {
+        {coupons?.map((coupon, id) => {
           return (
-            <div className="coupon">
+            <div key={id} className="coupon">
               <div className="concert-name">{coupon.concertName}</div>
               <div className="coupon-name">{coupon.name} </div>
               <div className="discount">{coupon.discountPercentage}%</div>

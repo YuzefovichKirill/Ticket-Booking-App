@@ -20,7 +20,7 @@ export default function CouponCreate() {
 
 	useEffect(() => {
 		var concertService = new ConcertService();
-		concertService.getConcertList()
+		concertService.getConcertList(null, null)
 			.then(data => setConcerts(data.data.concerts))
 			.catch((error) => alert(error.response.data))
 	}, [])
@@ -44,9 +44,9 @@ export default function CouponCreate() {
 					<div className="input-data">
 						<label>Concert name</label>
 						<select ref={concertId} required>
-							{concerts?.map(concert => {
+							{concerts?.map((concert, id) => {
 								return (
-									<option value={concert.id}>{concert.concertName}</option>
+									<option key={id} value={concert.id}>{concert.concertName}</option>
 								)
 							})}
 						</select>

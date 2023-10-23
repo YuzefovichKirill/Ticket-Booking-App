@@ -14,7 +14,7 @@ export default function ConcertList() {
     const [concertType, setConcertType] = useState('')
     var concertService = new ConcertService();
     const { addToCart } = useContext(CartContext)
-    const { userRole } = useContext(AuthContext)
+    const { isAuth, userRole } = useContext(AuthContext)
     var [points, setPoints] = useState([])
     useEffect(() => {
         concertService.getConcertList(concertName?.current?.value, concertType)
@@ -71,9 +71,9 @@ export default function ConcertList() {
                 ?
                 <div className="concert-list">
                     <p className="title">Concerts</p>
-                    {concerts?.map(concert => {
+                    {concerts?.map((concert, id) => {
                         return (
-                        <div className="concert">
+                        <div key={id} className="concert">
                             <div className="concert-payload">
                                 <div className="info concert-name">
                                     <div className="concert-name-text-list">{concert.concertName}</div>
@@ -91,9 +91,9 @@ export default function ConcertList() {
                             </div>
                             <div className="buttons">
                                 <Link to={routes.CONCERT_INFO} state={{concertId: concert.id}}>Get info</Link>
-                                <button onClick={() => handleAddToCart({id: concert.id, concertName: concert.concertName, 
-                                                                        dateTime: concert.dateTime, price: concert.price})}>Add to cart</button>
-                                {userRole === "Admin" &&<button onClick={() => deleteConcert(concert.id)}>Delete concert</button>}
+                                {isAuth && <button onClick={() => handleAddToCart({id: concert.id, concertName: concert.concertName, 
+                                                                dateTime: concert.dateTime, price: concert.price})}>Add to cart</button>}
+                                {userRole === "Admin" && <button onClick={() => deleteConcert(concert.id)}>Delete concert</button>}
                             </div>
                         </div>
                         )   

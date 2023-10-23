@@ -34,7 +34,7 @@ namespace TicketBooking.Persistence.Repositories
             var concerts = await _context.Concerts.ToListAsync();
             if (!Enum.TryParse(concertType, out ConcertType eConcertType) && !String.IsNullOrEmpty(concertType))
             {
-                throw new ArgumentException("Wrong concertType name", nameof(concertType));
+                throw new ArgumentException("Wrong name", nameof(concertType));
             }
 
             if (!String.IsNullOrEmpty(containsInName) && !String.IsNullOrEmpty(concertType))

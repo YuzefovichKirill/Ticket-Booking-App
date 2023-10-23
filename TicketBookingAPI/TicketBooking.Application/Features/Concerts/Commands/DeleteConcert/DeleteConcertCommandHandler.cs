@@ -5,7 +5,7 @@ using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Concerts.Commands.DeleteConcert
 {
-    public class DeleteConcertCommandHandler : IRequestHandler<DeleteConcertCommand>
+    public class DeleteConcertCommandHandler : IRequestHandler<DeleteConcertCommand, Guid>
     {
         private readonly IConcertRepository _concertRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -18,7 +18,7 @@ namespace TicketBooking.Application.Features.Concerts.Commands.DeleteConcert
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(DeleteConcertCommand request,
+        public async Task<Guid> Handle(DeleteConcertCommand request,
             CancellationToken cancellationToken)
         {
             var concert = await _concertRepository.GetByIdAsync(request.Id, cancellationToken);
@@ -30,6 +30,8 @@ namespace TicketBooking.Application.Features.Concerts.Commands.DeleteConcert
 
             _concertRepository.Delete(concert);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return request.Id;
         }
     }
 }

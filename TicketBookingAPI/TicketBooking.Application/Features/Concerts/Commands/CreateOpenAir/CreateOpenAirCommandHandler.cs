@@ -20,7 +20,14 @@ namespace TicketBooking.Application.Features.Concerts.Commands.CreateOpenAir
         public async Task<Guid> Handle(CreateOpenAirCommand request,
                 CancellationToken cancellationToken)
         {
-            if (request.ConcertType != ConcertType.OpenAir)
+            object obj;
+            if (!Enum.TryParse(typeof(ConcertType), request.ConcertType, true, out obj))
+            {
+                throw new ArgumentException("Wrong value", nameof(request.ConcertType));
+            }
+
+            ConcertType concertType = (ConcertType)obj;
+            if (concertType != ConcertType.OpenAir)
             {
                 throw new ArgumentException("Wrong value", nameof(request.ConcertType));
             }

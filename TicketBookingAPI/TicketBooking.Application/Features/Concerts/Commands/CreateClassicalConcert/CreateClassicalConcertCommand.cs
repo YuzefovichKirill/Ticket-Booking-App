@@ -13,11 +13,10 @@ namespace TicketBooking.Application.Features.Concerts.Commands.CreateClassicalCo
         public string? Place { get; set; }
         public double GeoLng { get; set; }
         public double GeoLat { get; set; }
-        public ConcertType ConcertType { get; set; }
+        public string? ConcertType { get; set; }
         public int Price { get; set; }
 
         public string? VoiceType { get; set; }
         public string? Composer { get; set; }
-
     }
 }

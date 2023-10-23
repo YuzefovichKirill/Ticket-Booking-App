@@ -8,7 +8,7 @@ namespace TicketBooking.Application.Features.Tickets.Queries.GetTicketList
         private readonly ITicketRepository _ticketRepository;
         private readonly IConcertRepository _concertRepository;
 
-        public GetTicketListQueryHandler(ITicketRepository ticketRepository = null, IConcertRepository concertRepository = null)
+        public GetTicketListQueryHandler(ITicketRepository ticketRepository, IConcertRepository concertRepository)
         {
             _ticketRepository = ticketRepository;
             _concertRepository = concertRepository;

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text.Json.Serialization;
 using TicketBooking.Application;
 using TicketBooking.Email;
@@ -47,6 +49,9 @@ namespace TicketBooking.WebAPI
             });
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>,
+               ConfigureSwaggerOptions>();
             services.AddSwaggerGen();
 
             services.AddAuthentication(options =>

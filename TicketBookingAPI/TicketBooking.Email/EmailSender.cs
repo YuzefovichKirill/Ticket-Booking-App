@@ -47,6 +47,10 @@ namespace TicketBooking.Email
                 await client.AuthenticateAsync(_emailConfig.UserName, _emailConfig.Password);
                 await client.SendAsync(emailMessage);
             }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
             finally
             {
                 await client.DisconnectAsync(true);

@@ -5,12 +5,14 @@ import { useLocation } from "react-router-dom";
 import { CartContext } from "../../contexts/cart-context";
 import "./concert-info.css"
 import Datetime from "../../components/date-time";
+import { AuthContext } from "../../contexts/auth-context";
 
 export default function ConcertInfo() {
     var location = useLocation()
-    var id = location.state.concertId
+    var id = location.state?.concertId
     var [concert, setConcert] = useState()
     var concertService = new ConcertService()
+    const { isAuth } = useContext(AuthContext)
     const {addToCart} = useContext(CartContext)
     useEffect(() => {
         if (!id) return;
@@ -58,8 +60,8 @@ export default function ConcertInfo() {
                 </div>
                 <div className="payment-info">
                     <div>Ticket price: {concert?.price} $</div>
-                    <Button className="add-to-cart" onClick={() => handleAddToCart({id: concert.id, concertName: concert.concertName, 
-                                                    dateTime: concert.dateTime, price: concert.price})}>Add to cart</Button>
+                    {isAuth && <Button className="add-to-cart" onClick={() => handleAddToCart({id: concert.id, concertName: concert.concertName, 
+                                                    dateTime: concert.dateTime, price: concert.price})}>Add to cart</Button>}
                 </div>
             </div>
         </div>

@@ -5,7 +5,7 @@ using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Orders.CreateOrder
 {
-    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand>
+    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, int>
     {
         private readonly IConcertRepository _concertRepository;
         private readonly ITicketRepository _ticketRepository;
@@ -21,7 +21,7 @@ namespace TicketBooking.Application.Features.Orders.CreateOrder
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
             foreach (var ticketDto in request.Tickets)
             {
@@ -43,7 +43,8 @@ namespace TicketBooking.Application.Features.Orders.CreateOrder
                 }
             }
 
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            var res = await _unitOfWork.SaveChangesAsync(cancellationToken);
+            return res;
         }
 
     }

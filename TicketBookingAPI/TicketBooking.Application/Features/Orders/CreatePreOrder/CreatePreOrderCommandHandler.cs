@@ -7,7 +7,7 @@ using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Orders.CreatePreOrder
 {
-    public class CreatePreOrderCommandHandler : IRequestHandler<CreatePreOrderCommand>
+    public class CreatePreOrderCommandHandler : IRequestHandler<CreatePreOrderCommand, int>
     {
         private readonly ICouponRepository _couponRepository;
         private readonly IConcertRepository _concertRepository;
@@ -26,7 +26,7 @@ namespace TicketBooking.Application.Features.Orders.CreatePreOrder
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(CreatePreOrderCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreatePreOrderCommand request, CancellationToken cancellationToken)
         {
             foreach (var couponDto in request.Coupons)
             {
@@ -71,7 +71,8 @@ namespace TicketBooking.Application.Features.Orders.CreatePreOrder
                 }
             }
 
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            var res = await _unitOfWork.SaveChangesAsync(cancellationToken);
+            return res;
         }
     }
 }

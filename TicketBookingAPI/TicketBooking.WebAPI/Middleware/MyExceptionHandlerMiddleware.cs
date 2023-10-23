@@ -32,11 +32,18 @@ namespace TicketBooking.WebAPI.Middleware
                 case NotFoundException:
                     code = HttpStatusCode.NotFound;
                     break;
-                case AlreadyUsedException:
-                    code = HttpStatusCode.BadRequest;
-                    break;
+
                 case NotEnoughTicketsException:
                     code = HttpStatusCode.Conflict;
+                    break;
+                case ArgumentException:
+                case AlreadyUsedException:
+                case System.ComponentModel.DataAnnotations.ValidationException:
+                    code = HttpStatusCode.BadRequest;
+                    break;
+                case FluentValidation.ValidationException ex:
+                    code = HttpStatusCode.BadRequest;
+                    result = String.Join("\n", ex.Errors.ToList());
                     break;
             }
             context.Response.ContentType = "application/json";

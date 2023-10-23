@@ -20,7 +20,14 @@ namespace TicketBooking.Application.Features.Concerts.Commands.CreateClassicalCo
         public async Task<Guid> Handle(CreateClassicalConcertCommand request,
             CancellationToken cancellationToken)
         {
-            if (request.ConcertType != ConcertType.ClassicalConcert)
+            object obj;
+            if(!Enum.TryParse(typeof(ConcertType), request.ConcertType, true, out obj))
+            {
+                throw new ArgumentException("Wrong value", nameof(request.ConcertType));
+            }
+
+            ConcertType concertType = (ConcertType)obj;
+            if (concertType != ConcertType.ClassicalConcert)
             {
                 throw new ArgumentException("Wrong value", nameof(request.ConcertType));
             }
@@ -43,6 +50,7 @@ namespace TicketBooking.Application.Features.Concerts.Commands.CreateClassicalCo
 
             await _concertRepository.AddAsync(concert, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+            
             return concert.Id;
         }
     }

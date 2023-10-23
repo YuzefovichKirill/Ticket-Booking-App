@@ -18,9 +18,9 @@ export default function TicketList() {
         <>
             <p className="title">Your tickets</p>
             <div className="tickets-list">
-                {tickets?.map(ticket => {
+                {tickets?.map((ticket, id) => {
                     return (
-                        <div className="ticket">
+                        <div key={id} className="ticket">
                             <div className="concert-name">{ticket.concertName}</div>
                             <Datetime datetime={ticket.concertTime}/>
                         </div>

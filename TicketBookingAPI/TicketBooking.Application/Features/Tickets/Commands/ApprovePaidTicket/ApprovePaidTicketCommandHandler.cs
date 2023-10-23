@@ -3,7 +3,7 @@ using TicketBooking.Application.Exceptions;
 using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain.Interfaces;
 
-namespace TicketBooking.Application.Features.Tickets.Commands.ApprovePaymentTicket
+namespace TicketBooking.Application.Features.Tickets.Commands.ApprovePaidTicket
 {
     public class ApprovePaidTicketCommandHandler: IRequestHandler<ApprovePaidTicketCommand>
     {

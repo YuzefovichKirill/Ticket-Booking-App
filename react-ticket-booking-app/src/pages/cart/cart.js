@@ -23,9 +23,9 @@ export default function Cart() {
       <div className="cart-container">
         <div className="cart-left-column">
           <div className="cart">
-          {cartItems.map(item => {
+          {cartItems.map((item, id) => {
             return (
-              <div className="cart-item">
+              <div key={id} className="cart-item">
                 <div className="concert-name">{item.concertName}</div>
                 <Datetime datetime={item.dateTime}/>
                 <div className="cart-buttons">

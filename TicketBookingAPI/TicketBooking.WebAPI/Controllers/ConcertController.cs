@@ -1,5 +1,4 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TicketBooking.Application.Features.Concerts.Commands.CreateClassicalConcert;
 using TicketBooking.Application.Features.Concerts.Commands.CreateOpenAir;
@@ -33,7 +32,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpPost("Classical-concert")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Guid>> CreateClassicalConcert([FromBody] CreateClassicalConcertCommand command)
         {
             var concertId = await Mediator.Send(command);
@@ -41,7 +40,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpPost("open-air")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Guid>> CreateOpenAir([FromBody] CreateOpenAirCommand command)
         {
             var concertId = await Mediator.Send(command);
@@ -49,7 +48,7 @@ namespace TicketBooking.WebAPI.Controllers
         }
 
         [HttpPost("party")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Guid>> CreateParty([FromBody] CreatePartyCommand command)
         {
             var concertId = await Mediator.Send(command);
@@ -58,11 +57,11 @@ namespace TicketBooking.WebAPI.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Delete(Guid id)
+        public async Task<ActionResult<Guid>> Delete(Guid id)
         {
             var command = new DeleteConcertCommand() { Id = id };
-            await Mediator.Send(command);
-            return NoContent();
+            var concertId = await Mediator.Send(command);
+            return Ok(concertId);
         }
     }
 }

@@ -5,7 +5,7 @@ using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Coupons.Commands.DeleteCoupon
 {
-    public class DeleteCouponCommandHandler: IRequestHandler<DeleteCouponCommand>
+    public class DeleteCouponCommandHandler: IRequestHandler<DeleteCouponCommand, Guid>
     {
         private readonly ICouponRepository _couponRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -18,7 +18,7 @@ namespace TicketBooking.Application.Features.Coupons.Commands.DeleteCoupon
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(DeleteCouponCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(DeleteCouponCommand request, CancellationToken cancellationToken)
         {
             var coupon = await _couponRepository.GetByIdAsync(request.Id, cancellationToken);
         
@@ -29,6 +29,8 @@ namespace TicketBooking.Application.Features.Coupons.Commands.DeleteCoupon
 
             _couponRepository.Delete(coupon);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return request.Id;
         }
     }
 }

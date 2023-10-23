@@ -17,7 +17,7 @@ namespace TicketBooking.WebAPI.Controllers
         public async Task<ActionResult> CreatePreOrder([FromBody] CreatePreOrderCommand command)
         {
             command.UserId = UserId;
-            await Mediator.Send(command);
+            var res = await Mediator.Send(command);
             return NoContent();
         }
 
@@ -25,7 +25,7 @@ namespace TicketBooking.WebAPI.Controllers
         public async Task<ActionResult> CreateOrder([FromBody] CreateOrderCommand command)
         {
             command.UserId = UserId;
-            await Mediator.Send(command);
+            var res = await Mediator.Send(command);
             return NoContent();
         }
 
@@ -34,7 +34,7 @@ namespace TicketBooking.WebAPI.Controllers
         public async Task<ActionResult> DeletePreorder([FromBody] DeletePreOrderCommand command)
         {
             command.UserId = UserId;
-            await Mediator.Send(command);
+            var res = await Mediator.Send(command);
             return NoContent();
         }
     }

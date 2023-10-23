@@ -8,7 +8,7 @@ using TicketBooking.Application.Features.Tickets.Queries.GetTicketList;
 using TicketBooking.Application.Features.Concerts.Queries.GetConcert;
 using TicketBooking.Email;
 using TicketBooking.Application.Features.Tickets.Commands.ConfirmTicket;
-using TicketBooking.Application.Features.Tickets.Commands.ApprovePaymentTicket;
+using TicketBooking.Application.Features.Tickets.Commands.ApprovePaidTicket;
 
 namespace TicketBooking.WebAPI.Controllers
 {

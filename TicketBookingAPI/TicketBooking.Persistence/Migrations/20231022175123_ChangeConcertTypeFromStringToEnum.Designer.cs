@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TicketBooking.Persistence;
 
@@ -11,9 +12,11 @@ using TicketBooking.Persistence;
 namespace TicketBooking.Persistence.Migrations
 {
     [DbContext(typeof(TicketBookingDbContext))]
-    partial class TicketBookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231022175123_ChangeConcertTypeFromStringToEnum")]
+    partial class ChangeConcertTypeFromStringToEnum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

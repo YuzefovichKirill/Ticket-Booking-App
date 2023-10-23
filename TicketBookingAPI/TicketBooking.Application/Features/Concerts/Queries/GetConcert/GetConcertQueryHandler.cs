@@ -8,13 +8,10 @@ namespace TicketBooking.Application.Features.Concerts.Queries.GetConcert
     public class GetConcertQueryHandler : IRequestHandler<GetConcertQuery, Concert>
     {
         private readonly IConcertRepository _concertRepository;
-        private readonly IUnitOfWork _unitOfWork;
 
         public GetConcertQueryHandler(
-            IConcertRepository concertRepository, 
-            IUnitOfWork unitOfWork)
+            IConcertRepository concertRepository)
         {
-            _unitOfWork = unitOfWork;
             _concertRepository = concertRepository;
         }
 

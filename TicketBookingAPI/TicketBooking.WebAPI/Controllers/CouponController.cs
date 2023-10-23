@@ -31,7 +31,7 @@ namespace TicketBooking.WebAPI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Create([FromBody] CreateCouponCommand command)
+        public async Task<ActionResult<Guid>> Create([FromBody] CreateCouponCommand command)
         {
             var couponId = await Mediator.Send(command);
             return Ok(couponId);
@@ -39,10 +39,11 @@ namespace TicketBooking.WebAPI.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Delete([FromHeader] DeleteCouponCommand command)
+        public async Task<ActionResult<Guid>> Delete(Guid id)
         {
-            await Mediator.Send(command);
-            return NoContent();
+            var command = new DeleteCouponCommand() { Id = id};
+            var couponId = await Mediator.Send(command);
+            return Ok(couponId);
         }
     }
 }

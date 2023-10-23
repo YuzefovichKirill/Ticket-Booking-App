@@ -3,7 +3,7 @@ using TicketBooking.Application.Features.Orders.CreateOrder;
 
 namespace TicketBooking.Application.Features.Orders.CreatePreOrder
 {
-    public class CreatePreOrderCommand : IRequest
+    public class CreatePreOrderCommand : IRequest<int>
     {
         public Guid UserId { get; set; }
         public List<TicketDto> Tickets { get; set; }

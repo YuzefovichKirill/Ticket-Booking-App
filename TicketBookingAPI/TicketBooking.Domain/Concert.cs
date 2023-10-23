@@ -11,7 +11,7 @@
         public string? Place { get; set; }
         public double GeoLng { get; set; }
         public double GeoLat { get; set; }
-        public ConcertType ConcertType { get; } = ConcertType.Concert;
+        public ConcertType ConcertType { get; }
         public int Price { get; set; }
 
         public List<Ticket> Tickets { get; set; } = new();

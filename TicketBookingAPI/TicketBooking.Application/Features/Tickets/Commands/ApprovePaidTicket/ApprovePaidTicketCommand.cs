@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace TicketBooking.Application.Features.Tickets.Commands.ApprovePaymentTicket
+namespace TicketBooking.Application.Features.Tickets.Commands.ApprovePaidTicket
 {
     public class ApprovePaidTicketCommand: IRequest
     {

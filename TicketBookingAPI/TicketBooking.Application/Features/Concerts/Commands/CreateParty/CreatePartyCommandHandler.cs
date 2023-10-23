@@ -20,7 +20,14 @@ namespace TicketBooking.Application.Features.Concerts.Commands.CreateParty
         public async Task<Guid> Handle(CreatePartyCommand request,
             CancellationToken cancellationToken)
         {
-            if (request.ConcertType != ConcertType.Party)
+            object obj;
+            if (!Enum.TryParse(typeof(ConcertType), request.ConcertType, true, out obj))
+            {
+                throw new ArgumentException("Wrong value", nameof(request.ConcertType));
+            }
+
+            ConcertType concertType = (ConcertType)obj;
+            if (concertType != ConcertType.Party)
             {
                 throw new ArgumentException("Wrong value", nameof(request.ConcertType));
             }

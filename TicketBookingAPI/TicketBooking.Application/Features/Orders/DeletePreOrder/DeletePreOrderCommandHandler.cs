@@ -1,13 +1,10 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using TicketBooking.Application.Exceptions;
-using TicketBooking.Application.Interfaces;
 using TicketBooking.Domain;
 using TicketBooking.Domain.Interfaces;
 
 namespace TicketBooking.Application.Features.Orders.DeletePreOrder
 {
-    public class DeleteOrderCommandHandler : IRequestHandler<DeletePreOrderCommand>
+    public class DeleteOrderCommandHandler : IRequestHandler<DeletePreOrderCommand, int>
     {
         private readonly IConcertRepository _concertRepository;
         private readonly ICouponRepository _couponRepository;
@@ -26,7 +23,7 @@ namespace TicketBooking.Application.Features.Orders.DeletePreOrder
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(DeletePreOrderCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(DeletePreOrderCommand request, CancellationToken cancellationToken)
         {
             List<UsedCoupon> usedCoupons = new List<UsedCoupon>();
             foreach (var couponDto in request.Coupons)
@@ -55,7 +52,8 @@ namespace TicketBooking.Application.Features.Orders.DeletePreOrder
                 concert.AmountOfAvailableTickets += ticketDto.Quantity;
             }
 
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            var res = await _unitOfWork.SaveChangesAsync(cancellationToken);
+            return res;
         }
     }
 }

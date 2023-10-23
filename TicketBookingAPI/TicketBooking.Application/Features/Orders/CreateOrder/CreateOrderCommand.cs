@@ -2,7 +2,7 @@
 
 namespace TicketBooking.Application.Features.Orders.CreateOrder
 {
-    public class CreateOrderCommand : IRequest
+    public class CreateOrderCommand : IRequest<int>
     {
         public Guid UserId { get; set; }
         public List<TicketDto> Tickets { get; set; }
