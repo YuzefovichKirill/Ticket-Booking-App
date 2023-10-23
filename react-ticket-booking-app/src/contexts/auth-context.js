@@ -11,7 +11,8 @@ const AuthProvider = ({userManager: manager, children}) => {
 
   useEffect(() => {
     const onUserLoaded = (user) => {
-        console.log('User loaded: ', user);
+        console.log('User loaded');
+        // console.log('User loaded: ', user);
         setIsAuth(true)
         setUserRole(getRole(user))
     };
