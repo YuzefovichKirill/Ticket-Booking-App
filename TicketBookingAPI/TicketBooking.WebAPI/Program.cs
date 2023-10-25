@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -74,6 +75,7 @@ namespace TicketBooking.WebAPI
                 });
             services.AddAuthorization();
 
+
             // Configure
             var app = builder.Build();
 
@@ -83,6 +85,7 @@ namespace TicketBooking.WebAPI
                 try
                 {
                     var context = serviceProvider.GetRequiredService<TicketBookingDbContext>();
+                    context.Database.Migrate();
                     DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
@@ -92,15 +95,17 @@ namespace TicketBooking.WebAPI
                 }
             }
 
-            if (app.Environment.IsDevelopment())
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ticket booking v1"));
+            /*if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ticket booking v1"));
-            }
+            }*/
 
             app.UseMyExceptionHandler();
             app.UseRouting();
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseCors("AllowAll");
 
             app.UseAuthentication();

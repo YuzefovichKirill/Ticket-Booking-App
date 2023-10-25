@@ -1,0 +1,57 @@
+version: '3.4'
+
+services:      
+  proxy:
+    image: nginx:mainline
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+  client:
+    image: client
+    build: 
+      context: ./react-ticket-booking-app
+      dockerfile: Dockerfile
+    ports: 
+      - "5000:3000"
+    depends_on:
+      - ticketbookingapi
+      - identityapi
+
+  identityapi:
+    image: identityapi
+    build: 
+      context: ./IdentityServer
+      dockerfile: Dockerfile
+    ports: 
+      - "8081:81"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:81
+      - ASPNETCORE_HTTP_PORTS=81
+    depends_on:
+      - db
+      
+  ticketbookingapi:
+    image: ticketbookingapi
+    build:
+      context: ./TicketBookingAPI
+      dockerfile: TicketBooking.WebAPI\Dockerfile
+    ports: 
+      - "8080:81"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:81
+      - ASPNETCORE_HTTP_PORTS=81
+    depends_on:
+      - db  
+  
+        
+  db:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "securePassword1*"
+      ACCEPT_EULA: "Y"

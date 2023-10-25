@@ -14,7 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketBooking.WebAPI", "Tic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketBooking.Persistence", "TicketBooking.Persistence\TicketBooking.Persistence.csproj", "{033C8698-BBAD-47A2-B413-3AF7F80A6CEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketBooking.Email", "TicketBooking.Email\TicketBooking.Email.csproj", "{4974751E-C54D-4584-B280-D9D048FD95B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketBooking.Email", "TicketBooking.Email\TicketBooking.Email.csproj", "{4974751E-C54D-4584-B280-D9D048FD95B6}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{78A891C4-879E-4C31-BF0D-72AB7B3EA7A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,10 @@ Global
 		{4974751E-C54D-4584-B280-D9D048FD95B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4974751E-C54D-4584-B280-D9D048FD95B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4974751E-C54D-4584-B280-D9D048FD95B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78A891C4-879E-4C31-BF0D-72AB7B3EA7A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78A891C4-879E-4C31-BF0D-72AB7B3EA7A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78A891C4-879E-4C31-BF0D-72AB7B3EA7A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78A891C4-879E-4C31-BF0D-72AB7B3EA7A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

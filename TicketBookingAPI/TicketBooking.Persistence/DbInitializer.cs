@@ -11,7 +11,6 @@ namespace TicketBooking.Persistence
     {
         public static void Initialize(TicketBookingDbContext context)
         {
-            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             Guid[] concertGuids = { Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), 
