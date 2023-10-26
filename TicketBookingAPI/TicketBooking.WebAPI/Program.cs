@@ -62,15 +62,16 @@ namespace TicketBooking.WebAPI
             })
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "https://localhost:7181/";
+                    options.Authority = "http://localhost:8000/";
                     options.Audience = "TicketBookingAPI";
                     options.RequireHttpsMetadata = false;
                 })
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = "https://localhost:7181/";
+                    options.Authority = "http://localhost:8000/";
                     options.ClientId = "TicketBookingAPI";
                     options.ResponseType = "id_token token";
+                    options.RequireHttpsMetadata = false;
                     options.GetClaimsFromUserInfoEndpoint = true;
                 });
             services.AddAuthorization();

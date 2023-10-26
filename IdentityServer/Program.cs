@@ -62,13 +62,14 @@ namespace IdentityServer
 
             var app = builder.Build();
             var env = app.Environment;
-
+            app.UseCookiePolicy(new CookiePolicyOptions() { MinimumSameSitePolicy = SameSiteMode.Lax });
             using (var scope = app.Services.CreateScope())
             {
                 var serviceProvider = scope.ServiceProvider;
                 try
                 {
                     var context = serviceProvider.GetRequiredService<AuthDbContext>();
+                    context.Database.Migrate();
                     DbInitializer.Initialize(context);
                     Configuration.CreateRoles(services).Wait();
                 }
@@ -83,6 +84,7 @@ namespace IdentityServer
             {
                 app.UseDeveloperExceptionPage();
             }
+
 
             app.UseStaticFiles(new StaticFileOptions
             {
