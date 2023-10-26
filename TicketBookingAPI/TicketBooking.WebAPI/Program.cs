@@ -65,14 +65,14 @@ namespace TicketBooking.WebAPI
             })
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "http://192.168.0.15:8000";
+                    options.Authority = "http://178.172.244.52:8000";
                     options.Audience = "TicketBookingAPI";
-                    options.MetadataAddress = "http://192.168.0.15:8000/.well-known/openid-configuration";
+                    options.MetadataAddress = "http://178.172.244.52:8000/.well-known/openid-configuration";
                     options.RequireHttpsMetadata = false;
                 })
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = "http://192.168.0.15:8000";
+                    options.Authority = "http://178.172.244.52:8000";
                     options.ClientId = "TicketBookingAPI";
                     options.ResponseType = "id_token token";
                     options.RequireHttpsMetadata = false;

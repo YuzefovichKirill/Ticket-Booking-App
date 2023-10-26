@@ -3,22 +3,16 @@ version: '3.4'
 services:      
   client:
     image: kirill753/ticket-booking-api:client
-    build: 
-      context: ./react-ticket-booking-app
-      dockerfile: Dockerfile
     ports: 
-      - "3000:3000"
+      - "3000:3000"   
     networks:
-      - mynet      
+      - mynet         
     depends_on:
       - ticketbookingapi
       - identityapi
 
   identityapi:
     image: kirill753/ticket-booking-api:identityapi
-    build: 
-      context: ./IdentityServer
-      dockerfile: Dockerfile
     ports: 
       - "8000:8000"
     environment:
@@ -26,15 +20,12 @@ services:
       - ASPNETCORE_URLS=http://+:8000
       - ASPNETCORE_HTTP_PORTS=8000
     networks:
-      - mynet
+      - mynet   
     depends_on:
       - db2
       
   ticketbookingapi:
     image: kirill753/ticket-booking-api:ticketbookingapi
-    build:
-      context: ./TicketBookingAPI
-      dockerfile: TicketBooking.WebAPI\Dockerfile
     ports: 
       - "80:80"
     environment:
@@ -45,7 +36,7 @@ services:
       - db  
    
   db:
-    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    image: justin2004/mssql_server_tiny:latest
     ports:
       - "1433:1433"
     environment:
@@ -55,7 +46,7 @@ services:
       - mynet
       
   db2:
-    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    image: justin2004/mssql_server_tiny:latest
     ports:
       - "1434:1434"
     environment:
@@ -63,7 +54,7 @@ services:
       ACCEPT_EULA: "Y"
     networks:
       - mynet
-
+      
 networks:
   mynet:
     driver: bridge
