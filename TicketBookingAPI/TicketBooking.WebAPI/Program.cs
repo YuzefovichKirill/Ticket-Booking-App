@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -55,6 +56,8 @@ namespace TicketBooking.WebAPI
                ConfigureSwaggerOptions>();
             services.AddSwaggerGen();
 
+            IdentityModelEventSource.ShowPII = true;
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -62,13 +65,14 @@ namespace TicketBooking.WebAPI
             })
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "http://localhost:8000/";
+                    options.Authority = "http://192.168.0.15:8000";
                     options.Audience = "TicketBookingAPI";
+                    options.MetadataAddress = "http://192.168.0.15:8000/.well-known/openid-configuration";
                     options.RequireHttpsMetadata = false;
                 })
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = "http://localhost:8000/";
+                    options.Authority = "http://192.168.0.15:8000";
                     options.ClientId = "TicketBookingAPI";
                     options.ResponseType = "id_token token";
                     options.RequireHttpsMetadata = false;
@@ -95,7 +99,6 @@ namespace TicketBooking.WebAPI
                     return;
                 }
             }
-
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ticket booking v1"));
             /*if (app.Environment.IsDevelopment())

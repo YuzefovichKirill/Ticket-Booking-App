@@ -63,6 +63,7 @@ namespace IdentityServer
             var app = builder.Build();
             var env = app.Environment;
             app.UseCookiePolicy(new CookiePolicyOptions() { MinimumSameSitePolicy = SameSiteMode.Lax });
+            
             using (var scope = app.Services.CreateScope())
             {
                 var serviceProvider = scope.ServiceProvider;
