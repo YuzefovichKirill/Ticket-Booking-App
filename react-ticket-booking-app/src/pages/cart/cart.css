@@ -1,0 +1,110 @@
+.cart-container {
+  display: flex;
+}
+
+.cart-left-column {
+  flex: 70%;
+  padding: 10px;
+}
+
+.cart-right-column  {
+  flex: 30%;
+  padding: 10px;
+}
+
+.crossed-out {
+  text-decoration: line-through;
+}
+
+.payment-block {
+  padding: 5px;
+  width: 100%;
+  background-color: #FFFFFF;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  width: 250px;
+  align-self: flex-start;
+  gap: 16px;
+  border-radius: 15px;
+}
+
+.paypal-buttons {
+  align-items: center;
+}
+
+.cart {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.cart-item {
+  width: max-content;
+  display: flex;
+  text-align: center;
+  max-height: 300px;
+  align-items: flex-start;
+  margin: 4px;
+  padding: 4px 4px 4px 0px;
+  background-color: #FFFFFF;
+
+}
+
+.cart-item .concert-name {
+  display: flex;
+  max-height: 600px;
+  max-width: 400px;
+  min-width: 200px;
+  padding-left: 5px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cart-item .date-time {
+  display: flex;
+  width: 200px;
+  flex-direction: column;
+}
+
+.cart-item .cart-buttons {
+  margin-left: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.cart-buttons button,
+.cart-buttons div {
+  padding: 2px 5px;
+}
+
+.cart-item .cart-price {
+  padding-left: 30px;
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+}
+
+.clear-cart-button {
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+}
+
+.promo-container {
+  display: flex;
+}
+
+.promo-container .promo-input {
+  position: relative;
+  box-sizing: border-box;
+  height: 30px;
+  padding: 9px 12px 11px;
+  margin-right: 5px;
+  border: 1px solid;
+}
+
+.promo-container .promo-submit {
+  padding: 5px 12px 11px;
+  height: 30px;
+}

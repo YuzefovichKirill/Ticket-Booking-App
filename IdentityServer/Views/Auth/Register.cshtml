@@ -1,0 +1,64 @@
+﻿@model RegisterVm
+
+<head>
+    <link href=@Url.Content("~/Styles/app.css") rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container">
+        <p class="title">Register</p>
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div >
+                <il>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li class="alert">@error.ErrorMessage</li>
+                    }
+                </il>
+            </div>
+        }
+        <form asp-controller="Auth" asp-action="Register" method="post">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div class="form-row">
+                <div class="input-data">
+                    <label>UserName</label>
+                    <input type="text" asp-for="UserName" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <label>Email</label>
+                    <input type="email" asp-for="Email" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <label>Password</label>
+                    <input type="password" asp-for="Password" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <label>Confirm Password</label>
+                    <input type="password" asp-for="ConfirmPassword" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <label>Become Admin</label>
+                    <input type="checkbox" asp-for="AdminRole" />
+                </div>  
+            </div>
+
+            <div class="submit-button">
+                <input type="submit" value="Submit" />
+            </div>
+
+        </form>
+
+        <a asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl"
+           class="switch-button">Login</a>
+    </div>
+</body>
+

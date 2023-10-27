@@ -1,0 +1,54 @@
+{
+  "name": "react-ticket-booking-app",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "http://localhost:3000/concerts/concert-list",
+  "dependencies": {
+    "@paypal/react-paypal-js": "^8.1.3",
+    "@pbe/react-yandex-maps": "^1.2.4",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.4.0",
+    "google-map-react": "^2.2.1",
+    "jwt-decode": "^3.1.2",
+    "oidc-client": "^1.11.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.10.1",
+    "react-redux": "^8.1.2",
+    "react-router-dom": "^6.15.0",
+    "react-router-guards": "^1.0.2",
+    "rxjs": "^7.8.1",
+    "style-components": "^0.1.0",
+    "styled-components": "^6.0.7",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "react-scripts": "^5.0.1"
+  }
+}
